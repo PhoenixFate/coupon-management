@@ -200,15 +200,6 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<warName>${project.artifactId}</warName>
-					<webResources>
-						<resource>
-							<directory>lib/</directory>
-							<targetPath>WEB-INF/lib</targetPath>
-							<includes>
-								<include>**/*.jar</include>
-							</includes>
-						</resource>
-					</webResources>
 				</configuration>
 			</plugin>
 		</plugins>
