@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="packageId" name="packageId" th:value="${packageInfo.packageId}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">服务包名称：</label>
+								<div class="col-sm-6">
+									<input id="packageName" name="packageName" th:value="${packageInfo.packageName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">服务包详情介绍：</label>
+								<div class="col-sm-8">
+									<textarea id="packageDetail" name="packageDetail" th:text="${packageInfo.packageDetail}" class="form-control" rows="5"></textarea>
+								</div>
+							</div>
+								<div class="form-group">	
+								<label class="col-sm-3 control-label">活动开始时间：</label>
+								<div class="col-sm-4">
+									<input id="periodStartTime" name="periodStartTime" th:value="${packageInfo.periodStartTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">活动截止时间：</label>
+								<div class="col-sm-4">
+									<input id="periodEndTime" name="periodEndTime" th:value="${packageInfo.periodEndTime}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">服务包状态</label>
+							<div class="col-sm-8">
+									<label class="radio-inline"> 
+										<input type="radio" name="packageStatus" value="1" th:field="${packageInfo.packageStatus}" checked="checked" /> 启用
+									</label> 
+									<label class="radio-inline"> 
+										<input type="radio" name="packageStatus" th:field="${packageInfo.packageStatus}" value="0" /> 暂不启用
+									</label> 
+								</div>
+							</div>
+																		<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/coupon/packageInfo/edit.js}">
+	</script>
+</body>
+</html>

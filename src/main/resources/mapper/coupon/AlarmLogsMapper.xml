@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.AlarmLogsDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.AlarmLogsDO">
+		select `id`,`alarm_code`,`alarm_name`,`alarm_desc`,`alarm_time`,`confirm_status`,`confirm_time`,`confirm_user`,`alarm_type`,`alarm_phone`,`org_code` from alarm_logs where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.coupon.domain.AlarmLogsDO">
+		select `id`,`alarm_code`,`alarm_name`,`alarm_desc`,`alarm_time`,`confirm_status`,`confirm_time`,`confirm_user`,`alarm_type`,`alarm_phone`,`org_code` from alarm_logs
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="alarmCode != null and alarmCode != ''"> and alarm_code = #{alarmCode} </if>
+		  		  <if test="alarmName != null and alarmName != ''"> and alarm_name = #{alarmName} </if>
+		  		  <if test="alarmDesc != null and alarmDesc != ''"> and alarm_desc = #{alarmDesc} </if>
+		  		  <if test="alarmTime != null and alarmTime != ''"> and alarm_time = #{alarmTime} </if>
+		  		  <if test="confirmStatus != null and confirmStatus != ''"> and confirm_status = #{confirmStatus} </if>
+		  		  <if test="confirmTime != null and confirmTime != ''"> and confirm_time = #{confirmTime} </if>
+		  		  <if test="confirmUser != null and confirmUser != ''"> and confirm_user = #{confirmUser} </if>
+		  		  <if test="alarmType != null and alarmType != ''"> and alarm_type = #{alarmType} </if>
+		  		  <if test="alarmPhone != null and alarmPhone != ''"> and alarm_phone = #{alarmPhone} </if>
+		  		  <if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from alarm_logs
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="alarmCode != null and alarmCode != ''"> and alarm_code = #{alarmCode} </if>
+		  		  <if test="alarmName != null and alarmName != ''"> and alarm_name = #{alarmName} </if>
+		  		  <if test="alarmDesc != null and alarmDesc != ''"> and alarm_desc = #{alarmDesc} </if>
+		  		  <if test="alarmTime != null and alarmTime != ''"> and alarm_time = #{alarmTime} </if>
+		  		  <if test="confirmStatus != null and confirmStatus != ''"> and confirm_status = #{confirmStatus} </if>
+		  		  <if test="confirmTime != null and confirmTime != ''"> and confirm_time = #{confirmTime} </if>
+		  		  <if test="confirmUser != null and confirmUser != ''"> and confirm_user = #{confirmUser} </if>
+		  		  <if test="alarmType != null and alarmType != ''"> and alarm_type = #{alarmType} </if>
+		  		  <if test="alarmPhone != null and alarmPhone != ''"> and alarm_phone = #{alarmPhone} </if>
+		  		  <if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.coupon.domain.AlarmLogsDO">
+		insert into alarm_logs
+		(
+			`id`, 
+			`alarm_code`, 
+			`alarm_name`, 
+			`alarm_desc`, 
+			`alarm_time`, 
+			`confirm_status`, 
+			`confirm_time`, 
+			`confirm_user`, 
+			`alarm_type`, 
+			`alarm_phone`, 
+			`org_code`
+		)
+		values
+		(
+			#{id}, 
+			#{alarmCode}, 
+			#{alarmName}, 
+			#{alarmDesc}, 
+			#{alarmTime}, 
+			#{confirmStatus}, 
+			#{confirmTime}, 
+			#{confirmUser}, 
+			#{alarmType}, 
+			#{alarmPhone}, 
+			#{orgCode}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.coupon.domain.AlarmLogsDO">
+		update alarm_logs 
+		<set>
+			<if test="alarmCode != null">`alarm_code` = #{alarmCode}, </if>
+			<if test="alarmName != null">`alarm_name` = #{alarmName}, </if>
+			<if test="alarmDesc != null">`alarm_desc` = #{alarmDesc}, </if>
+			<if test="alarmTime != null">`alarm_time` = #{alarmTime}, </if>
+			<if test="confirmStatus != null">`confirm_status` = #{confirmStatus}, </if>
+			<if test="confirmTime != null">`confirm_time` = #{confirmTime}, </if>
+			<if test="confirmUser != null">`confirm_user` = #{confirmUser}, </if>
+			<if test="alarmType != null">`alarm_type` = #{alarmType}, </if>
+			<if test="alarmPhone != null">`alarm_phone` = #{alarmPhone}, </if>
+			<if test="orgCode != null">`org_code` = #{orgCode}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from alarm_logs where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from alarm_logs where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

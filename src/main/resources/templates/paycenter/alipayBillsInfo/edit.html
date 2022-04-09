@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="ALIPAY_ID" name="ALIPAY_ID" th:value="${alipayBillsInfo.ALIPAY_ID}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">支付宝交易号：</label>
+								<div class="col-sm-8">
+									<input id="tradeNo" name="tradeNo" th:value="${alipayBillsInfo.tradeNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="balance" name="balance" th:value="${alipayBillsInfo.balance}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">对方账户：</label>
+								<div class="col-sm-8">
+									<input id="buyerAccount" name="buyerAccount" th:value="${alipayBillsInfo.buyerAccount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">货币类型：</label>
+								<div class="col-sm-8">
+									<input id="currency" name="currency" th:value="${alipayBillsInfo.currency}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">付款银行：</label>
+								<div class="col-sm-8">
+									<input id="depositBankNo" name="depositBankNo" th:value="${alipayBillsInfo.depositBankNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商品名称：</label>
+								<div class="col-sm-8">
+									<input id="goodsTitle" name="goodsTitle" th:value="${alipayBillsInfo.goodsTitle}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">收入金额：</label>
+								<div class="col-sm-8">
+									<input id="income" name="income" th:value="${alipayBillsInfo.income}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="iwAccountLogId" name="iwAccountLogId" th:value="${alipayBillsInfo.iwAccountLogId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">备注：</label>
+								<div class="col-sm-8">
+									<input id="memo" name="memo" th:value="${alipayBillsInfo.memo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户订单号：</label>
+								<div class="col-sm-8">
+									<input id="merchantOutOrderNo" name="merchantOutOrderNo" th:value="${alipayBillsInfo.merchantOutOrderNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="outcome" name="outcome" th:value="${alipayBillsInfo.outcome}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户ID：</label>
+								<div class="col-sm-8">
+									<input id="partnerId" name="partnerId" th:value="${alipayBillsInfo.partnerId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">费率：</label>
+								<div class="col-sm-8">
+									<input id="rate" name="rate" th:value="${alipayBillsInfo.rate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">操作员：</label>
+								<div class="col-sm-8">
+									<input id="sellerAccount" name="sellerAccount" th:value="${alipayBillsInfo.sellerAccount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">门店名称：</label>
+								<div class="col-sm-8">
+									<input id="sellerFullname" name="sellerFullname" th:value="${alipayBillsInfo.sellerFullname}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">手续费：</label>
+								<div class="col-sm-8">
+									<input id="serviceFee" name="serviceFee" th:value="${alipayBillsInfo.serviceFee}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="serviceFeeRatio" name="serviceFeeRatio" th:value="${alipayBillsInfo.serviceFeeRatio}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="signProductName" name="signProductName" th:value="${alipayBillsInfo.signProductName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="subTransCodeMsg" name="subTransCodeMsg" th:value="${alipayBillsInfo.subTransCodeMsg}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">订单总金额：</label>
+								<div class="col-sm-8">
+									<input id="totalFee" name="totalFee" th:value="${alipayBillsInfo.totalFee}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退款金额：</label>
+								<div class="col-sm-8">
+									<input id="tradeRefundAmount" name="tradeRefundAmount" th:value="${alipayBillsInfo.tradeRefundAmount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="transCodeMsg" name="transCodeMsg" th:value="${alipayBillsInfo.transCodeMsg}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易日期 yyyy-MM-dd ：</label>
+								<div class="col-sm-8">
+									<input id="transDate" name="transDate" th:value="${alipayBillsInfo.transDate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="crtTime" name="crtTime" th:value="${alipayBillsInfo.crtTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退款金额：</label>
+								<div class="col-sm-8">
+									<input id="addRefundFee" name="addRefundFee" th:value="${alipayBillsInfo.addRefundFee}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退款单号：</label>
+								<div class="col-sm-8">
+									<input id="addRefundNum" name="addRefundNum" th:value="${alipayBillsInfo.addRefundNum}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退款日期：</label>
+								<div class="col-sm-8">
+									<input id="addRefundDate" name="addRefundDate" th:value="${alipayBillsInfo.addRefundDate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">机构编码：</label>
+								<div class="col-sm-8">
+									<input id="hosCode" name="hosCode" th:value="${alipayBillsInfo.hosCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易时间 yyyy-MM-dd HH:mm:ss：</label>
+								<div class="col-sm-8">
+									<input id="transTime" name="transTime" th:value="${alipayBillsInfo.transTime}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/paycenter/alipayBillsInfo/edit.js">
+	</script>
+</body>
+</html>

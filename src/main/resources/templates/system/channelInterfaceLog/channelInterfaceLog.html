@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div name="searchform" id="searchform" class="layui-form layui-form-pane">
+							<div class="layui-form-item">
+								<input id="businessType" type="hidden" th:value="${businessType}">
+								<div class="layui-inline">
+									<label class="layui-form-label">账户号</label>
+									<div class="layui-input-inline">
+										<input lay-key="2" class="layui-input" id="bizId" placeholder="账户号" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">业务名称</label>
+									<div class="layui-input-inline">
+										<input lay-key="2" class="layui-input" id="businessName" placeholder="业务名称" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">响应码</label>
+									<div class="layui-input-inline">
+										<input lay-key="2" class="layui-input" id="rspCode" placeholder="响应码" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">调用渠道</label>
+									<div class="layui-input-inline">
+										<select lay-key="1" id="channelCode" name="channelCode" title="调用渠道" th:field="${channelCode}">
+								        	<option value="" selected="selected">全部渠道</option>
+								        	<option th:each="reserveChannel:${reserveChannels}" th:value="${reserveChannel.channelCode}" th:text="${reserveChannel.channelName}"></option>
+								        </select>
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">开始日期</label>
+									<div class="layui-input-inline">
+										<input lay-key="2" class="layui-input" id="startTime" placeholder="开始日期" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">结束日期</label>
+									<div class="layui-input-inline">
+										<input lay-key="3" class="layui-input" id="endTime" placeholder="结束日期" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<button class="layui-btn" type="button"  id="reload">
+										<i class="fa fa-search" aria-hidden="true"></i>查询
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true" class="layui-hide" lay-filter="channelInterfaceLogList"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/system/channelInterfaceLog/channelInterfaceLog.js}"></script>
+</body>
+</html>

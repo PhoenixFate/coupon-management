@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>欢迎页</title>
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link rel="stylesheet" th:href="@{css/layui.css}" media="all">
+<link rel="stylesheet" th:href="@{css/adminV2.css}" media="all">
+<link rel="stylesheet" th:href="@{css/modules/layer/default/layer.css}"
+	media="all">
+</head>
+<body layadmin-themealias="default">
+
+	<div class="layui-fluid">
+		<div class="layui-row layui-col-space15">
+<div class="layui-col-sm6 layui-col-md3" th:each="todayData: ${todayDatas}">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						<p class="layuiadmin-big-font" th:text="${todayData.type}">0</p> <span class="layui-badge layui-bg-blue layuiadmin-badge">今日</span>
+					</div>
+					<div class="layui-card-body layuiadmin-card-list">
+						<!-- <p class="layuiadmin-big-font" th:text="${todayData.totalFeeYan}">0</p> -->
+						<p th:if="${todayData.type == '用户数'}">
+							人数 <span class="layuiadmin-span-color" th:text="${todayData.nums}">0</span>
+						</p>
+						 <p th:if="${todayData.type != '用户数'}">
+							张数 <span class="layuiadmin-span-color" th:text="${todayData.nums}">0</span>
+						</p> 
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-sm12">
+				<div class="layui-card">
+					<div class="layui-card-body">
+						<div class="layui-row">
+							<div class="layui-col-sm9">
+								<div id="payChart" style="min-height: 450px;"></div>
+							</div>
+							<div class="layui-col-sm3">
+								<div class="layui-card-header">
+									<h3>优惠券核销数|发放数(近一年)</h3>
+								</div>
+								<div th:each="todayData: ${totalDatas}"
+									class="layui-card-body layadmin-takerates">
+									<div class="layui-progress" th:if="${todayData.channelName != '9999'}">
+										<h3 th:text="${todayData.couponName}"></h3>
+										<span class="layui-progress-text" th:text="${todayData.nums + '笔' }"></span>
+										<span class="layui-progress-text" th:text="'(' + ${todayData.totalNums} + '笔)'"></span>
+										<div class="layui-progress-bar"
+											th:style="'width:' + ${todayData.percent + '%'}">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="layui-col-sm6 layui-col-md3">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						 开户统计<span class="layui-badge layui-bg-blue layuiadmin-badge">今日开户数</span>
+					</div>
+					<div class="layui-card-body layuiadmin-card-list">
+						<p class="layuiadmin-big-font" th:text="${todayData.accountToday}">0</p>
+						<p>
+							&nbsp;
+						</p>
+						<p>
+							总计开户数 <span class="layuiadmin-span-color" th:text="${todayData.accountTotal}">0</span>
+						</p>
+						
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-sm6 layui-col-md3">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						发券概览<span class="layui-badge layui-bg-cyan layuiadmin-badge">今日充值</span>
+					</div>
+					<div class="layui-card-body layuiadmin-card-list">
+						<p class="layuiadmin-big-font" th:text="${todayData.rechargeFeeYan}">0</p>
+						<p>
+							笔数 <span class="layuiadmin-span-color" th:text="${todayData.rechargenums}">0</span>
+						</p>
+						<p>
+							账户结余 <span class="layuiadmin-span-color" th:text="${todayData.remainFeeYan}">0</span>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-sm6 layui-col-md3">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						消费概览<span class="layui-badge layui-bg-green layuiadmin-badge">今日消费</span>
+					</div>
+					<div class="layui-card-body layuiadmin-card-list">
+						<p class="layuiadmin-big-font" th:text="${todayData.consumeFeeYan}">0</p>
+						<p>
+							笔数 <span class="layuiadmin-span-color" th:text="${todayData.consumenums}">0</span>
+						</p>
+						<p>
+							退款 <span class="layuiadmin-span-color" th:text="${todayData.refundFeeYan}">0</span>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-sm6 layui-col-md3">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						退值概览<span class="layui-badge layui-bg-red layuiadmin-badge">今日退值 </span>
+					</div>
+					<div class="layui-card-body layuiadmin-card-list">
+						<p class="layuiadmin-big-font" th:text="${todayData.returnFeeYan}">0</p>
+						<p>
+						&nbsp;
+						</p>
+						<p>
+							笔数 <span class="layuiadmin-span-color" th:text="${todayData.returnnums}">0</span>
+						</p>
+						
+					</div>
+				</div>
+			</div>
+			
+			<div class="layui-col-sm12">
+				<div class="layui-card">
+					<div class="layui-card-body">
+						<div class="layui-row">
+							<div class="layui-col-sm9">
+								<div id="payChart" style="min-height: 450px;"></div>
+							</div>
+							<div class="layui-col-sm3">
+								<div class="layui-card-header">
+									<h3>各支付渠道充值笔数|百分比</h3>
+								</div>
+								<div th:each="todayData: ${payChannelDatas}"
+									class="layui-card-body layadmin-takerates">
+									<div class="layui-progress" th:if="${todayData.payChannel != '9999'}">
+										<h3 th:text="${todayData.payChannelName}"></h3>
+										<span class="layui-progress-text" th:text="${todayData.rechargenums + '笔'}"></span>
+										<span class="layui-progress-text" th:text="'(' + ${todayData.rechargeFeeYan} + ')'"></span>
+										<div class="layui-progress-bar"
+											th:style="'width:' + ${todayData.percent + '%'}">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+		</div>
+		
+	</div>
+	<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+	<script th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+	<script th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+	<script th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+	<script th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+	<script th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+	<script th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+	<script th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
+	<script th:src="@{/js/plugins/bootstrap-select/bootstrap-select.min.js}"></script>
+	<script th:src="@{/js/plugins/layer/layer.js}"></script>
+	<script th:src="@{/js/content.js?v=1.0.0}"></script>
+	<!-- summernote -->
+	<script th:src="@{/js/plugins/summernote/summernote.js}"></script>
+	<script th:src="@{/js/plugins/summernote/summernote-zh-CN.js}"></script>
+	<script th:src="@{/js/ajax-util.js}"></script>
+	<!-- layui.js -->
+	<script th:src="@{/layui.js}"></script>
+	<script th:src="@{/js/plugins/echarts/echarts-all.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
+	var statistics =[[${statistics}]];
+	</script>
+	<script th:src="@{/js/appjs/main.js}"></script>
+	<style id="LAY_layadmin_theme">
+.layui-side-menu, .layadmin-pagetabs .layui-tab-title li:after,
+	.layadmin-pagetabs .layui-tab-title li.layui-this:after,
+	.layui-layer-admin .layui-layer-title, .layadmin-side-shrink .layui-side-menu .layui-nav>.layui-nav-item>.layui-nav-child
+	{
+	background-color: #20222A !important;
+}
+
+.layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a,
+	.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a
+	{
+	background-color: #009688 !important;
+}
+
+.layui-layout-admin .layui-logo {
+	background-color: #20222A !important;
+}
+</style>
+</body>
+</html>

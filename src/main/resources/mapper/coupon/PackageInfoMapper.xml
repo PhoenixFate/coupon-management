@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.PackageInfoDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.PackageInfoDO">
+		select `package_id`,`coupon_id`,`package_name`,`package_detail`,`version`,`package_status`,`period_start_time`,`period_end_time`,`create_time`,`update_time`from package_info where package_id = #{value}
+	</select>
+
+	<select id="getPacCouRelationInfoByPacId" resultType="com.phoenix.coupon.domain.PackageCouponInfoDo" >
+		SELECT
+			pcri.package_id,
+			pcri.coupon_nums,
+			pcri.coupon_id,
+			ci.coupon_name,
+			ci.coupon_detail 
+		FROM
+			(
+			SELECT
+				pi.package_id,
+				pcr.coupon_id,
+				pcr.coupon_nums 
+			FROM
+				package_info AS pi
+				LEFT JOIN package_coupon_relation AS pcr ON pi.package_id = pcr.package_id 
+				AND pi.package_id = #{packageId}
+			) AS pcri
+			LEFT JOIN coupon_info AS ci ON pcri.coupon_id = ci.coupon_id
+	</select>
+	
+	<select id="getAllPacCouInfo" resultType="com.phoenix.coupon.domain.PackageCouponInfoDo">
+			SELECT  pcr.relation_id, pcr.package_id,pcr.coupon_nums,pcr.coupon_id FROM package_coupon_relation as pcr WHERE pcr.package_id = #{packageId}
+	</select>
+	
+	<update id="setPacCouNums" >
+	 		UPDATE package_coupon_relation AS pcr 
+			SET pcr.coupon_nums = #{arg0}
+			WHERE
+				 pcr.coupon_id = #{arg1} AND pcr.package_id = #{arg2}
+	</update>
+
+	<select id="list" resultType="com.phoenix.coupon.domain.PackageInfoDO">
+		select `package_id`,`coupon_id`,`package_name`,`package_detail`,`version`,`package_status`,`period_start_time`,`period_end_time`,`create_time`,`update_time`from package_info
+        <where>  
+		  		  <if test="packageId != null and packageId != ''"> and package_id = #{packageId} </if>
+		  		  <if test="couponId != null and couponId != ''"> and coupon_id = #{couponId} </if>
+		  		  <if test="packageName != null and packageName != ''"> and package_name = #{packageName} </if>
+		  		  <if test="packageDetail != null and packageDetail != ''"> and package_detail = #{packageDetail} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="packageStatus != null and packageStatus != ''"> and package_status = #{packageStatus} </if>
+		  		  <if test="periodStartTime != null and periodStartTime != ''"> and period_start_time = #{periodStartTime} </if>
+		  		  <if test="periodEndTime != null and periodEndTime != ''"> and period_end_time = #{periodEndTime} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by package_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="getPacCouRelationInfoCount" resultType="int">
+		select count(*) from package_info as pi,package_coupon_relation pcr where pi.package_id = pcr.package_id and pcr.package_id = #{packageId}
+	</select>
+	
+	
+ 	<select id="count" resultType="int">
+		select count(*) from package_info
+		 <where>  
+		  		  <if test="packageId != null and packageId != ''"> and package_id = #{packageId} </if>
+		  		  <if test="couponId != null and couponId != ''"> and coupon_id = #{couponId} </if>
+		  		  <if test="packageName != null and packageName != ''"> and package_name = #{packageName} </if>
+		  		  <if test="packageDetail != null and packageDetail != ''"> and package_detail = #{packageDetail} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="packageStatus != null and packageStatus != ''"> and package_status = #{packageStatus} </if>
+		  		  <if test="periodStartTime != null and periodStartTime != ''"> and period_start_time = #{periodStartTime} </if>
+		  		  <if test="periodEndTime != null and periodEndTime != ''"> and period_end_time = #{periodEndTime} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.coupon.domain.PackageInfoDO">
+		insert into package_info
+		(
+			`package_id`, 
+			`coupon_id`, 
+			`package_name`, 
+			`package_detail`, 
+			`version`, 
+			`package_status`, 
+			`period_start_time`, 
+			`period_end_time`
+		)
+		values
+		(
+			#{packageId}, 
+			#{couponId}, 
+			#{packageName}, 
+			#{packageDetail}, 
+			#{version}, 
+			#{packageStatus}, 
+			#{periodStartTime}, 
+			#{periodEndTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.coupon.domain.PackageInfoDO">
+		update package_info 
+		<set>
+			<if test="couponId != null">`coupon_id` = #{couponId}, </if>
+			<if test="packageName != null">`package_name` = #{packageName}, </if>
+			<if test="packageDetail != null">`package_detail` = #{packageDetail}, </if>
+			<if test="version != null">`version` = #{version}, </if>
+			<if test="packageStatus != null">`package_status` = #{packageStatus}, </if>
+			<if test="periodStartTime != null">`period_start_time` = #{periodStartTime}, </if>
+			<if test="periodEndTime != null">`period_end_time` = #{periodEndTime}, </if>
+		</set>
+		where package_id = #{packageId}
+	</update>
+	
+	<delete id="remove">
+		delete from package_info where package_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from package_info where package_id in 
+		<foreach item="packageId" collection="array" open="(" separator="," close=")">
+			#{packageId}
+		</foreach>
+	</delete>
+
+</mapper>

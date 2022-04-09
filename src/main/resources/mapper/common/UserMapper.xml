@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phoenix.common.dao.UserDao">
+
+	<select id="get" resultType="com.phoenix.common.domain.UserDO">
+		select user_id, user_name,
+		user_real_name, password, status, email, mobile, create_user,
+		create_gmt, update_user, update_gmt, org_code
+		from sys_user
+		where user_id =
+		#{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.common.domain.UserDO">
+		select u.user_id, u.user_name, u.user_real_name, u.password, u.status, u.email,
+		u.mobile, u.org_code, e.org_name
+		from
+		sys_user u
+		left join sys_org e on e.org_code = u.org_code
+		<where>
+			<if test="userId != null and userId != ''"> and user_id = #{userId,jdbcType=VARCHAR} </if>
+			<if test="userName != null and userName != ''"> and user_name = #{userName,jdbcType=VARCHAR} </if>
+			<if test="userRealName != null and userRealName != ''"> and user_real_name = #{userRealName,jdbcType=VARCHAR} </if>
+			<if test="orgCode != null and orgCode != ''"> and u.org_code = #{orgCode,jdbcType=VARCHAR} </if>
+			<if test="password != null and password != ''"> and password = #{password,jdbcType=VARCHAR} </if>
+			<if test="status != null and status != ''"> and u.status = #{status,jdbcType=INTEGER} </if>
+			<if test="searchName != null and searchName != ''"> and user_name like concat('%',#{searchName},'%')
+			</if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by user_id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from sys_user
+		<where>
+			<if test="userId != null and userId != ''"> and user_id = #{userId,jdbcType=VARCHAR} </if>
+			<if test="userName != null and userName != ''"> and user_name = #{userName,jdbcType=VARCHAR} </if>
+			<if test="userRealName != null and userRealName != ''"> and user_real_name = #{userRealName,jdbcType=VARCHAR} </if>
+			<if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode,jdbcType=VARCHAR} </if>
+			<if test="password != null and password != ''"> and password = #{password,jdbcType=VARCHAR} </if>
+			<if test="status != null and status != ''"> and status = #{status,jdbcType=INTEGER} </if>
+			<if test="searchName != null and searchName != ''"> and user_name like concat('%',#{searchName},'%')
+			</if>
+		</where>
+	</select>
+
+	<insert id="save"
+		parameterType="com.phoenix.common.domain.UserDO">
+		insert into sys_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="userRealName != null">
+				user_real_name,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createGmt != null">
+				create_gmt,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="updateGmt != null">
+				update_gmt,
+			</if>
+			<if test="orgCode != null">
+				org_code,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userRealName != null">
+				#{userRealName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createGmt != null">
+				#{createGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateGmt != null">
+				#{updateGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orgCode != null">
+				#{orgCode,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<insert id="batchSave">
+		insert into sys_user
+		(user_id,user_name,password,org_code)
+		values
+		<foreach item="item" index="index" collection="list"
+			separator=",">
+			(#{item.userId},#{item.userName},#{item.password},#{item.orgCode})
+		</foreach>
+	</insert>
+
+	<update id="update"
+		parameterType="com.phoenix.common.domain.UserDO">
+		update sys_user
+		<set>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userRealName != null">
+				user_real_name = #{userRealName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createGmt != null">
+				create_gmt = #{createGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				update_user = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateGmt != null">
+				update_gmt = #{updateGmt,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="remove">
+		delete from sys_user where user_id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from sys_user where user_id in
+		<foreach item="userId" collection="array" open="("
+			separator="," close=")">
+			#{userId}
+		</foreach>
+	</delete>
+</mapper>

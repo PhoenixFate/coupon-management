@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phoenix.system.dao.ReserveFreezeLogDao">
+	<sql id="Base_Column_List">
+		id, channelCode, descr, create_time, freeze_end_time, org_code
+	</sql>
+	<select id="list"
+		resultType="com.phoenix.system.domain.ReserveFreezeLogDO">
+		select rfl.id, rfl.channelCode, rfl.descr, rfl.create_time, rfl.freeze_end_time, rfl.org_code, wrc.channel_name
+		from channel_freeze_log rfl
+		inner join sys_channel wrc on wrc.channel_code = rfl.channelCode
+		<where>
+			<if test="id != null and id != ''"> and rfl.id = #{id,jdbcType=VARCHAR}</if>
+			<if test="orgCode != null and orgCode != ''"> and rfl.org_code = #{orgCode,jdbcType=VARCHAR}</if>
+			<if test="channelCode != null and channelCode != ''"> and rfl.channelCode = #{channelCode,jdbcType=VARCHAR}</if>
+			<if test="startTime != null and startTime != ''"> and rfl.create_time &gt;= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+			<if test="endTime != null and endTime != ''"> and rfl.create_time &lt; STR_TO_DATE(#{endTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+		</where>
+		order by rfl.create_time desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(id) from channel_freeze_log rfl
+		inner join sys_channel wrc on wrc.channel_code = rfl.channelCode
+		<where>
+			<if test="id != null and id != ''"> and rfl.id = #{id,jdbcType=VARCHAR}</if>
+			<if test="orgCode != null and orgCode != ''"> and rfl.org_code = #{orgCode,jdbcType=VARCHAR}</if>
+			<if test="channelCode != null and channelCode != ''"> and rfl.channelCode = #{channelCode,jdbcType=VARCHAR}</if>
+			<if test="startTime != null and startTime != ''"> and rfl.create_time &gt;= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+			<if test="endTime != null and endTime != ''"> and rfl.create_time &lt; STR_TO_DATE(#{endTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+		</where>
+	</select>
+</mapper>

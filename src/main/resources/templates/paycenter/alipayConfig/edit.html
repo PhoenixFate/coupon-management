@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${alipayConfig.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">appid：</label>
+								<div class="col-sm-8">
+									<input id="appid" name="appid" th:value="${alipayConfig.appid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户号：</label>
+								<div class="col-sm-8">
+									<input id="pid" name="pid" th:value="${alipayConfig.pid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户私钥：</label>
+								<div class="col-sm-8">
+									<input id="privateKey" name="privateKey" th:value="${alipayConfig.privateKey}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户公钥：</label>
+								<div class="col-sm-8">
+									<input id="publicKey" name="publicKey" th:value="${alipayConfig.publicKey}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">细分渠道码， 用于一个医院多个账户：</label>
+								<div class="col-sm-8">
+									<input id="hosPayId" name="hosPayId" th:value="${alipayConfig.hosPayId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支付宝公钥：</label>
+								<div class="col-sm-8">
+									<input id="alipayPublicKey" name="alipayPublicKey" th:value="${alipayConfig.alipayPublicKey}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户名称：</label>
+								<div class="col-sm-8">
+									<input id="mchName" name="mchName" th:value="${alipayConfig.mchName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支付宝接口地址：</label>
+								<div class="col-sm-8">
+									<input id="gatewayUrl" name="gatewayUrl" th:value="${alipayConfig.gatewayUrl}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">签名方式(RSA/RSA2)：</label>
+								<div class="col-sm-8">
+									<input id="signType" name="signType" th:value="${alipayConfig.signType}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">支付宝服务商ID：</label>
+								<div class="col-sm-8">
+									<input id="providerId" name="providerId" th:value="${alipayConfig.providerId}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/paycenter/alipayConfig/edit.js}">
+	</script>
+</body>
+</html>

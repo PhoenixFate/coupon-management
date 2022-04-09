@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<style type="text/css">
+.layui-form-pane .layui-form-label {
+	width: 270px;
+}
+
+label {
+	margin-bottom: 0px;
+}
+
+.layui-form-item {
+	margin-bottom: 0px;
+}
+
+.layui-form-item .layui-input-inline {
+	width: 150px;
+}
+</style>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<form class="layui-form layui-form-pane" id="">
+						<input class="layui-input" type="hidden" id="returnId"
+									th:value="${accountReturnLog.returnId}">
+						<div class="layui-form-item">
+							<label class="layui-form-label">病人姓名：</label>
+							<div class="layui-input-inline">
+								<input class="layui-input" type="text"
+									th:value="${accountReturnLog.username}">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">本次退值总金额：</label>
+							<div class="layui-input-inline">
+								<input class="layui-input" type="text"
+									th:value="${accountReturnLog.returnAmount/100.0 + '元'}">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">其中-现金退值金额（需手动处理）：</label>
+							<div class="layui-input-inline">
+								<input class="layui-input" type="text"
+									th:value="${accountReturnLog.cashReturnAmount/100.0 + '元'}">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">其中-银行卡退值金额（需手动处理）：</label>
+							<div class="layui-input-inline">
+								<input class="layui-input" type="text"
+									th:value="${accountReturnLog.bankReturnAmount / 100.0	+ '元'}">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">其中-线上支付退值金额（自动处理）：</label>
+							<div class="layui-input-inline">
+								<input class="layui-input" type="text"
+									th:value="${accountReturnLog.onlinepayReturnAmount / 100.0	+ '元'}">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12" style="text-align:center">
+				<div class="layui-inline">
+					<button class="layui-btn" type="button" onclick="returnConfirm();">
+						<i class="fa fa-search" aria-hidden="true"></i>确认退值
+					</button>
+					<button type="button" class="layui-btn layui-btn-danger " onclick="cancel();">
+						<i class="fa fa fa-remove" aria-hidden="true"></i>取消退值
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	
+	<script type="text/javascript" th:src="@{/js/appjs/account/accountReturnLog/accountReturnInfo.js}"></script>
+</body>
+</html>

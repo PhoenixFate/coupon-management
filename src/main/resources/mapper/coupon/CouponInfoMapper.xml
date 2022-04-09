@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.CouponInfoDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.CouponInfoDO">
+		select `coupon_id`,`coupon_name`,`coupon_detail`,`total_nums`,`remain_nums`,`use_orgcodes`,`user_limits`,`version`,`biz_code`,`coupon_status`,`period_start_time`,`period_end_time`,`period_valid_type`,`period_valid_days`,`period_start_type`,`create_time`,`update_time` from coupon_info where coupon_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.coupon.domain.CouponInfoDO">
+		select `coupon_id`,`coupon_name`,`coupon_detail`,`total_nums`,`remain_nums`,`use_orgcodes`,`user_limits`,`version`,`biz_code`,`coupon_status`,`period_start_time`,`period_end_time`,`period_valid_type`,`period_valid_days`,`period_start_type`,`create_time`,`update_time` from coupon_info
+        <where>  
+		  		  <if test="couponId != null and couponId != ''"> and coupon_id = #{couponId} </if>
+		  		  <if test="couponName != null and couponName != ''"> and coupon_name = #{couponName} </if>
+		  		  <if test="couponDetail != null and couponDetail != ''"> and coupon_detail = #{couponDetail} </if>
+		  		  <if test="totalNums != null and totalNums != ''"> and total_nums = #{totalNums} </if>
+		  		  <if test="remainNums != null and remainNums != ''"> and remain_nums = #{remainNums} </if>
+		  		  <if test="useOrgcodes != null and useOrgcodes != ''"> and use_orgcodes = #{useOrgcodes} </if>
+		  		  <if test="userLimits != null and userLimits != ''"> and user_limits = #{userLimits} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="bizCode != null and bizCode != ''"> and biz_code = #{bizCode} </if>
+		  		  <if test="couponStatus != null and couponStatus != ''"> and coupon_status = #{couponStatus} </if>
+		  		  <if test="periodStartTime != null and periodStartTime != ''"> and period_start_time = #{periodStartTime} </if>
+		  		  <if test="periodEndTime != null and periodEndTime != ''"> and period_end_time = #{periodEndTime} </if>
+		  		  <if test="periodValidType != null and periodValidType != ''"> and period_valid_type = #{periodValidType} </if>
+		  		  <if test="periodValidDays != null and periodValidDays != ''"> and period_valid_days = #{periodValidDays} </if>
+		  		  <if test="periodStartType != null and periodStartType != ''"> and period_start_type = #{periodStartType} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  
+		  		  <if test="couponStatusList != null" >
+					AND coupon_status IN
+				    <foreach item="item" index="index" collection="couponStatusList" open="(" separator="," close=")">  
+						 #{item}  
+					</foreach> 
+				  </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by coupon_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from coupon_info
+		 <where>  
+		  		  <if test="couponId != null and couponId != ''"> and coupon_id = #{couponId} </if>
+		  		  <if test="couponName != null and couponName != ''"> and coupon_name = #{couponName} </if>
+		  		  <if test="couponDetail != null and couponDetail != ''"> and coupon_detail = #{couponDetail} </if>
+		  		  <if test="totalNums != null and totalNums != ''"> and total_nums = #{totalNums} </if>
+		  		  <if test="remainNums != null and remainNums != ''"> and remain_nums = #{remainNums} </if>
+		  		  <if test="useOrgcodes != null and useOrgcodes != ''"> and use_orgcodes = #{useOrgcodes} </if>
+		  		  <if test="userLimits != null and userLimits != ''"> and user_limits = #{userLimits} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="bizCode != null and bizCode != ''"> and biz_code = #{bizCode} </if>
+		  		  <if test="couponStatus != null and couponStatus != ''"> and coupon_status = #{couponStatus} </if>
+		  		  <if test="periodStartTime != null and periodStartTime != ''"> and period_start_time = #{periodStartTime} </if>
+		  		  <if test="periodEndTime != null and periodEndTime != ''"> and period_end_time = #{periodEndTime} </if>
+		  		  <if test="periodValidType != null and periodValidType != ''"> and period_valid_type = #{periodValidType} </if>
+		  		  <if test="periodValidDays != null and periodValidDays != ''"> and period_valid_days = #{periodValidDays} </if>
+		  		  <if test="periodStartType != null and periodStartType != ''"> and period_start_type = #{periodStartType} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		   <if test="couponStatusList != null" >
+					AND coupon_status IN
+				    <foreach item="item" index="index" collection="couponStatusList" open="(" separator="," close=")">  
+						 #{item}  
+					</foreach> 
+				  </if>
+		  		</where>
+	</select>
+	<insert id="save" parameterType="com.phoenix.coupon.domain.CouponInfoDO">
+		insert into coupon_info
+		(
+			`coupon_id`, 
+			`coupon_name`, 
+			`coupon_detail`, 
+			`total_nums`, 
+			`use_orgcodes`, 
+			`user_limits`, 
+			`version`, 
+			`biz_code`, 
+			`coupon_status`, 
+			`period_start_time`, 
+			`period_end_time`, 
+			`period_valid_type`, 
+			`period_valid_days`, 
+			`period_start_type`,
+			remain_nums
+		)
+		values
+		(
+			#{couponId}, 
+			#{couponName}, 
+			#{couponDetail}, 
+			#{totalNums}, 
+			#{useOrgcodes}, 
+			#{userLimits}, 
+			#{version}, 
+			#{bizCode}, 
+			#{couponStatus}, 
+			#{periodStartTime}, 
+			#{periodEndTime}, 
+			#{periodValidType}, 
+			#{periodValidDays}, 
+			#{periodStartType},
+			#{remainNums}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.coupon.domain.CouponInfoDO">
+		update coupon_info 
+		<set>
+			<if test="couponName != null">`coupon_name` = #{couponName}, </if>
+			<if test="couponDetail != null">`coupon_detail` = #{couponDetail}, </if>
+			<if test="totalNums != null">`total_nums` = #{totalNums}, </if>
+			<if test="remainNums != null">`remain_nums` = #{remainNums}, </if>
+			<if test="useOrgcodes != null">`use_orgcodes` = #{useOrgcodes}, </if>
+			<if test="userLimits != null">`user_limits` = #{userLimits}, </if>
+			<if test="version != null">`version` = #{version}, </if>
+			<if test="bizCode != null">`biz_code` = #{bizCode}, </if>
+			<if test="couponStatus != null">`coupon_status` = #{couponStatus}, </if>
+			<if test="periodStartTime != null">`period_start_time` = #{periodStartTime}, </if>
+			<if test="periodEndTime != null">`period_end_time` = #{periodEndTime}, </if>
+			<if test="periodValidType != null">`period_valid_type` = #{periodValidType}, </if>
+			<if test="periodValidDays != null">`period_valid_days` = #{periodValidDays}, </if>
+			<if test="periodStartType != null">`period_start_type` = #{periodStartType}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where coupon_id = #{couponId}
+	</update>
+	
+	<delete id="remove">
+		delete from coupon_info where coupon_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from coupon_info where coupon_id in 
+		<foreach item="couponId" collection="array" open="(" separator="," close=")">
+			#{couponId}
+		</foreach>
+	</delete>
+
+	<select id="liststatistic" resultType="com.phoenix.coupon.domain.CouponInfoDO">
+		select coupon_id, coupon_name from coupon_info GROUP BY coupon_id ,coupon_name
+	</select>
+
+</mapper>

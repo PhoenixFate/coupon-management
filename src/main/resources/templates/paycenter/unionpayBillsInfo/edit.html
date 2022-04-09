@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="ZD_ID" name="ZD_ID" th:value="${unionpayBillsInfo.ZD_ID}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">银联交易流水（流水号 + | + 参考号）银商订单号：</label>
+								<div class="col-sm-8">
+									<input id="unionpayId" name="unionpayId" th:value="${unionpayBillsInfo.unionpayId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="originalUnionpayId" name="originalUnionpayId" th:value="${unionpayBillsInfo.originalUnionpayId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">医院编码：</label>
+								<div class="col-sm-8">
+									<input id="hosCode" name="hosCode" th:value="${unionpayBillsInfo.hosCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户订单号：</label>
+								<div class="col-sm-8">
+									<input id="merchantOrderNo" name="merchantOrderNo" th:value="${unionpayBillsInfo.merchantOrderNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户号：</label>
+								<div class="col-sm-8">
+									<input id="merchantCode" name="merchantCode" th:value="${unionpayBillsInfo.merchantCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户名：</label>
+								<div class="col-sm-8">
+									<input id="merchantName" name="merchantName" th:value="${unionpayBillsInfo.merchantName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">终端号：</label>
+								<div class="col-sm-8">
+									<input id="terminalCode" name="terminalCode" th:value="${unionpayBillsInfo.terminalCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易日期YYYY-MM-DD：</label>
+								<div class="col-sm-8">
+									<input id="transDate" name="transDate" th:value="${unionpayBillsInfo.transDate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易时间：</label>
+								<div class="col-sm-8">
+									<input id="transHour" name="transHour" th:value="${unionpayBillsInfo.transHour}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易类型：</label>
+								<div class="col-sm-8">
+									<input id="transType" name="transType" th:value="${unionpayBillsInfo.transType}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">银行卡号：</label>
+								<div class="col-sm-8">
+									<input id="cardNumber" name="cardNumber" th:value="${unionpayBillsInfo.cardNumber}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易金额：</label>
+								<div class="col-sm-8">
+									<input id="transAmount" name="transAmount" th:value="${unionpayBillsInfo.transAmount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">清算金额：</label>
+								<div class="col-sm-8">
+									<input id="liquidationAmount" name="liquidationAmount" th:value="${unionpayBillsInfo.liquidationAmount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">手续费：</label>
+								<div class="col-sm-8">
+									<input id="handlingFee" name="handlingFee" th:value="${unionpayBillsInfo.handlingFee}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">参考号：</label>
+								<div class="col-sm-8">
+									<input id="referenceNo" name="referenceNo" th:value="${unionpayBillsInfo.referenceNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">流水号：</label>
+								<div class="col-sm-8">
+									<input id="flowNumber" name="flowNumber" th:value="${unionpayBillsInfo.flowNumber}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户名称：</label>
+								<div class="col-sm-8">
+									<input id="businessName" name="businessName" th:value="${unionpayBillsInfo.businessName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">卡类型：</label>
+								<div class="col-sm-8">
+									<input id="cardType" name="cardType" th:value="${unionpayBillsInfo.cardType}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">发卡行：</label>
+								<div class="col-sm-8">
+									<input id="issuer" name="issuer" th:value="${unionpayBillsInfo.issuer}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">实际支付金额：</label>
+								<div class="col-sm-8">
+									<input id="actualPaymentAmount" name="actualPaymentAmount" th:value="${unionpayBillsInfo.actualPaymentAmount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">账单号：</label>
+								<div class="col-sm-8">
+									<input id="accountNumber" name="accountNumber" th:value="${unionpayBillsInfo.accountNumber}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支付方式：</label>
+								<div class="col-sm-8">
+									<input id="paymethod" name="paymethod" th:value="${unionpayBillsInfo.paymethod}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">银商订单号：</label>
+								<div class="col-sm-8">
+									<input id="silverMerchantOrderNo" name="silverMerchantOrderNo" th:value="${unionpayBillsInfo.silverMerchantOrderNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">备注：</label>
+								<div class="col-sm-8">
+									<input id="remark" name="remark" th:value="${unionpayBillsInfo.remark}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">钱包优惠金额：</label>
+								<div class="col-sm-8">
+									<input id="walletDiscountAmount" name="walletDiscountAmount" th:value="${unionpayBillsInfo.walletDiscountAmount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户优惠金额：</label>
+								<div class="col-sm-8">
+									<input id="merchantDiscountAmount" name="merchantDiscountAmount" th:value="${unionpayBillsInfo.merchantDiscountAmount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">原交易流水号：</label>
+								<div class="col-sm-8">
+									<input id="originalTransactionSerialNo" name="originalTransactionSerialNo" th:value="${unionpayBillsInfo.originalTransactionSerialNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退货订单号：</label>
+								<div class="col-sm-8">
+									<input id="returnOrderNumber" name="returnOrderNumber" th:value="${unionpayBillsInfo.returnOrderNumber}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">付款附言：</label>
+								<div class="col-sm-8">
+									<input id="paymentPostscript" name="paymentPostscript" th:value="${unionpayBillsInfo.paymentPostscript}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">分店简称：</label>
+								<div class="col-sm-8">
+									<input id="branchShortName" name="branchShortName" th:value="${unionpayBillsInfo.branchShortName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支付途径(账单类型  1：pos，9:扫码，68：手机) 默认1：</label>
+								<div class="col-sm-8">
+									<input id="paymentRoute" name="paymentRoute" th:value="${unionpayBillsInfo.paymentRoute}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否退款 1是：</label>
+								<div class="col-sm-8">
+									<input id="refundFlag" name="refundFlag" th:value="${unionpayBillsInfo.refundFlag}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">创建时间：</label>
+								<div class="col-sm-8">
+									<input id="creatTime" name="creatTime" th:value="${unionpayBillsInfo.creatTime}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/paycenter/unionpayBillsInfo/edit.js">
+	</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div name="searchform" id="searchform" class="layui-form layui-form-pane">
+							<div class="layui-form-item">
+								<div class="layui-inline">
+									<label class="layui-form-label">账户号</label>
+									<div class="layui-input-inline">
+										<input  class="layui-input" id="accountNo" placeholder="账户号" type="text">
+									</div>
+								</div>
+								
+								<div class="layui-inline">
+									<label class="layui-form-label">账户姓名</label>
+									<div class="layui-input-inline">
+										<input  class="layui-input" id="username" placeholder="账户姓名" type="text">
+									</div>
+								</div>
+								
+								<div class="layui-inline">
+									<label class="layui-form-label">优惠券号码</label>
+									<div class="layui-input-inline">
+										<input class="layui-input" id="couponNo" placeholder="优惠券号码" type="text">
+									</div>
+								</div>
+								
+								<div class="layui-inline">
+									<label class="layui-form-label">发券时间</label>
+									<div class="layui-input-inline">
+										<input class="layui-input" id="provideStartTime" placeholder="发券开始时间" type="text">
+									</div>
+								</div>
+								
+									<div class="layui-inline">
+									<label class="layui-form-label">发券时间</label>
+									<div class="layui-input-inline">
+										<input  class="layui-input" id="provideEndTime" placeholder="发券结束时间" type="text">
+									</div>
+								</div>
+								
+								<div class="layui-inline">
+									<label class="layui-form-label">优惠券状态</label>
+									<div class="layui-input-inline">
+										<select lay-key="6" id="couponStatus" name="couponStatus" title="优惠券状态">
+											<option value="" selected="selected">全部</option>
+											<option value="0">未使用</option>
+											<option value="1">已使用</option>
+											<option value="2">已冻结</option>
+											<option value="3">已过期</option>
+											<option value="4">已删除</option>
+										</select>
+									</div>
+								</div>
+								
+								<div class="layui-inline">
+									<label class="layui-form-label">消费时间</label>
+									<div class="layui-input-inline">
+										<input class="layui-input" id="consumeStartTime" placeholder="消费开始时间" type="text">
+									</div>
+								</div>
+								
+									<div class="layui-inline">
+									<label class="layui-form-label">消费时间</label>
+									<div class="layui-input-inline">
+										<input  class="layui-input" id="ConsumeEndTime" placeholder="消费结束时间" type="text">
+									</div>
+								</div>
+								
+								
+								<div class="layui-inline">
+									<label class="layui-form-label">产品编号</label>
+									<div class="layui-input-inline">
+										<input class="layui-input" id="productCode" placeholder="优惠券对应的产品编号" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">服务包名称</label>
+									<div class="layui-input-inline">
+										<input class="layui-input" id="packageName" placeholder="优惠券对应的服务包名称" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<button class="layui-btn" type="button"  id="reload">
+										<i class="fa fa-search" aria-hidden="true"></i>查询
+									</button>
+									<button shiro:hasPermission="coupon:accountCouponInfo:add" type="button" class="layui-btn btn-primary" onclick="add()">
+										<i class="fa fa-plus" aria-hidden="true"></i>添加
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_unfreeze_h = 'hidden';
+				var s_consume_h = 'hidden';
+				var s_freeze_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="coupon:accountCouponInfo:unfreeze">
+			<script type="text/javascript">
+				var s_unfreeze_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="coupon:accountCouponInfo:consume">
+			<script type="text/javascript">
+				var s_consume_h = '';
+			</script>
+		</div>
+		
+		<div shiro:hasPermission="coupon:accountCouponInfo:freeze">
+			<script type="text/javascript">
+				var s_freeze_h = '';
+			</script>
+		</div>
+		
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/coupon/accountCouponInfo/accountCouponInfo.js}"></script>
+</body>
+</html>

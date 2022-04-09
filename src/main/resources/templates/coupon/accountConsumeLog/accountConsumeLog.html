@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div name="searchform" id="searchform" class="layui-form layui-form-pane">
+							<div class="layui-form-item">
+								<div class="layui-inline">
+									<label class="layui-form-label">账户号</label>
+									<div class="layui-input-inline">
+										<input  class="layui-input" id="accountNo" placeholder="账户号" type="text">
+									</div>
+								</div>
+								
+								<div class="layui-inline">
+									<label class="layui-form-label">优惠券号码</label>
+									<div class="layui-input-inline">
+										<input class="layui-input" id="couponNo" placeholder="优惠券号码" type="text">
+									</div>
+								</div>
+								
+								<div class="layui-inline">
+									<label class="layui-form-label">消费开始时间</label>
+									<div class="layui-inline"> <!-- 注意：这一层元素并不是必须的 -->
+									  <input type="text" class="layui-input" id="startTime">
+									</div>
+									
+								</div>
+								<div class="layui-inline" >
+									<label class="layui-form-label">消费结束时间</label>
+									<div class="layui-inline"> <!-- 注意：这一层元素并不是必须的 -->
+									  <input type="text" class="layui-input" id="endTime">
+									</div>
+								</div>
+								
+								<div class="layui-inline">
+									<label class="layui-form-label">消费状态</label>
+									<div class="layui-input-inline">
+										<select lay-key="6" id="consumeStatus" name="consumeStatus" title="优惠券消费状态">
+											<option value="" selected="selected">全部</option>
+											<option value="0">撤销</option>
+											<option value="1">核销成功</option>
+										</select>
+									</div>
+								</div>
+								
+								<div class="layui-inline">
+									<label class="layui-form-label">产品编号</label>
+									<div class="layui-input-inline">
+										<input class="layui-input" id="productCode" placeholder="优惠券对应的产品编号" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<button class="layui-btn" type="button"  id="reload" >
+										<i class="fa fa-search" aria-hidden="true"></i>查询
+									</button>
+									<button shiro:hasPermission="coupon:accountConsumeLog:add" type="button" class="layui-btn btn-primary" onclick="add()">
+										<i class="fa fa-plus" aria-hidden="true"></i>添加
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				var s_refund_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="paycenter:accountConsumeLog:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="paycenter:accountConsumeLog:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="coupon:accountConsumeLog:refund">
+			<script type="text/javascript">
+				var s_refund_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/coupon/accountConsumeLog/accountConsumeLog.js}"></script>
+</body>
+</html>

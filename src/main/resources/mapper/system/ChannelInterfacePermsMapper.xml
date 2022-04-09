@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.phoenix.system.dao.ChannelInterfacePermsDao">
+	<sql id="Base_Column_List">
+		id, interface_list_id, channel_code
+	</sql>
+
+	<select id="list"
+		resultType="com.phoenix.system.domain.ChannelInterfacePermsDO">
+		select <include refid="Base_Column_List" />
+		from channel_interface_perms
+		<where>
+			<if test="id != null and id != ''"> and id = #{id,jdbcType=VARCHAR}</if>
+			<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode,jdbcType=VARCHAR}</if>
+		</where>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(id) from channel_interface_perms
+		<where>
+			<if test="id != null and id != ''"> and id = #{id,jdbcType=VARCHAR}</if>
+			<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode,jdbcType=VARCHAR}</if>
+		</where>
+	</select>
+
+	<delete id="remove" parameterType="java.lang.String">
+		delete from channel_interface_perms
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from channel_interface_perms
+		where channel_code = #{channelCode,jdbcType=VARCHAR} and org_code = #{orgCode,jdbcType=VARCHAR}
+			<if test="needDeleteInterfaceIds != null">
+				and interface_list_id in
+				<foreach item="interfaceId" collection="needDeleteInterfaceIds" open="(" separator="," close=")">
+					#{interfaceId}
+				</foreach>
+			</if>
+	</delete>
+	
+	<insert id="batchSave">
+		insert into channel_interface_perms
+		(id, interface_list_id, channel_code) values
+		<foreach item="item" index="index" collection="list"
+			separator=",">
+			(#{item.id},#{item.interfaceListId},#{item.channelCode})
+		</foreach>
+	</insert>
+
+	<insert id="save"
+		parameterType="com.phoenix.system.domain.ChannelInterfacePermsDO">
+		insert into channel_interface_perms
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="interfaceListId != null">
+				interface_list_id,
+			</if>
+			<if test="channelCode != null">
+				channel_code,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="interfaceListId != null">
+				#{interfaceListId,jdbcType=VARCHAR},
+			</if>
+			<if test="channelCode != null">
+				#{channelCode,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+</mapper>

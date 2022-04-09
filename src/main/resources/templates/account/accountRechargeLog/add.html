@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">账户id：</label>
+								<div class="col-sm-8">
+									<input id="accountId" name="accountId" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">账户号：</label>
+								<div class="col-sm-8">
+									<input id="accountNo" name="accountNo" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">充值渠道码：</label>
+								<div class="col-sm-8">
+									<input id="channelCode" name="channelCode" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">充值金额， 分为单位：</label>
+								<div class="col-sm-8">
+									<input id="rechargeAmount" name="rechargeAmount" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">充值时间：</label>
+								<div class="col-sm-8">
+									<input id="rechargeTime" name="rechargeTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支付渠道， 01 现金， 02 支付宝， 03 微信， 04 银行卡，11 银联， 13 工行聚合支付：</label>
+								<div class="col-sm-8">
+									<input id="payChannel" name="payChannel" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">充值状态， 1 成功， 0 失败， 用于判断是否更新成功账户表余额：</label>
+								<div class="col-sm-8">
+									<input id="rechargeStatus" name="rechargeStatus" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">第三方订单号，商户订单号：</label>
+								<div class="col-sm-8">
+									<input id="thirdOrdernumber" name="thirdOrdernumber" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">第三方支付流水号， 支付宝微信银联等生成的支付流水号：</label>
+								<div class="col-sm-8">
+									<input id="thirdPayFlow" name="thirdPayFlow" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">银行交易凭证号：</label>
+								<div class="col-sm-8">
+									<input id="bankPzh" name="bankPzh" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">银联交易流水号：</label>
+								<div class="col-sm-8">
+									<input id="bankFlow" name="bankFlow" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">银行商户号：</label>
+								<div class="col-sm-8">
+									<input id="bankMerchantNo" name="bankMerchantNo" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">充值描述：</label>
+								<div class="col-sm-8">
+									<input id="remark" name="remark" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">充值终端号：</label>
+								<div class="col-sm-8">
+									<input id="terminalNo" name="terminalNo" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">充值完成之后账户余额：</label>
+								<div class="col-sm-8">
+									<input id="accountBalance" name="accountBalance" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退值标记， 0 未退， 1 已退：</label>
+								<div class="col-sm-8">
+									<input id="returnFlag" name="returnFlag" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退值金额：</label>
+								<div class="col-sm-8">
+									<input id="returnAmount" name="returnAmount" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退值时间：</label>
+								<div class="col-sm-8">
+									<input id="returnTime" name="returnTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">机构代码：</label>
+								<div class="col-sm-8">
+									<input id="orgCode" name="orgCode" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退值操作员号：</label>
+								<div class="col-sm-8">
+									<input id="returnCollector" name="returnCollector" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">乐观锁：</label>
+								<div class="col-sm-8">
+									<input id="version" name="version" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/account/accountRechargeLog/add.js}">
+	</script>
+</body>
+</html>

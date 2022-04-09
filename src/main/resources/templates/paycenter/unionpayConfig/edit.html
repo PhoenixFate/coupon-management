@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${unionpayConfig.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">二维码付款消息ID：</label>
+								<div class="col-sm-8">
+									<input id="qrMsgId" name="qrMsgId" th:value="${unionpayConfig.qrMsgId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">二维码付款消息来源：</label>
+								<div class="col-sm-8">
+									<input id="qrMsgSrc" name="qrMsgSrc" th:value="${unionpayConfig.qrMsgSrc}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">二维码付款商户号：</label>
+								<div class="col-sm-8">
+									<input id="qrMid" name="qrMid" th:value="${unionpayConfig.qrMid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">二维码付款终端号：</label>
+								<div class="col-sm-8">
+									<input id="qrTid" name="qrTid" th:value="${unionpayConfig.qrTid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">二维码付款业务类型：</label>
+								<div class="col-sm-8">
+									<input id="qrInstMid" name="qrInstMid" th:value="${unionpayConfig.qrInstMid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">医院支付ID：</label>
+								<div class="col-sm-8">
+									<input id="hosPayId" name="hosPayId" th:value="${unionpayConfig.hosPayId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">二维码付款MD5 key：</label>
+								<div class="col-sm-8">
+									<input id="qrMd5Key" name="qrMd5Key" th:value="${unionpayConfig.qrMd5Key}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户名称：</label>
+								<div class="col-sm-8">
+									<input id="mchName" name="mchName" th:value="${unionpayConfig.mchName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">二维码付款接口地址：</label>
+								<div class="col-sm-8">
+									<input id="qrGatewayUrl" name="qrGatewayUrl" th:value="${unionpayConfig.qrGatewayUrl}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">当面付商户号：</label>
+								<div class="col-sm-8">
+									<input id="f2fMid" name="f2fMid" th:value="${unionpayConfig.f2fMid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">当面付终端号：</label>
+								<div class="col-sm-8">
+									<input id="f2fTid" name="f2fTid" th:value="${unionpayConfig.f2fTid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">当面付APPID：</label>
+								<div class="col-sm-8">
+									<input id="f2fAppid" name="f2fAppid" th:value="${unionpayConfig.f2fAppid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">当面付秘钥：</label>
+								<div class="col-sm-8">
+									<input id="f2fAppkey" name="f2fAppkey" th:value="${unionpayConfig.f2fAppkey}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">当面付接口地址：</label>
+								<div class="col-sm-8">
+									<input id="f2fGatewayUrl" name="f2fGatewayUrl" th:value="${unionpayConfig.f2fGatewayUrl}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">ftp配置：</label>
+								<div class="col-sm-8">
+									<input id="ftpConfig" name="ftpConfig" th:value="${unionpayConfig.ftpConfig}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/paycenter/unionpayConfig/edit.js}">
+	</script>
+</body>
+</html>

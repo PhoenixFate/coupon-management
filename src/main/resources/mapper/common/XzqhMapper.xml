@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phoenix.common.dao.XzqhDao">
+	<select id="selectXzqh" resultType="com.phoenix.common.domain.XzqhDO">
+		select qhdm, mc, pyjm, cj
+		from sys_xzqh
+		<where>
+			<if test="qhdm != null and qhdm != ''"> and qhdm = #{qhdm,jdbcType=VARCHAR}</if>
+			<if test="cj != null and cj != ''"> and cj = #{cj,jdbcType=VARCHAR}</if>
+			<if test="province != null and province != ''"> and qhdm like concat(#{province},'%','00000')</if>
+			<if test="city != null and city != ''"> and qhdm like concat(#{city},'%','000')</if>
+		</where>
+		order by qhdm
+	</select>
+</mapper>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.AccountConsumeLogDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.AccountConsumeLogDO">
+		select `consume_id`,`account_id`,`account_no`,`channel_code`,`consume_time`,`third_ordernumber`,`remark`,`coupon_no`,`refund_flag`,`refund_time`,`biz_code`,`biz_name`,`consume_status`,`org_code`,`version`,`username`,`consume_collector`,`refund_collector`,`coupon_id`,`product_code`,`refund_channel_code`,`belogto_doctor`,`consume_doctor_id`,`cash_out_flag`,`cash_out_time`,`cash_out_flow` from account_consume_log where consume_id = #{value}
+	</select>
+
+<select id="list" resultType="com.phoenix.coupon.domain.AccountConsumeLogDO">
+		select consume_id, consume.account_id, consume.account_no, consume.channel_code, consume.consume_time, consume.third_ordernumber, consume.remark, consume.coupon_no, consume.refund_flag, consume.refund_time, consume.biz_code, consume.biz_name, consume.consume_status, consume.org_code, consume.version, consume.username, consume.consume_collector, consume.refund_collector, consume.coupon_id, consume.product_code, consume.refund_channel_code, consume.belogto_doctor, consume.consume_doctor_id, consume.cash_out_flag, consume.cash_out_time, consume.cash_out_flow, coupon.coupon_name from account_consume_log consume LEFT JOIN coupon_info coupon on consume.coupon_id = coupon.coupon_id
+        <where>  
+		  		  <if test="consumeId != null and consumeId != ''"> and consume.consume_id = #{consumeId} </if>
+		  		  <if test="accountId != null and accountId != ''"> and consume.account_id = #{accountId} </if>
+		  		  <if test="accountNo != null and accountNo != ''"> and consume.account_no = #{accountNo} </if>
+		  		  <if test="channelCode != null and channelCode != ''"> and consume.channel_code = #{channelCode} </if>
+		  		  <if test="consumeTime != null and consumeTime != ''"> and consume.consume_time = #{consumeTime} </if>
+		  		  <if test="thirdOrdernumber != null and thirdOrdernumber != ''"> and consume.third_ordernumber = #{thirdOrdernumber} </if>
+		  		  <if test="remark != null and remark != ''"> and consume.remark = #{remark} </if>
+		  		  <if test="couponNo != null and couponNo != ''"> and consume.coupon_no = #{couponNo} </if>
+		  		  <if test="refundFlag != null and refundFlag != ''"> and consume.refund_flag = #{refundFlag} </if>
+		  		  <if test="refundTime != null and refundTime != ''"> and consume.refund_time = #{refundTime} </if>
+		  		  <if test="bizCode != null and bizCode != ''"> and consume.biz_code = #{bizCode} </if>
+		  		  <if test="bizName != null and bizName != ''"> and consume.biz_name = #{bizName} </if>
+		  		  <if test="consumeStatus != null and consumeStatus != ''"> and consume.consume_status = #{consumeStatus} </if>
+		  		  <if test="orgCode != null and orgCode != ''"> and consume.org_code = #{orgCode} </if>
+		  		  <if test="version != null and version != ''"> and consume.version = #{version} </if>
+		  		  <if test="username != null and username != ''"> and consume.username = #{username} </if>
+		  		  <if test="consumeCollector != null and consumeCollector != ''"> and consume.consume_collector = #{consumeCollector} </if>
+		  		  <if test="refundCollector != null and refundCollector != ''"> and consume.refund_collector = #{refundCollector} </if>
+		  		  <if test="couponId != null and couponId != ''"> and consume.coupon_id = #{couponId} </if>
+		  		  <if test="productCode != null and productCode != ''"> and consume.product_code = #{productCode} </if>
+		  		  <if test="refundChannelCode != null and refundChannelCode != ''"> and consume.refund_channel_code = #{refundChannelCode} </if>
+		  		  <if test="belogtoDoctor != null and belogtoDoctor != ''"> and consume.belogto_doctor = #{belogtoDoctor} </if>
+		  		  <if test="consumeDoctorId != null and consumeDoctorId != ''"> and consume.consume_doctor_id = #{consumeDoctorId} </if>
+		  		  <if test="cashOutFlag != null and cashOutFlag != ''"> and consume.cash_out_flag = #{cashOutFlag} </if>
+		  		  <if test="cashOutTime != null and cashOutTime != ''"> and consume.cash_out_time = #{cashOutTime} </if>
+		  		  <if test="cashOutFlow != null and cashOutFlow != ''"> and consume.cash_out_flow = #{cashOutFlow} </if>
+		  		  <if test="startTime != null and startTime != ''"> and consume.consume_time >= #{startTime} </if>
+		  		   <if test="endTime != null and endTime != ''"> and consume.consume_time &lt;= #{endTime} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by consume.consume_time desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from account_consume_log
+		 <where>  
+		  		  <if test="consumeId != null and consumeId != ''"> and consume_id = #{consumeId} </if>
+		  		  <if test="accountId != null and accountId != ''"> and account_id = #{accountId} </if>
+		  		  <if test="accountNo != null and accountNo != ''"> and account_no = #{accountNo} </if>
+		  		  <if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode} </if>
+		  		  <if test="consumeTime != null and consumeTime != ''"> and consume_time = #{consumeTime} </if>
+		  		  <if test="thirdOrdernumber != null and thirdOrdernumber != ''"> and third_ordernumber = #{thirdOrdernumber} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="couponNo != null and couponNo != ''"> and coupon_no = #{couponNo} </if>
+		  		  <if test="refundFlag != null and refundFlag != ''"> and refund_flag = #{refundFlag} </if>
+		  		  <if test="refundTime != null and refundTime != ''"> and refund_time = #{refundTime} </if>
+		  		  <if test="bizCode != null and bizCode != ''"> and biz_code = #{bizCode} </if>
+		  		  <if test="bizName != null and bizName != ''"> and biz_name = #{bizName} </if>
+		  		  <if test="consumeStatus != null and consumeStatus != ''"> and consume_status = #{consumeStatus} </if>
+		  		  <if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="consumeCollector != null and consumeCollector != ''"> and consume_collector = #{consumeCollector} </if>
+		  		  <if test="refundCollector != null and refundCollector != ''"> and refund_collector = #{refundCollector} </if>
+		  		  <if test="couponId != null and couponId != ''"> and coupon_id = #{couponId} </if>
+		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
+		  		  <if test="refundChannelCode != null and refundChannelCode != ''"> and refund_channel_code = #{refundChannelCode} </if>
+		  		  <if test="belogtoDoctor != null and belogtoDoctor != ''"> and belogto_doctor = #{belogtoDoctor} </if>
+		  		  <if test="consumeDoctorId != null and consumeDoctorId != ''"> and consume_doctor_id = #{consumeDoctorId} </if>
+		  		  <if test="cashOutFlag != null and cashOutFlag != ''"> and cash_out_flag = #{cashOutFlag} </if>
+		  		  <if test="cashOutTime != null and cashOutTime != ''"> and cash_out_time = #{cashOutTime} </if>
+		  		  <if test="cashOutFlow != null and cashOutFlow != ''"> and cash_out_flow = #{cashOutFlow} </if>
+		  		  <if test="startTime != null and startTime != ''"> and consume_time >= #{startTime} </if>
+		  		   <if test="endTime != null and endTime != ''"> and consume_time &lt;= #{endTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.coupon.domain.AccountConsumeLogDO">
+		insert into account_consume_log
+		(
+			`consume_id`, 
+			`account_id`, 
+			`account_no`, 
+			`channel_code`, 
+			`consume_time`, 
+			`third_ordernumber`, 
+			`remark`, 
+			`coupon_no`, 
+			`refund_flag`, 
+			`refund_time`, 
+			`biz_code`, 
+			`biz_name`, 
+			`consume_status`, 
+			`org_code`, 
+			`version`, 
+			`username`, 
+			`consume_collector`, 
+			`refund_collector`, 
+			`coupon_id`, 
+			`product_code`, 
+			`refund_channel_code`, 
+			`belogto_doctor`, 
+			`consume_doctor_id`, 
+			`cash_out_flag`, 
+			`cash_out_time`, 
+			`cash_out_flow`
+		)
+		values
+		(
+			#{consumeId}, 
+			#{accountId}, 
+			#{accountNo}, 
+			#{channelCode}, 
+			#{consumeTime}, 
+			#{thirdOrdernumber}, 
+			#{remark}, 
+			#{couponNo}, 
+			#{refundFlag}, 
+			#{refundTime}, 
+			#{bizCode}, 
+			#{bizName}, 
+			#{consumeStatus}, 
+			#{orgCode}, 
+			#{version}, 
+			#{username}, 
+			#{consumeCollector}, 
+			#{refundCollector}, 
+			#{couponId}, 
+			#{productCode}, 
+			#{refundChannelCode}, 
+			#{belogtoDoctor}, 
+			#{consumeDoctorId}, 
+			#{cashOutFlag}, 
+			#{cashOutTime}, 
+			#{cashOutFlow}
+		)
+	</insert>
+	 
+<update id="update" parameterType="com.phoenix.coupon.domain.AccountConsumeLogDO">
+		update account_consume_log 
+		<set>
+			<if test="accountId != null">`account_id` = #{accountId}, </if>
+			<if test="accountNo != null">`account_no` = #{accountNo}, </if>
+			<if test="channelCode != null">`channel_code` = #{channelCode}, </if>
+			<if test="consumeTime != null">`consume_time` = #{consumeTime}, </if>
+			<if test="thirdOrdernumber != null">`third_ordernumber` = #{thirdOrdernumber}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="couponNo != null">`coupon_no` = #{couponNo}, </if>
+			<if test="refundFlag != null">`refund_flag` = #{refundFlag}, </if>
+			<if test="refundTime != null">`refund_time` = #{refundTime}, </if>
+			<if test="bizCode != null">`biz_code` = #{bizCode}, </if>
+			<if test="bizName != null">`biz_name` = #{bizName}, </if>
+			<if test="consumeStatus != null">`consume_status` = #{consumeStatus}, </if>
+			<if test="orgCode != null">`org_code` = #{orgCode}, </if>
+			<if test="version != null">`version` = #{version}, </if>
+			<if test="username != null">`username` = #{username}, </if>
+			<if test="consumeCollector != null">`consume_collector` = #{consumeCollector}, </if>
+			<if test="refundCollector != null">`refund_collector` = #{refundCollector}, </if>
+			<if test="couponId != null">`coupon_id` = #{couponId}, </if>
+			<if test="productCode != null">`product_code` = #{productCode}, </if>
+			<if test="refundChannelCode != null">`refund_channel_code` = #{refundChannelCode}, </if>
+			<if test="belogtoDoctor != null">`belogto_doctor` = #{belogtoDoctor}, </if>
+			<if test="consumeDoctorId != null">`consume_doctor_id` = #{consumeDoctorId}, </if>
+			<if test="cashOutFlag != null">`cash_out_flag` = #{cashOutFlag}, </if>
+			<if test="cashOutTime != null">`cash_out_time` = #{cashOutTime}, </if>
+			<if test="cashOutFlow != null">`cash_out_flow` = #{cashOutFlow}</if>
+		</set>
+		where consume_id = #{consumeId}
+	</update>
+	
+	<delete id="remove">
+		delete from account_consume_log where consume_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from account_consume_log where consume_id in 
+		<foreach item="consumeId" collection="array" open="(" separator="," close=")">
+			#{consumeId}
+		</foreach>
+	</delete>
+	
+	<select id="consumeliststatistic" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as nums from account_consume_log where consume_status = 1 and consume_time  &gt;= #{startTime} 
+		 and consume_time &lt;= #{endTime} 
+		 <if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode} </if>
+	</select>
+
+	<select id="returnliststatistic" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as nums from account_consume_log where refund_flag  =1 and  refund_time  &gt;= #{startTime} 
+		and refund_time &lt;= #{endTime} 
+		<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode}  </if>
+	</select>
+	
+	
+	<select id="list7daysConsum" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as nums, DATE_FORMAT(consume_time ,"%Y-%m-%d") as tradeDate from account_consume_log where  
+		consume_status = 1 and consume_time  &gt;= #{startTime} and consume_time &lt;= #{endTime} 
+		<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode}  </if>
+		 GROUP BY DATE_FORMAT(consume_time ,"%Y-%m-%d") ORDER BY  DATE_FORMAT(consume_time ,"%Y-%m-%d") desc
+	</select>
+	
+	
+		<select id="liststatisticAll" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as nums, coupon_id from account_consume_log where consume_status = 1  and  consume_time  &gt;= #{startTime} 
+		and consume_time &lt;= #{endTime} 
+		<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode}  </if>
+		 GROUP BY coupon_id  ORDER BY  nums desc
+	</select>
+	
+	
+	
+	<select id="sumCancelList" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as nums,  DATE_FORMAT(refund_time ,"%Y-%m-%d") as tradeDate, coupon_id from account_consume_log  
+		where refund_flag = 1 and refund_time  &gt;= #{startTime} and refund_time &lt;= #{endTime} 
+		<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode}  </if>
+		 GROUP BY DATE_FORMAT(refund_time ,"%Y-%m-%d"),coupon_id ORDER BY  DATE_FORMAT(refund_time ,"%Y-%m-%d") desc
+	</select>
+	
+	<select id="sumConsumeList" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as nums,  DATE_FORMAT(consume_time ,"%Y-%m-%d") as tradeDate, coupon_id from account_consume_log  
+		where consume_status = 1 and consume_time  &gt;= #{startTime} and consume_time &lt;= #{endTime} 
+		<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode}  </if>
+		 GROUP BY DATE_FORMAT(consume_time ,"%Y-%m-%d"),coupon_id ORDER BY  DATE_FORMAT(consume_time ,"%Y-%m-%d") desc
+	</select>
+
+	<select id="sumDoctorsList" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as nums,  DATE_FORMAT(consume_time ,"%Y-%m-%d") as tradeDate, belogto_doctor,coupon_id,cash_out_flag
+		 from account_consume_log  
+		where consume_status = 1 and consume_time  &gt;= #{startTime} and consume_time &lt;= #{endTime} 
+		<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode}  </if>
+		<if test="belogtoDoctor != null and belogtoDoctor != ''"> and belogto_doctor = #{belogtoDoctor}  </if>
+		<if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode}  </if>
+		GROUP BY DATE_FORMAT(consume_time ,"%Y-%m-%d"),belogto_doctor,coupon_id,cash_out_flag ORDER BY  DATE_FORMAT(consume_time ,"%Y-%m-%d") desc
+	</select>
+</mapper>

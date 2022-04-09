@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.AccountPackageRelationDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.AccountPackageRelationDO">
+		select `relation_id`,`package_id`,`account_id`,`account_no`,`package_name`,`create_time`,`username`,`product_code`,`product_name`,`biz_flow`,`start_time`,`end_time` from account_package_relation where relation_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.coupon.domain.AccountPackageRelationDO">
+		select `relation_id`,`package_id`,`account_id`,`account_no`,`package_name`,`create_time`,`username`,`product_code`,`product_name`,`biz_flow`,`start_time`,`end_time` from account_package_relation
+        <where>  
+		  		  <if test="relationId != null and relationId != ''"> and relation_id = #{relationId} </if>
+		  		  <if test="packageId != null and packageId != ''"> and package_id = #{packageId} </if>
+		  		  <if test="accountId != null and accountId != ''"> and account_id = #{accountId} </if>
+		  		  <if test="accountNo != null and accountNo != ''"> and account_no = #{accountNo} </if>
+		  		  <if test="packageName != null and packageName != ''"> and package_name = #{packageName} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
+		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
+		  		  <if test="bizFlow != null and bizFlow != ''"> and biz_flow = #{bizFlow} </if>
+		  		 <!--  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and end_time = #{endTime} </if>
+		  		   -->
+		  		  
+		  		   <if test="startTime != null and startTime != ''"> and create_time >= #{startTime} </if>
+		  		   <if test="endTime != null and endTime != ''"> and create_time &lt;= #{endTime} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by create_time desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from account_package_relation
+		 <where>  
+		  		  <if test="relationId != null and relationId != ''"> and relation_id = #{relationId} </if>
+		  		  <if test="packageId != null and packageId != ''"> and package_id = #{packageId} </if>
+		  		  <if test="accountId != null and accountId != ''"> and account_id = #{accountId} </if>
+		  		  <if test="accountNo != null and accountNo != ''"> and account_no = #{accountNo} </if>
+		  		  <if test="packageName != null and packageName != ''"> and package_name = #{packageName} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
+		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
+		  		  <if test="bizFlow != null and bizFlow != ''"> and biz_flow = #{bizFlow} </if>
+		  		 <!--  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and end_time = #{endTime} </if> -->
+		  		   <if test="startTime != null and startTime != ''"> and create_time >= #{startTime} </if>
+		  		   <if test="endTime != null and endTime != ''"> and create_time &lt;= #{endTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.coupon.domain.AccountPackageRelationDO">
+		insert into account_package_relation
+		(
+			`relation_id`, 
+			`package_id`, 
+			`account_id`, 
+			`account_no`, 
+			`package_name`, 
+			`create_time`, 
+			`username`, 
+			`product_code`, 
+			`product_name`, 
+			`biz_flow`, 
+			`start_time`, 
+			`end_time`
+		)
+		values
+		(
+			#{relationId}, 
+			#{packageId}, 
+			#{accountId}, 
+			#{accountNo}, 
+			#{packageName}, 
+			#{createTime}, 
+			#{username}, 
+			#{productCode}, 
+			#{productName}, 
+			#{bizFlow}, 
+			#{startTime}, 
+			#{endTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.coupon.domain.AccountPackageRelationDO">
+		update account_package_relation 
+		<set>
+			<if test="packageId != null">`package_id` = #{packageId}, </if>
+			<if test="accountId != null">`account_id` = #{accountId}, </if>
+			<if test="accountNo != null">`account_no` = #{accountNo}, </if>
+			<if test="packageName != null">`package_name` = #{packageName}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="username != null">`username` = #{username}, </if>
+			<if test="productCode != null">`product_code` = #{productCode}, </if>
+			<if test="productName != null">`product_name` = #{productName}, </if>
+			<if test="bizFlow != null">`biz_flow` = #{bizFlow}, </if>
+			<if test="startTime != null">`start_time` = #{startTime}, </if>
+			<if test="endTime != null">`end_time` = #{endTime}</if>
+		</set>
+		where relation_id = #{relationId}
+	</update>
+	
+	<delete id="remove">
+		delete from account_package_relation where relation_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from account_package_relation where relation_id in 
+		<foreach item="relationId" collection="array" open="(" separator="," close=")">
+			#{relationId}
+		</foreach>
+	</delete>
+
+</mapper>

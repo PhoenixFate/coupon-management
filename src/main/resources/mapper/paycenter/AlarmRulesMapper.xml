@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.paycenter.dao.AlarmRulesDao">
+
+	<select id="get" resultType="com.phoenix.paycenter.domain.AlarmRulesDO">
+		select `id`,`alarm_code`,`alarm_name`,`time_region`,`time_space`,`expression`,`threshold`,`alarm_type`,`alarm_phone`,`org_code`,`days` from alarm_rules where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.paycenter.domain.AlarmRulesDO">
+		select `id`,`alarm_code`,`alarm_name`,`time_region`,`time_space`,`expression`,`threshold`,`alarm_type`,`alarm_phone`,`org_code`,`days` from alarm_rules
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="alarmCode != null and alarmCode != ''"> and alarm_code = #{alarmCode} </if>
+		  		  <if test="alarmName != null and alarmName != ''"> and alarm_name = #{alarmName} </if>
+		  		  <if test="timeRegion != null and timeRegion != ''"> and time_region = #{timeRegion} </if>
+		  		  <if test="days != null and days != ''"> and days = #{days} </if>
+		  		  <if test="timeSpace != null and timeSpace != ''"> and time_space = #{timeSpace} </if>
+		  		  <if test="expression != null and expression != ''"> and expression = #{expression} </if>
+		  		  <if test="threshold != null and threshold != ''"> and threshold = #{threshold} </if>
+		  		  <if test="alarmType != null and alarmType != ''"> and alarm_type = #{alarmType} </if>
+		  		  <if test="alarmPhone != null and alarmPhone != ''"> and alarm_phone = #{alarmPhone} </if>
+		  		  <if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from alarm_rules
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="alarmCode != null and alarmCode != ''"> and alarm_code = #{alarmCode} </if>
+		  		  <if test="alarmName != null and alarmName != ''"> and alarm_name = #{alarmName} </if>
+		  		  <if test="timeRegion != null and timeRegion != ''"> and time_region = #{timeRegion} </if>
+		  		  <if test="timeSpace != null and timeSpace != ''"> and time_space = #{timeSpace} </if>
+		  		  <if test="expression != null and expression != ''"> and expression = #{expression} </if>
+		  		  <if test="days != null and days != ''"> and days = #{days} </if>
+		  		  <if test="threshold != null and threshold != ''"> and threshold = #{threshold} </if>
+		  		  <if test="alarmType != null and alarmType != ''"> and alarm_type = #{alarmType} </if>
+		  		  <if test="alarmPhone != null and alarmPhone != ''"> and alarm_phone = #{alarmPhone} </if>
+		  		  <if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.paycenter.domain.AlarmRulesDO">
+		insert into alarm_rules
+		(
+			`id`, 
+			`alarm_code`, 
+			`alarm_name`, 
+			`time_region`, 
+			`time_space`, 
+			`expression`, 
+			`threshold`, 
+			`alarm_type`, 
+			`alarm_phone`, 
+			`org_code`, 
+			`days`
+		)
+		values
+		(
+			#{id}, 
+			#{alarmCode}, 
+			#{alarmName}, 
+			#{timeRegion}, 
+			#{timeSpace}, 
+			#{expression}, 
+			#{threshold}, 
+			#{alarmType}, 
+			#{alarmPhone}, 
+			#{orgCode}, 
+			#{days}
+			
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.paycenter.domain.AlarmRulesDO">
+		update alarm_rules 
+		<set>
+			<if test="alarmCode != null">`alarm_code` = #{alarmCode}, </if>
+			<if test="alarmName != null">`alarm_name` = #{alarmName}, </if>
+			<if test="timeRegion != null">`time_region` = #{timeRegion}, </if>
+			<if test="timeSpace != null">`time_space` = #{timeSpace}, </if>
+			<if test="expression != null">`expression` = #{expression}, </if>
+			<if test="threshold != null">`threshold` = #{threshold}, </if>
+			<if test="alarmType != null">`alarm_type` = #{alarmType}, </if>
+			<if test="alarmPhone != null">`alarm_phone` = #{alarmPhone}, </if>
+			<if test="days != null and days != ''"> `days` = #{days}, </if>
+			<if test="orgCode != null">`org_code` = #{orgCode}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from alarm_rules where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from alarm_rules where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

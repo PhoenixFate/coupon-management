@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.AccountCouponInfoDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.AccountCouponInfoDO">
+		select `provide_id`,`account_id`,`account_no`,`channel_code`,`provide_time`,`coupon_no`,`third_ordernumber`,`remark`,`return_flag`,`return_time`,`version`,`username`,`biz_code`,`coupon_id`,`biz_flow`,`product_code`,`coupon_status`,`consume_time`,`period_start_time`,`period_end_time`,`package_id`,`package_name`,`batch_no`,`belogto_doctor`,`belogto_orgcode` from account_coupon_info where coupon_no = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.coupon.domain.AccountCouponInfoDO">
+		select provide_id, account.account_id, account.account_no, account.channel_code, account.provide_time, account.coupon_no, account.third_ordernumber, account.remark, account.return_flag, account.return_time, account.version, account.username, account.biz_code, account.coupon_id, account.biz_flow, account.product_code, account.coupon_status, account.consume_time, account.period_start_time, account.period_end_time, account.package_id, account.package_name, account.batch_no, account.belogto_doctor, account.belogto_orgcode, coupon.coupon_name  from account_coupon_info account LEFT JOIN coupon_info coupon on account.coupon_id = coupon.coupon_id
+        <where>  
+		  		  <if test="provideId != null and provideId != ''"> and account.provide_id = #{provideId} </if>
+		  		  <if test="accountId != null and accountId != ''"> and account.account_id = #{accountId} </if>
+		  		  <if test="accountNo != null and accountNo != ''"> and account.account_no = #{accountNo} </if>
+		  		  <if test="channelCode != null and channelCode != ''"> and account.channel_code = #{channelCode} </if>
+		  		  <if test="provideStartTime != null and provideStartTime != '' " > and account.provide_time >= #{provideStartTime} </if>
+		  		  <if test="provideEndTime != null and provideEndTime != '' " > and account.provide_time &lt;= #{provideEndTime} </if>
+		  		  <if test="couponNo != null and couponNo != ''"> and account.coupon_no = #{couponNo} </if>
+		  		  <if test="thirdOrdernumber != null and thirdOrdernumber != ''"> and account.third_ordernumber = #{thirdOrdernumber} </if>
+		  		  <if test="remark != null and remark != ''"> and account.remark = #{remark} </if>
+		  		  <if test="returnFlag != null and returnFlag != ''"> and account.return_flag = #{returnFlag} </if>
+		  		  <if test="returnTime != null and returnTime != ''"> and account.return_time = #{returnTime} </if>
+		  		  <if test="version != null and version != ''"> and account.version = #{version} </if>
+		  		  <if test="username != null and username != ''"> and account.username = #{username} </if>
+		  		  <if test="bizCode != null and bizCode != ''"> and account.biz_code = #{bizCode} </if>
+		  		  <if test="couponId != null and couponId != ''"> and account.coupon_id = #{couponId} </if>
+		  		  <if test="bizFlow != null and bizFlow != ''"> and account.biz_flow = #{bizFlow} </if>
+		  		  <if test="productCode != null and productCode != ''"> and account.product_code = #{productCode} </if>
+		  		  <if test="couponStatus != null and couponStatus != ''"> and account.coupon_status = #{couponStatus} </if>
+		  		   <if test="consumeStartTime != null and consumeStartTime != '' " > and account.consume_time >= #{consumeStartTime} </if>
+		  		  <if test="ConsumeEndTime != null and ConsumeEndTime != '' " > and account.consume_time &lt;= #{ConsumeEndTime} </if>
+		  		  <if test="periodStartTime != null and periodStartTime != ''"> and account.period_start_time >= #{periodStartTime} </if>
+		  		  <if test="periodEndTime != null and periodEndTime != ''"> and account.period_end_time &lt;= #{periodEndTime} </if>
+		  		  <if test="packageId != null and packageId != ''"> and account.package_id = #{packageId} </if>
+		  		  
+		  		   <if test="packageRelationId != null and packageRelationId != ''"> and account.package_relation_id = #{packageRelationId} </if>
+		  		  
+		  		  <if test="packageName != null and packageName != ''"> and account.package_name = #{packageName} </if>
+		  		  <if test="periodEndTime != null and periodEndTime != '' and periodStartTime != null and periodStartTime != ''"> and account.period_start_time &lt;= #{periodEndTime} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by account.provide_time desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from account_coupon_info
+		 <where>  
+		  		    <if test="provideId != null and provideId != ''"> and provide_id = #{provideId} </if>
+		  		  <if test="accountId != null and accountId != ''"> and account_id = #{accountId} </if>
+		  		  <if test="accountNo != null and accountNo != ''"> and account_no = #{accountNo} </if>
+		  		  <if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode} </if>
+		  		  <if test="provideStartTime != null and provideStartTime != '' " > and provide_time >= #{provideStartTime} </if>
+		  		  <if test="provideEndTime != null and provideEndTime != '' " > and provide_time &lt;= #{provideEndTime} </if>
+		  		  <if test="couponNo != null and couponNo != ''"> and coupon_no = #{couponNo} </if>
+		  		  <if test="thirdOrdernumber != null and thirdOrdernumber != ''"> and third_ordernumber = #{thirdOrdernumber} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="returnFlag != null and returnFlag != ''"> and return_flag = #{returnFlag} </if>
+		  		  <if test="returnTime != null and returnTime != ''"> and return_time = #{returnTime} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="bizCode != null and bizCode != ''"> and biz_code = #{bizCode} </if>
+		  		  <if test="couponId != null and couponId != ''"> and coupon_id = #{couponId} </if>
+		  		  <if test="bizFlow != null and bizFlow != ''"> and biz_flow = #{bizFlow} </if>
+		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
+		  		  <if test="couponStatus != null and couponStatus != ''"> and coupon_status = #{couponStatus} </if>
+		  		   <if test="consumeStartTime != null and consumeStartTime != '' " > and consume_time >= #{consumeStartTime} </if>
+		  		  <if test="ConsumeEndTime != null and ConsumeEndTime != '' " > and consume_time &lt;= #{ConsumeEndTime} </if>
+		  		  <if test="periodStartTime != null and periodStartTime != ''"> and period_start_time >= #{periodStartTime} </if>
+		  		  <if test="periodEndTime != null and periodEndTime != ''"> and period_end_time &lt;= #{periodEndTime} </if>
+		  		  <if test="packageId != null and packageId != ''"> and package_id = #{packageId} </if>
+		  		  <if test="packageName != null and packageName != ''"> and package_name = #{packageName} </if>
+		  		  <if test="periodEndTime != null and periodEndTime != '' and periodStartTime != null and periodStartTime != ''"> and period_start_time &lt;= #{periodEndTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.coupon.domain.AccountCouponInfoDO">
+		insert into account_coupon_info
+		(
+			`provide_id`, 
+			`account_id`, 
+			`account_no`, 
+			`channel_code`, 
+			`provide_time`, 
+			`coupon_no`, 
+			`third_ordernumber`, 
+			`remark`, 
+			`return_flag`, 
+			`return_time`, 
+			`version`, 
+			`username`, 
+			`biz_code`, 
+			`coupon_id`, 
+			`biz_flow`, 
+			`product_code`, 
+			`coupon_status`, 
+			`consume_time`, 
+			`period_start_time`, 
+			`period_end_time`
+		)
+		values
+		(
+			#{provideId}, 
+			#{accountId}, 
+			#{accountNo}, 
+			#{channelCode}, 
+			#{provideTime}, 
+			#{couponNo}, 
+			#{thirdOrdernumber}, 
+			#{remark}, 
+			#{returnFlag}, 
+			#{returnTime}, 
+			#{version}, 
+			#{username}, 
+			#{bizCode}, 
+			#{couponId}, 
+			#{bizFlow}, 
+			#{productCode}, 
+			#{couponStatus}, 
+			#{consumeTime}, 
+			#{periodStartTime}, 
+			#{periodEndTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.coupon.domain.AccountCouponInfoDO">
+		update account_coupon_info 
+		<set>
+			<if test="provideId != null">`provide_id` = #{provideId}, </if>
+			<if test="accountId != null">`account_id` = #{accountId}, </if>
+			<if test="channelCode != null">`channel_code` = #{channelCode}, </if>
+			<if test="provideTime != null">`provide_time` = #{provideTime}, </if>
+			<if test="couponNo != null">`coupon_no` = #{couponNo}, </if>
+			<if test="thirdOrdernumber != null">`third_ordernumber` = #{thirdOrdernumber}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="returnFlag != null">`return_flag` = #{returnFlag}, </if>
+			<if test="returnTime != null">`return_time` = #{returnTime}, </if>
+			<if test="version != null">`version` = #{version}, </if>
+			<if test="username != null">`username` = #{username}, </if>
+			<if test="bizCode != null">`biz_code` = #{bizCode}, </if>
+			<if test="couponId != null">`coupon_id` = #{couponId}, </if>
+			<if test="bizFlow != null">`biz_flow` = #{bizFlow}, </if>
+			<if test="productCode != null">`product_code` = #{productCode}, </if>
+			<if test="couponStatus != null">`coupon_status` = #{couponStatus}, </if>
+			<if test="consumeTime != null">`consume_time` = #{consumeTime}, </if>
+			<if test="periodStartTime != null">`period_start_time` = #{periodStartTime}, </if>
+			<if test="periodEndTime != null">`period_end_time` = #{periodEndTime}</if>
+		</set>
+		where provide_id = #{provideId}
+	</update>
+	
+	<delete id="remove">
+		delete from account_coupon_info where  coupon_no = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from account_coupon_info where coupon_no in 
+		<foreach item="accountNo" collection="array" open="(" separator="," close=")">
+			#{couponNo}
+		</foreach>
+	</delete>
+	
+	
+	<select id="liststatistic" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as nums from account_coupon_info where  provide_time  &gt;= #{startTime} and provide_time &lt;= #{endTime} 
+		<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode}  </if>
+	</select>
+	
+	
+	<select id="list7days" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as nums, DATE_FORMAT(provide_time ,"%Y-%m-%d") as tradeDate from account_coupon_info where 
+		 provide_time  &gt;= #{startTime} and provide_time &lt;= #{endTime} 
+		 <if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode}  </if>
+		 GROUP BY DATE_FORMAT(provide_time ,"%Y-%m-%d") ORDER BY  DATE_FORMAT(provide_time ,"%Y-%m-%d") desc
+	</select>
+	
+	
+	<select id="liststatisticCount" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as totalNums, coupon_id from account_coupon_info where provide_time  &gt;= #{startTime} and provide_time &lt;= #{endTime} 
+		<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode}  </if>
+		GROUP BY coupon_id 
+	</select>
+
+	
+	
+	<select id="sumSendList" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as nums,  DATE_FORMAT(provide_time ,"%Y-%m-%d") as tradeDate, coupon_id from account_coupon_info  
+		where  provide_time  &gt;= #{startTime} and provide_time &lt;= #{endTime} 
+		<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode}  </if>
+		 GROUP BY DATE_FORMAT(provide_time ,"%Y-%m-%d"),coupon_id ORDER BY  DATE_FORMAT(provide_time ,"%Y-%m-%d") desc
+	</select>
+	
+	
+		<update id="preConsumeCancel" parameterType="com.phoenix.coupon.domain.AccountCouponInfoDO">
+		update account_coupon_info 
+		<set>
+			<if test="thirdOrdernumber != null">`third_ordernumber` = #{thirdOrdernumber}, </if>
+			<if test="version != null">`version` = #{version}, </if>
+			<if test="couponStatus != null">`coupon_status` = #{couponStatus}, </if>
+			<if test="consumeTime != null">`consume_time` = #{consumeTime}, </if>
+			<if test="belogtoDoctor != null">`belogto_doctor` = #{belogtoDoctor},</if>
+			<if test="belogtoOrgcode != null">`belogto_orgcode` = #{belogtoOrgcode},</if>
+		</set>
+		where coupon_no = #{couponNo} and coupon_status = '2'
+	</update>
+	
+		<update id="freeze" parameterType="com.phoenix.coupon.domain.AccountCouponInfoDO">
+		update account_coupon_info 
+		<set>
+			<if test="thirdOrdernumber != null">`third_ordernumber` = #{thirdOrdernumber}, </if>
+			<if test="version != null">`version` = #{version}, </if>
+			<if test="couponStatus != null">`coupon_status` = #{couponStatus}, </if>
+			<if test="belogtoDoctor != null">`belogto_doctor` = #{belogtoDoctor},</if>
+			<if test="belogtoOrgcode != null">`belogto_orgcode` = #{belogtoOrgcode},</if>
+		</set>
+		where coupon_no = #{couponNo} and coupon_status = '0'
+	</update>
+
+</mapper>

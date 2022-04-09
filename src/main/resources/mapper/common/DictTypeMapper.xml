@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phoenix.common.dao.DictTypeDao">
+	<select id="get"
+		resultType="com.phoenix.common.domain.DictTypeDO">
+		select type_id, type_code, type_name, remarks from
+		sys_dict_type where type_id = #{value}
+	</select>
+
+	<select id="list"
+		resultType="com.phoenix.common.domain.DictTypeDO">
+		select type_id, type_code, type_name, remarks from
+		sys_dict_type
+		<where>
+			<if test="typeId != null and typeId != ''"> and type_id = #{typeId} </if>
+			<if test="typeCode != null and typeCode != ''"> and type_code = #{typeCode} </if>
+			<if test="typeName != null and typeName != ''"> and type_name = #{typeName} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by type_id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from sys_dict_type
+		<where>
+			<if test="typeId != null and typeId != ''"> and type_id = #{typeId} </if>
+			<if test="typeCode != null and typeCode != ''"> and type_code = #{typeCode} </if>
+			<if test="typeName != null and typeName != ''"> and type_name = #{typeName} </if>
+		</where>
+	</select>
+
+	<insert id="save"
+		parameterType="com.phoenix.common.domain.DictDO">
+		insert into sys_dict_type
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="typeId != null">
+				type_id,
+			</if>
+			<if test="typeCode != null">
+				type_code,
+			</if>
+			<if test="typeName != null">
+				type_name,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="typeId != null">
+				#{typeId,jdbcType=VARCHAR},
+			</if>
+			<if test="typeCode != null">
+				#{typeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="typeName != null">
+				#{typeName,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update"
+		parameterType="com.phoenix.common.domain.DictDO">
+		update sys_dict_type
+		<set>
+			<if test="typeCode != null">
+				type_code = #{typeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="typeName != null">
+				type_name = #{typeName,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where type_id = #{typeId}
+	</update>
+
+	<delete id="remove">
+		delete from sys_dict_type where type_id =
+		#{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from sys_dict_type where type_id in
+		<foreach item="typeId" collection="array" open="("
+			separator="," close=")">
+			#{typeId}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">医院编码：</label>
+								<div class="col-sm-8">
+									<input id="orgCode" name="orgCode" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">清算日期 YYYY-MM-DD：</label>
+								<div class="col-sm-8">
+									<input id="orderDate" name="orderDate" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易检索号：</label>
+								<div class="col-sm-8">
+									<input id="tradeIdx" name="tradeIdx" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支付渠道：</label>
+								<div class="col-sm-8">
+									<input id="channel" name="channel" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">数据来源：</label>
+								<div class="col-sm-8">
+									<input id="dataSource" name="dataSource" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">工行订单号：</label>
+								<div class="col-sm-8">
+									<input id="icbcOrdernumber" name="icbcOrdernumber" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支付卡号：</label>
+								<div class="col-sm-8">
+									<input id="cardNo" name="cardNo" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户订单号：</label>
+								<div class="col-sm-8">
+									<input id="thirdOrdernumber" name="thirdOrdernumber" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易额 单位分：</label>
+								<div class="col-sm-8">
+									<input id="orderFee" name="orderFee" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易时间 yyyy-MM-dd    HH:mm:ss：</label>
+								<div class="col-sm-8">
+									<input id="tradeTime" name="tradeTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">创建时间：</label>
+								<div class="col-sm-8">
+									<input id="createTime" name="createTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否退款 1是：</label>
+								<div class="col-sm-8">
+									<input id="refundFlag" name="refundFlag" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退费金额：</label>
+								<div class="col-sm-8">
+									<input id="refundFee" name="refundFee" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易日期 yyyy-MM-dd：</label>
+								<div class="col-sm-8">
+									<input id="tradeDate" name="tradeDate" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/account/accountIcbcZd/add.js}">
+	</script>
+</body>
+</html>

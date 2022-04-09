@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.DoctorInfoDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.DoctorInfoDO">
+		select `doc_apply_id`,`doc_code`,`doc_name`,`doc_card`,`doc_phone`,`doctor_type`,`doctor_type_name`,`doc_title`,`hos_code`,`audit_status`,`audit_msg`,`create_time`,`update_time`,`audit_user`,`dept_name`,`hos_name`,`open_id`,`open_type` from doctor_info where doc_apply_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.coupon.domain.DoctorInfoDO">
+		select doc_apply_id, doc.doc_code, doc.doc_name, doc.doc_card, doc.doc_phone, doc.doctor_type, doc.doctor_type_name, doc.doc_title, doc.hos_code, doc.audit_status, doc.audit_msg, doc.create_time, doc.update_time, doc.audit_user, doc.dept_name, doc.open_id, doc.open_type, org.org_name hos_name from doctor_info doc LEFT JOIN sys_org org on doc.hos_code = org.org_code
+        <where>  
+		  		  <if test="docApplyId != null and docApplyId != ''"> and doc.doc_apply_id = #{docApplyId} </if>
+		  		  <if test="docCode != null and docCode != ''"> and doc.doc_code = #{docCode} </if>
+		  		  <if test="docName != null and docName != ''"> and doc.doc_name = #{docName} </if>
+		  		  <if test="docCard != null and docCard != ''"> and doc.doc_card = #{docCard} </if>
+		  		  <if test="docPhone != null and docPhone != ''"> and doc.doc_phone = #{docPhone} </if>
+		  		  <if test="doctorType != null and doctorType != ''"> and doc.doctor_type = #{doctorType} </if>
+		  		  <if test="doctorTypeName != null and doctorTypeName != ''"> and doc.doctor_type_name = #{doctorTypeName} </if>
+		  		  <if test="docTitle != null and docTitle != ''"> and doc.doc_title = #{docTitle} </if>
+		  		  <if test="hosCode != null and hosCode != ''"> and doc.hos_code = #{hosCode} </if>
+		  		  <if test="auditStatus != null and auditStatus != ''"> and doc.audit_status = #{auditStatus} </if>
+		  		  <if test="auditMsg != null and auditMsg != ''"> and doc.audit_msg = #{auditMsg} </if>
+		  		  <if test="createTime != null and createTime != ''"> and doc.create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and doc.update_time = #{updateTime} </if>
+		  		  <if test="auditUser != null and auditUser != ''"> and doc.audit_user = #{auditUser} </if>
+		  		  <if test="deptName != null and deptName != ''"> and doc.dept_name = #{deptName} </if>
+		  		  <if test="hosName != null and hosName != ''"> and doc.hos_name = #{hosName} </if>
+		  		  <if test="openId != null and openId != ''"> and doc.open_id = #{openId} </if>
+		  		  <if test="openType != null and openType != ''"> and doc.open_type = #{openType} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by doc.update_time desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from doctor_info
+		 <where>  
+		  		  <if test="docApplyId != null and docApplyId != ''"> and doc_apply_id = #{docApplyId} </if>
+		  		  <if test="docCode != null and docCode != ''"> and doc_code = #{docCode} </if>
+		  		  <if test="docName != null and docName != ''"> and doc_name = #{docName} </if>
+		  		  <if test="docCard != null and docCard != ''"> and doc_card = #{docCard} </if>
+		  		  <if test="docPhone != null and docPhone != ''"> and doc_phone = #{docPhone} </if>
+		  		  <if test="doctorType != null and doctorType != ''"> and doctor_type = #{doctorType} </if>
+		  		  <if test="doctorTypeName != null and doctorTypeName != ''"> and doctor_type_name = #{doctorTypeName} </if>
+		  		  <if test="docTitle != null and docTitle != ''"> and doc_title = #{docTitle} </if>
+		  		  <if test="hosCode != null and hosCode != ''"> and hos_code = #{hosCode} </if>
+		  		  <if test="auditStatus != null and auditStatus != ''"> and audit_status = #{auditStatus} </if>
+		  		  <if test="auditMsg != null and auditMsg != ''"> and audit_msg = #{auditMsg} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="auditUser != null and auditUser != ''"> and audit_user = #{auditUser} </if>
+		  		  <if test="deptName != null and deptName != ''"> and dept_name = #{deptName} </if>
+		  		  <if test="hosName != null and hosName != ''"> and hos_name = #{hosName} </if>
+		  		  <if test="openId != null and openId != ''"> and open_id = #{openId} </if>
+		  		  <if test="openType != null and openType != ''"> and open_type = #{openType} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.coupon.domain.DoctorInfoDO">
+		insert into doctor_info
+		(
+			`doc_apply_id`, 
+			`doc_code`, 
+			`doc_name`, 
+			`doc_card`, 
+			`doc_phone`, 
+			`doctor_type`, 
+			`doctor_type_name`, 
+			`doc_title`, 
+			`hos_code`, 
+			`audit_status`, 
+			`audit_msg`, 
+			`create_time`, 
+			`update_time`, 
+			`audit_user`, 
+			`dept_name`, 
+			`hos_name`, 
+			`open_id`, 
+			`open_type`
+		)
+		values
+		(
+			#{docApplyId}, 
+			#{docCode}, 
+			#{docName}, 
+			#{docCard}, 
+			#{docPhone}, 
+			#{doctorType}, 
+			#{doctorTypeName}, 
+			#{docTitle}, 
+			#{hosCode}, 
+			#{auditStatus}, 
+			#{auditMsg}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{auditUser}, 
+			#{deptName}, 
+			#{hosName}, 
+			#{openId}, 
+			#{openType}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.coupon.domain.DoctorInfoDO">
+		update doctor_info 
+		<set>
+			<if test="docCode != null">`doc_code` = #{docCode}, </if>
+			<if test="docName != null">`doc_name` = #{docName}, </if>
+			<if test="docCard != null">`doc_card` = #{docCard}, </if>
+			<if test="docPhone != null">`doc_phone` = #{docPhone}, </if>
+			<if test="doctorType != null">`doctor_type` = #{doctorType}, </if>
+			<if test="doctorTypeName != null">`doctor_type_name` = #{doctorTypeName}, </if>
+			<if test="docTitle != null">`doc_title` = #{docTitle}, </if>
+			<if test="hosCode != null">`hos_code` = #{hosCode}, </if>
+			<if test="auditStatus != null">`audit_status` = #{auditStatus}, </if>
+			<if test="auditMsg != null">`audit_msg` = #{auditMsg}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="auditUser != null">`audit_user` = #{auditUser}, </if>
+			<if test="deptName != null">`dept_name` = #{deptName}, </if>
+			<if test="hosName != null">`hos_name` = #{hosName}, </if>
+			<if test="openId != null">`open_id` = #{openId}, </if>
+			<if test="openType != null">`open_type` = #{openType}</if>
+		</set>
+		where doc_apply_id = #{docApplyId}
+	</update>
+	
+	<delete id="remove">
+		delete from doctor_info where doc_apply_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from doctor_info where doc_apply_id in 
+		<foreach item="docApplyId" collection="array" open="(" separator="," close=")">
+			#{docApplyId}
+		</foreach>
+	</delete>
+
+</mapper>

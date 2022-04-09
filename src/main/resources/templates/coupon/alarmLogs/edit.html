@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${alarmLogs.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">警报规则代码：</label>
+								<div class="col-sm-8">
+									<input id="alarmCode" name="alarmCode" th:value="${alarmLogs.alarmCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">警报规则名称：</label>
+								<div class="col-sm-8">
+									<input id="alarmName" name="alarmName" th:value="${alarmLogs.alarmName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">报警内容：</label>
+								<div class="col-sm-8">
+									<input id="alarmDesc" name="alarmDesc" th:value="${alarmLogs.alarmDesc}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">报警时间：</label>
+								<div class="col-sm-8">
+									<input id="alarmTime" name="alarmTime" th:value="${alarmLogs.alarmTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">人工处理标志,1已处理， 0 未处理：</label>
+								<div class="col-sm-8">
+									<input id="confirmStatus" name="confirmStatus" th:value="${alarmLogs.confirmStatus}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">确认时间：</label>
+								<div class="col-sm-8">
+									<input id="confirmTime" name="confirmTime" th:value="${alarmLogs.confirmTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">确认人：</label>
+								<div class="col-sm-8">
+									<input id="confirmUser" name="confirmUser" th:value="${alarmLogs.confirmUser}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">报警类型：</label>
+								<div class="col-sm-8">
+									<input id="alarmType" name="alarmType" th:value="${alarmLogs.alarmType}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">报警号码，逗号分隔：</label>
+								<div class="col-sm-8">
+									<input id="alarmPhone" name="alarmPhone" th:value="${alarmLogs.alarmPhone}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">机构代码：</label>
+								<div class="col-sm-8">
+									<input id="orgCode" name="orgCode" th:value="${alarmLogs.orgCode}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/coupon/alarmLogs/edit.js}">
+	</script>
+</body>
+</html>

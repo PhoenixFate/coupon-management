@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>卡券管理系统</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="卡券管理系统">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css?v=3.3.6}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css?v=4.4.0}">
+    <link rel="stylesheet" th:href="@{/css/plugins/toastr/toastr.min.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css?v=4.1.0}">
+    <link rel="stylesheet" th:href="@{/fonts/iconfont.css}">
+    <link th:href="@{/css/plugins/bootstrap-select/bootstrap-select.min.css}" rel="stylesheet">
+    <style type="text/css">
+    	.btn-default {
+		    background-color:#2f4050!important;
+		    border: none;
+		    color:#999c9e;
+		    font-size:14px;
+		    font-weight: 600;
+		    padding: 20px 10px;
+    		min-height: 50px;
+		}
+		.btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover {
+		    border: none;
+		    color:#999c9e;
+		}
+		.btn-default:hover, .btn-default:focus, .btn-default:active,  .btn-default.active, .open .dropdown-toggle.btn-default {
+		    background-color: #2f4050;
+		    border: none;
+		    color: #999c9e;
+		}
+		.bs-searchbox .form-control{
+			border: 1px solid #e5e6e7;
+			height: 34px;
+		}
+    </style>
+</head>
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden">
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="nav-close">
+            <i class="fa fa-times-circle"></i>
+        </div>
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div style="min-height:40px; padding: 10px 5px">
+                    	 <img alt="" id="commonOrgDisplayLogo" th:src="@{zhyl.png}" style="width:170px;">
+                    	<!-- <h2 id="orgDisplayName" class="" style="color: #ffffff;  line-height:26px;margin-left:15px">
+                            	<strong >卡券管理系统</strong>
+                        </h2> -->
+                    </div>
+                    <div class="dropdown profile-element hidden">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear">
+                            	<span class="block m-t-xs">
+                            		<strong class="font-bold" th:text="${username}"></strong>
+                            	</span>
+                            	<span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
+                             </span>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a @click="personal" href="#">修改头像</a></li>
+                            <li><a @click="personal" href="#">个人资料</a></li>
+                            <li><a @click="personal" href="#">密码修改</a></li>
+                            <li><a @click="personal" href="#">信箱</a></li>
+                            <li class="divider"></li>
+                            <li><a th:href="@{logout}">安全退出</a></li>
+                        </ul>
+                        <div class="logo-element">卡券管理系统</div>
+                    </div>
+                </li>
+                <li th:each="menu : ${menus}">
+                	<a href="#">
+						<i th:class="${menu.attributes.icon}"></i>
+                    	<span class="nav-label" th:text="${menu.text}"></span>
+						<span class="fa arrow"></span>
+                	</a>
+                    <ul class="nav nav-second-level">
+                        <li th:each="cmenu : ${menu.children}">
+                        	<a class="J_menuItem" th:href="@{${cmenu.attributes.url}}">
+                        		<i th:class="${cmenu.attributes.icon}" th:text="${' ' + cmenu.text}"></i>
+                        	</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--左侧导航结束-->
+    <!--右侧部分开始-->
+    <div id="page-wrapper" class="dashbard-1 ">
+        <div class="row border-bottom">
+            <nav role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <form role="search" class="navbar-form-custom" method="post" action="">
+                            <select id="globalChannelCode" class="selectpicker" data-live-search="true">
+					        	<option th:each="channel:${channelList}" th:value="${channel.channelCode}" th:text="${channel.channelName}"  th:selected="${channel.channelCode eq defaultChannel}"></option>
+					        </select>
+                    </form>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                	<!-- 
+                    <li class="hidden-xs">
+                    	<a href="/blog" target="_Blank" class=""><i class="fa fa-rss-square"></i>博客</a>
+                    </li>
+                    <li class="dropdown">
+                    	<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+							<i class="fa fa-envelope"></i>
+                        	<span class="label label-warning">{{total}}</span>通知
+                    	</a>
+                        <ul class="dropdown-menu dropdown-messages">
+                            <li v-for="row in rows" class="m-t-xs">
+                                <div class="dropdown-messages-box">
+                                    <a class="pull-left"><i class="fa fa-server"></i></a>
+                                    <div class="media-body">
+                                        <small class="pull-right">{{row.before}}</small>
+                                        <strong>{{row.sender}}</strong>
+                                        {{row.title}} <br>
+                                        <small class="text-muted">{{row.updateDate}}</small>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                            </li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a class="J_menuItem" th:href="@{/oa/notify/selfNotify}"> <i
+                                            class="fa fa-envelope"></i> <strong> 查看所有消息</strong>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="hidden-xs"><a @click="personal" href="#" ><i class="fa fa-id-card"></i> 个人</a></li>
+                     -->
+                    <li class="dropdown hidden-xs"><a class="right-sidebar-toggle" aria-expanded="false" th:text="${username}"><i class="fa fa-id-card"></i></a></li>
+                </ul>
+            </nav> 
+        </div>
+        <div class="row content-tabs">
+            <button class="roll-nav roll-left J_tabLeft">
+                <i class="fa fa-backward"></i>
+            </button>
+            <nav class="page-tabs J_menuTabs">
+                <div class="page-tabs-content">
+                    <a href="javascript:;" class="active J_menuTab" data-id="index_v1.html" id="main_tab">首页</a>
+                </div>
+            </nav>
+            <button class="roll-nav roll-right J_tabRight">
+                <i class="fa fa-forward"></i>
+            </button>
+            <div class="btn-group roll-nav roll-right">
+                <button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作
+                	<span class="caret"></span>
+                </button>
+                <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                    <li class="J_tabShowActive"><a>定位当前选项卡</a></li>
+                    <li class="divider"></li>
+                    <li class="J_tabCloseAll"><a>关闭全部选项卡</a></li>
+                    <li class="J_tabCloseOther"><a>关闭其他选项卡</a></li>
+                </ul>
+            </div>
+            <a th:href="@{/logout}" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+        </div>
+        <div class="row J_mainContent" id="content-whole">
+            <iframe class="J_iframe" id="main_iframe" name="iframe0" width="100%" height="100%" th:src="@{/main}" frameborder="0" data-id="index_v1.html" seamless></iframe>
+        </div>
+        <!-- 
+        <div class="footer">
+        	 
+            <div class="pull-center"><span>南京字节空间网络技术有限公司 版权所有</span>
+            <span>苏ICP备18009588号</span></div>
+        </div>
+         -->
+    </div>
+    <!--右侧部分结束-->
+    <!--右侧边栏开始-->
+    <div id="right-sidebar">
+        <div class="sidebar-container">
+            <ul class="nav nav-tabs navs-3">
+                <li class="active">
+                	<a data-toggle="tab" href="#tab-1"> <i class="fa fa-gear"></i> 我的 </a>
+                </li>
+                <li class="">
+                	<a data-toggle="tab" href="#tab-2"> <i class="fa fa-photo"></i> 主题 </a>
+                </li>
+                <!-- 
+                <li><a data-toggle="tab" href="#tab-3"> 项目进度 </a></li>
+                 -->
+            </ul>
+            <div class="tab-content">
+            	<div id="tab-1" class="tab-pane active">
+                    <div class="sidebar-title">
+                        <h3><i class="fa fa-comments-o"></i> 我的信息 </h3>
+                        <small><i class="fa fa-tim"></i>你可以从这里维护自己信息。</small>
+                    </div>
+                    <div class="skin-setttings">
+                    	<!-- 
+                        <div class="setings-item">
+                            <span> 个人资料  </span>
+                        </div>
+                         -->
+                        <div class="setings-item">
+                            <span id="personal" style="cursor:pointer;"> 个人资料 </span>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-2" class="tab-pane">
+                    <div class="sidebar-title">
+                        <h3><i class="fa fa-comments-o"></i> 主题设置 </h3>
+                        <small><i class="fa fa-tim"></i>
+                            	你可以从这里选择和预览主题的布局和样式，这些设置会被保存在本地，下次打开的时候会直接应用这些设置。
+                        </small>
+                    </div>
+                    <div class="skin-setttings">
+                        <div class="title">主题设置</div>
+                        <div class="setings-item">
+                            <span>收起左侧菜单</span>
+                            <div class="switch">
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu" /> 
+                                   	<label class="onoffswitch-label" for="collapsemenu"> 
+                                   		<span class="onoffswitch-inner"></span>
+										<span class="onoffswitch-switch"></span>
+                               		</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+<!-- 全局js -->
+<script th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/js/plugins/layer/layer.min.js}"></script>
+<!-- 自定义js -->
+<script th:src="@{/js/app.js?v=4.1.0}"></script>
+<script type="text/javascript" th:src="@{/js/contabs.js}"></script>
+<!-- 第三方插件 -->
+<script  th:src="@{/js/plugins/pace/pace.min.js}"></script>
+<!-- vue -->
+<script type="text/javascript" th:src="@{/js/vue.min.js}"></script>
+<!-- Toastr script -->
+<script th:src="@{/js/plugins/toastr/toastr.min.js}"></script>
+<script th:src="@{/js/plugins/bootstrap-select/bootstrap-select.min.js}"></script>
+<script type="text/javascript">
+$(function(){
+//	showOrgDisplayLogo();
+	$("#main_tab").on("click",function(){
+		$('#main_iframe').prop('src', $('#main_iframe').prop('src'));
+	});
+	//刷新首页
+	$("#globalChannelCode").on("change",function(){
+		//showOrgDisplayLogo();
+		$(".J_tabCloseAll").click();//切换医院，关闭所有选项卡
+		$.post(ctx + 'reserveChannel/setGloabChannel',{"channelCode" : $(this).val()},function(r) {
+					if (r.code == 0) {
+						$('#main_iframe').prop('src', $('#main_iframe').prop('src'));
+					} else {
+					}
+				}
+			);
+	})
+	
+	$("#personal").on("click",function(){
+		layer.open({
+			type : 2,
+			title : '个人资料',
+			maxmin : true,
+			shadeClose : false, // 点击遮罩关闭层
+			area : [ '800px', '520px' ],
+			content : ctx + 'user/personal'
+		});
+	});
+})
+/* 
+function showOrgDisplayLogo(){
+	var orgDisplayLogo = $("#globalOrgCode").find("option:selected").attr("orgdisplaylogo");
+	$("#orgDisplayLogo").hide();
+	$("#commonOrgDisplayLogo").hide();
+	if(orgDisplayLogo){
+		$("#orgDisplayLogo").attr("src",orgDisplayLogo).show();
+	} else {
+		$("#commonOrgDisplayLogo").show();
+	}
+} */
+/*
+    var stompClient = null;
+    $(function () {
+        connect();
+    });
+
+    function connect() {
+        var sock = new SockJS(ctx + "endpointChat");
+        var stomp = Stomp.over(sock);
+        stomp.connect('guest', 'guest', function(frame) {
+
+            /**  订阅了/user/queue/notifications 发送的消息,这里在控制器的 convertAndSendToUser 定义的地址保持一致, 
+             *  这里多用了一个/user,并且这个user 是必须的,使用user 才会发送消息到指定的用户。 
+             *  
+            stomp.subscribe("/user/queue/notifications", handleNotification);
+            stomp.subscribe('/topic/getResponse', function (response) { //订阅/topic/getResponse 目标发送的消息。这个是在控制器的@SendTo中定义的。
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "progressBar": true,
+                    "positionClass": "toast-bottom-right",
+                    "onclick": null,
+                    "showDuration": "400",
+                    "hideDuration": "1000",
+                    "timeOut": "7000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.info(JSON.parse(response.body).responseMessage);
+            });
+        });
+        function handleNotification(message) {
+            wrapper.notify();
+            toastr.info(message.body);
+        }
+    }
+
+    var wrapper = new Vue({
+        el: '#wrapper',
+        data: {
+            total: '',
+            rows: '',
+        },
+        methods: {
+            notify: function () {
+                $.getJSON(ctx + 'oa/notify/message', function (r) {
+                    wrapper.total = r.total;
+                    wrapper.rows = r.rows;
+                });
+            },
+            personal: function () {
+                layer.open({
+                    type: 2,
+                    title: '个人设置',
+                    maxmin: true,
+                    shadeClose: false,
+                    area: ['800px', '600px'],
+                    content: ctx + 'sys/user/personal'
+                });
+            }
+        },
+        created: function () {
+            this.notify()
+        }
+    })
+    */
+</script>
+</body>
+</html>

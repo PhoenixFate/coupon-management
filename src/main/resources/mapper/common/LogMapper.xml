@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phoenix.common.dao.LogDao">
+	<select id="get" resultType="com.phoenix.common.domain.LogDO">
+		select log_id, user_id, user_name,
+		operation, time, method, params, ip, create_gmt from sys_log where
+		log_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.common.domain.LogDO">
+		select log_id, user_id, user_name, operation, time, method, params,
+		ip, create_gmt from sys_log
+		<where>
+			<if test="logId != null and logId != ''"> and log_id = #{logId} </if>
+			<if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+			<if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+			<if test="operation != null and operation != ''"> and operation = #{operation} </if>
+			<if test="time != null and time != ''"> and time = #{time} </if>
+			<if test="method != null and method != ''"> and method = #{method} </if>
+			<if test="params != null and params != ''"> and params = #{params} </if>
+			<if test="ip != null and ip != ''"> and ip = #{ip} </if>
+			<if test="createGmt != null and createGmt != ''"> and create_gmt = #{createGmt} </if>
+			<if test="searchOperation != null and searchOperation != ''"> and operation like concat('%',#{searchOperation},'%')
+			</if>
+			<if test="searchUsername != null and searchUsername != ''"> and user_name like concat('%',#{searchUsername},'%')
+			</if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by log_id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from sys_log
+		<where>
+			<if test="logId != null and logId != ''"> and log_id = #{logId} </if>
+			<if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+			<if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+			<if test="operation != null and operation != ''"> and operation = #{operation} </if>
+			<if test="time != null and time != ''"> and time = #{time} </if>
+			<if test="method != null and method != ''"> and method = #{method} </if>
+			<if test="params != null and params != ''"> and params = #{params} </if>
+			<if test="ip != null and ip != ''"> and ip = #{ip} </if>
+			<if test="createGmt != null and createGmt != ''"> and create_gmt = #{createGmt} </if>
+			<if test="searchOperation != null and searchOperation != ''"> and operation like concat('%',#{searchOperation},'%')
+			</if>
+			<if test="searchUsername != null and searchUsername != ''"> and user_name like concat('%',#{searchUsername},'%')
+			</if>
+		</where>
+	</select>
+
+	<insert id="save"
+		parameterType="com.phoenix.common.domain.LogDO">
+		insert into sys_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="logId != null">
+				log_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="operation != null">
+				operation,
+			</if>
+			<if test="time != null">
+				time,
+			</if>
+			<if test="method != null">
+				method,
+			</if>
+			<if test="params != null">
+				params,
+			</if>
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="createGmt != null">
+				create_gmt,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="logId != null">
+				#{logId,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="operation != null">
+				#{operation,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				#{time,jdbcType=INTEGER},
+			</if>
+			<if test="method != null">
+				#{method,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				#{params,jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				#{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="createGmt != null">
+				#{createGmt,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update"
+		parameterType="com.phoenix.common.domain.LogDO">
+		update sys_log
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="operation != null">
+				operation = #{operation,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				time = #{time,jdbcType=INTEGER},
+			</if>
+			<if test="method != null">
+				method = #{method,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				params = #{params,jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				ip = #{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="createGmt != null">
+				create_gmt = #{createGmt,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where log_id = #{logId,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="remove">
+		delete from sys_log where log_id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from sys_log where log_id in
+		<foreach item="logId" collection="array" open="("
+			separator="," close=")">
+			#{logId}
+		</foreach>
+	</delete>
+
+</mapper>

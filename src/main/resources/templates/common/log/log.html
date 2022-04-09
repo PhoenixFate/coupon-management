@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div name="searchform" id="searchform" class="layui-form layui-form-pane">
+							<div class="layui-form-item">
+								<div class="layui-inline">
+									<label class="layui-form-label">操作</label>
+									<div class="layui-input-inline">
+										<input lay-key="1" class="layui-input" id="searchOperation" placeholder="操作" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">用户</label>
+									<div class="layui-input-inline">
+										<input lay-key="2" class="layui-input" id="searchUsername" placeholder="用户" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<button class="layui-btn" type="button"  id="reload">
+										<i class="fa fa-search" aria-hidden="true"></i>查询
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true"  class="layui-hide" lay-filter="logList"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/common/log/log.js}"></script>
+</body>
+</html>

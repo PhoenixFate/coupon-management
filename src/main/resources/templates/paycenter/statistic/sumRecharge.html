@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div name="searchform" id="searchform" class="layui-form layui-form-pane">
+							<div class="layui-form-item">
+								<div class="layui-inline">
+									<label class="layui-form-label">开始日期</label>
+									<div class="layui-input-inline">
+										<input lay-key="2" class="layui-input" id="startTime" placeholder="开始日期" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">结束日期</label>
+									<div class="layui-input-inline">
+										<input lay-key="3" class="layui-input" id="endTime" placeholder="结束日期" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">收费员</label>
+									<div class="layui-input-inline">
+										<input lay-key="2" class="layui-input" id="rechargeCollector" placeholder="收费员工号" type="text">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">充值渠道</label>
+									<div class="layui-input-inline">
+										<select lay-key="1" id="channelCode" name="channelCode" title="充值渠道" >
+								        	<option value="" selected="selected">全部渠道</option>
+								        	<option th:each="reserveChannel:${reserveChannels}" th:value="${reserveChannel.channelCode}" th:text="${reserveChannel.channelName}"></option>
+								        </select>
+									</div>
+								</div>
+								<div class="layui-inline">
+									<button class="layui-btn" type="button"  id="reload">
+										<i class="fa fa-search" aria-hidden="true"></i>查询
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:include="include :: footer"></div>
+	<script th:inline="javascript">
+		var hideCols = JSON.parse([[${hideCols}]]);
+	</script>
+	<script type="text/javascript" th:src="@{/js/appjs/paycenter/statistic/sumRecharge.js}"></script>
+</body>
+</html>

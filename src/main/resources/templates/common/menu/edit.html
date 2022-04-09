@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="menuId" name="menuId" th:value="${menu.menuId}" type="hidden">
+							<input id="parentMenuId" name="parentMenuId" th:value="${menu.parentMenuId}" class="form-control" type="hidden">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">父菜单：</label>
+								<div class="col-sm-8">
+									<div id="menuTree"></div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">菜单名称：</label>
+								<div class="col-sm-8">
+									<input id="menuName" name="menuName"
+										th:value="${menu.menuName}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">菜单URL：</label>
+								<div class="col-sm-8">
+									<input id="menuUrl" name="menuUrl" th:value="${menu.menuUrl}"
+										class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">授权：</label>
+								<div class="col-sm-8">
+									<input id="menuPerms" name="menuPerms"
+										th:value="${menu.menuPerms}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">类型 ：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline"> 
+										<input type="radio" name="status" value="0" th:field="*{menu.menuType}" /> 目录
+									</label> 
+									<label class="radio-inline"> 
+										<input type="radio" name="status" value="1" th:field="*{menu.menuType}" /> 菜单
+									</label>
+									<label class="radio-inline"> 
+										<input type="radio" name="status" value="2" th:field="*{menu.menuType}" /> 按钮
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">菜单图标：</label>
+								<div class="col-sm-5">
+									<input id="menuIcon" name="menuIcon" class="form-control" type="text"
+										placeholder="例如：fa fa-circle-o" th:value="${menu.menuIcon}">
+								</div>
+								<input id="ico-btn" class="btn btn-warning" type="button" value="选择图标">
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">排序：</label>
+								<div class="col-sm-8">
+									<input id="menuOrderNum" name="menuOrderNum"
+										th:value="${menu.menuOrderNum}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">备注：</label>
+								<div class="col-sm-8">
+									<textarea id="remark" name="remark" class="form-control" maxlength="500" th:text="${menu.remark}"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-5">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/common/menu/edit.js}">
+	</script>
+</body>
+</html>

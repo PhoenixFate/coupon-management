@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.AccountInfoDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.AccountInfoDO">
+		select `account_id`,`account_no`,`account_type`,`username`,`password`,`enable_flag`,`crt_time`,`update_time`,`phoneno`,`create_channel`,`idNo`,`version` from account_info where account_no = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.coupon.domain.AccountInfoDO">
+		select `account_id`,`account_no`,`account_type`,`username`,`password`,`enable_flag`,`crt_time`,`update_time`,`phoneno`,`create_channel`,`idNo`,`version` from account_info
+        <where>  
+		  		  <if test="accountId != null and accountId != ''"> and account_id = #{accountId} </if>
+		  		  <if test="accountNo != null and accountNo != ''"> and account_no = #{accountNo} </if>
+		  		  <if test="accountType != null and accountType != ''"> and account_type = #{accountType} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="password != null and password != ''"> and password = #{password} </if>
+		  		  <if test="enableFlag != null and enableFlag != ''"> and enable_flag = #{enableFlag} </if>
+		  		  <if test="crtTime != null and crtTime != ''"> and crt_time = #{crtTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="phoneno != null and phoneno != ''"> and phoneno = #{phoneno} </if>
+		  		  <if test="createChannel != null and createChannel != ''"> and create_channel = #{createChannel} </if>
+		  		  <if test="idno != null and idno != ''"> and idNo = #{idno} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by account_no desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from account_info
+		 <where>  
+		  		  <if test="accountId != null and accountId != ''"> and account_id = #{accountId} </if>
+		  		  <if test="accountNo != null and accountNo != ''"> and account_no = #{accountNo} </if>
+		  		  <if test="accountType != null and accountType != ''"> and account_type = #{accountType} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="password != null and password != ''"> and password = #{password} </if>
+		  		  <if test="enableFlag != null and enableFlag != ''"> and enable_flag = #{enableFlag} </if>
+		  		  <if test="crtTime != null and crtTime != ''"> and crt_time = #{crtTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="phoneno != null and phoneno != ''"> and phoneno = #{phoneno} </if>
+		  		  <if test="createChannel != null and createChannel != ''"> and create_channel = #{createChannel} </if>
+		  		  <if test="idno != null and idno != ''"> and idNo = #{idno} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.coupon.domain.AccountInfoDO">
+		insert into account_info
+		(
+			`account_id`, 
+			`account_no`, 
+			`account_type`, 
+			`username`, 
+			`password`, 
+			`enable_flag`, 
+			`crt_time`, 
+			`update_time`, 
+			`phoneno`, 
+			`create_channel`, 
+			`idNo`, 
+			`version`
+		)
+		values
+		(
+			#{accountId}, 
+			#{accountNo}, 
+			#{accountType}, 
+			#{username}, 
+			#{password}, 
+			#{enableFlag}, 
+			#{crtTime}, 
+			#{updateTime}, 
+			#{phoneno}, 
+			#{createChannel}, 
+			#{idno}, 
+			#{version}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.coupon.domain.AccountInfoDO">
+		update account_info 
+		<set>
+			<if test="accountId != null">`account_id` = #{accountId}, </if>
+			<if test="accountType != null">`account_type` = #{accountType}, </if>
+			<if test="username != null">`username` = #{username}, </if>
+			<if test="password != null">`password` = #{password}, </if>
+			<if test="enableFlag != null">`enable_flag` = #{enableFlag}, </if>
+			<if test="crtTime != null">`crt_time` = #{crtTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="phoneno != null">`phoneno` = #{phoneno}, </if>
+			<if test="createChannel != null">`create_channel` = #{createChannel}, </if>
+			<if test="idno != null">`idNo` = #{idno}, </if>
+			<if test="version != null">`version` = #{version}</if>
+		</set>
+		where account_no = #{accountNo}
+	</update>
+	
+	<delete id="remove">
+		delete from account_info where account_no = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from account_info where account_no in 
+		<foreach item="accountNo" collection="array" open="(" separator="," close=")">
+			#{accountNo}
+		</foreach>
+	</delete>
+
+
+	<select id="liststatistic" resultType="com.phoenix.coupon.domain.CouponStatistic">
+		select count(0) as nums from account_info where  crt_time  &gt;= #{startTime} and crt_time &lt;= #{endTime} 
+		<if test="channelCode != null and channelCode != ''"> and create_channel = #{channelCode}  </if>
+	</select>
+</mapper>

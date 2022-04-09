@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phoenix.common.dao.UserRoleDao">
+
+	<insert id="save"
+		parameterType="com.phoenix.common.domain.UserRoleDO">
+		insert into sys_user_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userRoleId != null">
+				user_role_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="roleId != null">
+				role_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userRoleId != null">
+				#{userRoleId,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="roleId != null">
+				#{roleId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="getRoleId" resultType="java.lang.String">
+		select role_id from
+		sys_user_role where user_id=#{userId}
+	</select>
+
+	<delete id="removeByUserId">
+		delete from sys_user_role where user_id=#{userId}
+	</delete>
+
+	<delete id="batchRemoveByUserId">
+		delete from sys_user_role where user_id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

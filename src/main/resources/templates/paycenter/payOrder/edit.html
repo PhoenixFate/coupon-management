@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="order_number" name="order_number" th:value="${payOrder.order_number}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">医院编码：</label>
+								<div class="col-sm-8">
+									<input id="orgCode" name="orgCode" th:value="${payOrder.orgCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">appid：</label>
+								<div class="col-sm-8">
+									<input id="appid" name="appid" th:value="${payOrder.appid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">子商户appid：</label>
+								<div class="col-sm-8">
+									<input id="subAppid" name="subAppid" th:value="${payOrder.subAppid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户号：</label>
+								<div class="col-sm-8">
+									<input id="mchId" name="mchId" th:value="${payOrder.mchId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">子商户号：</label>
+								<div class="col-sm-8">
+									<input id="subMchId" name="subMchId" th:value="${payOrder.subMchId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">订单总金额， 单位分：</label>
+								<div class="col-sm-8">
+									<input id="totalFee" name="totalFee" th:value="${payOrder.totalFee}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">openid：</label>
+								<div class="col-sm-8">
+									<input id="openid" name="openid" th:value="${payOrder.openid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">用户ip：</label>
+								<div class="col-sm-8">
+									<input id="spbillCreateIp" name="spbillCreateIp" th:value="${payOrder.spbillCreateIp}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支付渠道,wx或者alipay：</label>
+								<div class="col-sm-8">
+									<input id="payChannel" name="payChannel" th:value="${payOrder.payChannel}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">回调参数：</label>
+								<div class="col-sm-8">
+									<input id="attach" name="attach" th:value="${payOrder.attach}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">业务回调地址：</label>
+								<div class="col-sm-8">
+									<input id="callbackUrl" name="callbackUrl" th:value="${payOrder.callbackUrl}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">实收金额：</label>
+								<div class="col-sm-8">
+									<input id="incomeFee" name="incomeFee" th:value="${payOrder.incomeFee}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">订单时间：</label>
+								<div class="col-sm-8">
+									<input id="ordertime" name="ordertime" th:value="${payOrder.ordertime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">收入时间：</label>
+								<div class="col-sm-8">
+									<input id="incometime" name="incometime" th:value="${payOrder.incometime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">第三方支付订单号：</label>
+								<div class="col-sm-8">
+									<input id="transactionId" name="transactionId" th:value="${payOrder.transactionId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支付状态， 00 支付中， 01已支付， 02 支付失败， 03 交易撤销， 04 交易关闭，05 已退款：</label>
+								<div class="col-sm-8">
+									<input id="paystatus" name="paystatus" th:value="${payOrder.paystatus}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">版本号，每次修改都变更：</label>
+								<div class="col-sm-8">
+									<input id="version" name="version" th:value="${payOrder.version}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">流水号，用于退款验证：</label>
+								<div class="col-sm-8">
+									<input id="flow" name="flow" th:value="${payOrder.flow}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">累计退款金额：</label>
+								<div class="col-sm-8">
+									<input id="refundFee" name="refundFee" th:value="${payOrder.refundFee}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">最后一次更新时间：</label>
+								<div class="col-sm-8">
+									<input id="updateTime" name="updateTime" th:value="${payOrder.updateTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">产品编码：</label>
+								<div class="col-sm-8">
+									<input id="productCode" name="productCode" th:value="${payOrder.productCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">收费员：</label>
+								<div class="col-sm-8">
+									<input id="collectorNo" name="collectorNo" th:value="${payOrder.collectorNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">业务名称：</label>
+								<div class="col-sm-8">
+									<input id="bizName" name="bizName" th:value="${payOrder.bizName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">用户姓名：</label>
+								<div class="col-sm-8">
+									<input id="userName" name="userName" th:value="${payOrder.userName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">接口调用渠道：</label>
+								<div class="col-sm-8">
+									<input id="channelCode" name="channelCode" th:value="${payOrder.channelCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支付产品， qr,f2f,app,js：</label>
+								<div class="col-sm-8">
+									<input id="payMode" name="payMode" th:value="${payOrder.payMode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">付款账户：</label>
+								<div class="col-sm-8">
+									<input id="accountNo" name="accountNo" th:value="${payOrder.accountNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">买家姓名：</label>
+								<div class="col-sm-8">
+									<input id="buyerName" name="buyerName" th:value="${payOrder.buyerName}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/paycenter/payOrder/edit.js">
+	</script>
+</body>
+</html>

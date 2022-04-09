@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.PackageCouponRelationDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.PackageCouponRelationDO">
+		select `relation_id`,`package_id`,`coupon_id`,`coupon_nums` from package_coupon_relation where relation_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.coupon.domain.PackageCouponRelationDO">
+		select `relation_id`,`package_id`,`coupon_id`,`coupon_nums` from package_coupon_relation
+        <where>  
+		  		  <if test="relationId != null and relationId != ''"> and relation_id = #{relationId} </if>
+		  		  <if test="packageId != null and packageId != ''"> and package_id = #{packageId} </if>
+		  		  <if test="couponId != null and couponId != ''"> and coupon_id = #{couponId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by relation_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from package_coupon_relation
+		 <where>  
+		  		  <if test="relationId != null and relationId != ''"> and relation_id = #{relationId} </if>
+		  		  <if test="packageId != null and packageId != ''"> and package_id = #{packageId} </if>
+		  		  <if test="couponId != null and couponId != ''"> and coupon_id = #{couponId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.coupon.domain.PackageCouponRelationDO">
+		insert into package_coupon_relation
+		(
+			`relation_id`, 
+			`package_id`, 
+			`coupon_id`,
+			`coupon_nums`
+		)
+		values
+		(
+			#{relationId}, 
+			#{packageId}, 
+			#{couponId}, 
+			#{couponNums}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.coupon.domain.PackageCouponRelationDO">
+		update package_coupon_relation 
+		<set>
+			<if test="packageId != null">`package_id` = #{packageId}, </if>
+			<if test="couponId != null">`coupon_id` = #{couponId}</if>
+		</set>
+		where relation_id = #{relationId}
+	</update>
+	
+	<delete id="remove">
+		delete from package_coupon_relation where relation_id = #{value}
+	</delete>
+	
+	<delete id="removeByPacId">
+		delete from package_coupon_relation where package_id = #{packageId}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from package_coupon_relation where relation_id in 
+		<foreach item="relationId" collection="array" open="(" separator="," close=")">
+			#{relationId}
+		</foreach>
+	</delete>
+
+</mapper>

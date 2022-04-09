@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phoenix.system.dao.ChannelInterfaceLogDao">
+	<sql id="Base_Column_List">
+		log_id, channel_code, business_type, business_name, org_code, time, method,
+		params,biz_id,
+		ip, create_gmt,rspCode
+	</sql>
+	
+	<select id="total" resultType="com.phoenix.system.vo.ChannelInterfaceLogStatisticVO">
+		select count(1) statisticCount
+		from channel_interface_log
+		<where>
+			<if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode,jdbcType=VARCHAR}</if>
+			<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode,jdbcType=VARCHAR}</if>
+			<if test="businessType != null and businessType != ''"> and business_type = #{businessType,jdbcType=VARCHAR}</if>
+			<if test="businessName != null and businessName != ''"> and business_name = #{businessName,jdbcType=VARCHAR}</if>
+			<if test="bizId != null and bizId != ''"> and biz_id = #{bizId,jdbcType=VARCHAR}</if>
+			<if test="rspCode != null and rspCode != ''"> and rspCode = #{rspCode} </if>
+			<if test="startTime != null and startTime != ''"> and create_gmt &gt;= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+			<if test="endTime != null and endTime != ''"> and create_gmt &lt; STR_TO_DATE(#{endTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+		</where>
+	</select>
+	
+	<select id="listStatistic" resultType="com.phoenix.system.vo.ChannelInterfaceLogStatisticVO">
+		select * from
+			(select
+				<choose>
+					<when test="statisticType == 1"> channel_code </when>
+					<when test="statisticType == 2"> business_type, business_name </when>
+				</choose>, count(1) statisticCount
+				from channel_interface_log
+				<where>
+					<if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode,jdbcType=VARCHAR}</if>
+					<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode,jdbcType=VARCHAR}</if>
+					<if test="businessType != null and businessType != ''"> and business_type = #{businessType,jdbcType=VARCHAR}</if>
+					<if test="businessName != null and businessName != ''"> and business_name = #{businessName,jdbcType=VARCHAR}</if>
+					<if test="bizId != null and bizId != ''"> and biz_id = #{bizId,jdbcType=VARCHAR}</if>
+					<if test="rspCode != null and rspCode != ''"> and rspCode = #{rspCode} </if>
+					<if test="startTime != null and startTime != ''"> and create_gmt &gt;= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+					<if test="endTime != null and endTime != ''"> and create_gmt &lt; STR_TO_DATE(#{endTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+				</where>
+				<choose>
+					<when test="statisticType == 1"> group by channel_code </when>
+					<when test="statisticType == 2"> group by business_type, business_name </when>
+				</choose>
+			) t 
+			<choose>
+				<when test="statisticType == 1"> order by t.channel_code </when>
+				<when test="statisticType == 2"> order by t.business_type </when>
+			</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="countStatistic" resultType="int">
+		select count(1) from 
+			(select
+				<choose>
+					<when test="statisticType == 1"> channel_code </when>
+					<when test="statisticType == 2"> business_type, business_name </when>
+				</choose>, count(1) statisticCount
+				from channel_interface_log
+				<where>
+					<if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode,jdbcType=VARCHAR}</if>
+					<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode,jdbcType=VARCHAR}</if>
+					<if test="businessType != null and businessType != ''"> and business_type = #{businessType,jdbcType=VARCHAR}</if>
+					<if test="businessName != null and businessName != ''"> and business_name = #{businessName,jdbcType=VARCHAR}</if>
+					<if test="bizId != null and bizId != ''"> and biz_id = #{bizId,jdbcType=VARCHAR}</if>
+					<if test="rspCode != null and rspCode != ''"> and rspCode = #{rspCode} </if>
+					<if test="startTime != null and startTime != ''"> and create_gmt &gt;= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+					<if test="endTime != null and endTime != ''"> and create_gmt &lt; STR_TO_DATE(#{endTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+				</where>
+				<choose>
+					<when test="statisticType == 1"> group by channel_code </when>
+					<when test="statisticType == 2"> group by business_type, business_name </when>
+				</choose>
+			) t
+	</select>
+	
+	<select id="list" resultType="com.phoenix.system.domain.ChannelInterfaceLogDO">
+		select cil.log_id, cil.channel_code, cil.business_type, cil.business_name, cil.org_code, cil.time, cil.method,
+		cil.params, cil.ip, cil.create_gmt, wrc.channel_name, cil.biz_id, cil.server_ip, cil.result,cil.rspCode
+		from channel_interface_log cil
+		left join sys_channel wrc on wrc.channel_code = cil.channel_code
+		<where>
+			<if test="orgCode != null and orgCode != ''"> and cil.org_code = #{orgCode,jdbcType=VARCHAR}</if>
+			<if test="channelCode != null and channelCode != ''"> and cil.channel_code = #{channelCode,jdbcType=VARCHAR}</if>
+			<if test="businessType != null and businessType != ''"> and cil.business_type = #{businessType,jdbcType=VARCHAR}</if>
+			<if test="businessName != null and businessName != ''"> and cil.business_name = #{businessName,jdbcType=VARCHAR}</if>
+			<if test="bizId != null and bizId != ''"> and cil.biz_id = #{bizId,jdbcType=VARCHAR}</if>
+			<if test="rspCode != null and rspCode != ''"> and cil.rspCode = #{rspCode} </if>
+			<if test="startTime != null and startTime != ''"> and cil.create_gmt &gt;= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+			<if test="endTime != null and endTime != ''"> and cil.create_gmt &lt; STR_TO_DATE(#{endTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+		</where>
+		order by cil.create_gmt desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(log_id) from channel_interface_log
+		<where>
+			<if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode,jdbcType=VARCHAR}</if>
+			<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode,jdbcType=VARCHAR}</if>
+			<if test="businessType != null and businessType != ''"> and business_type = #{businessType,jdbcType=VARCHAR}</if>
+			<if test="businessName != null and businessName != ''"> and business_name = #{businessName,jdbcType=VARCHAR}</if>
+			<if test="bizId != null and bizId != ''"> and biz_id = #{bizId,jdbcType=VARCHAR}</if>
+			<if test="rspCode != null and rspCode != ''"> and rspCode = #{rspCode} </if>
+			<if test="startTime != null and startTime != ''"> and create_gmt &gt;= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+			<if test="endTime != null and endTime != ''"> and create_gmt &lt; STR_TO_DATE(#{endTime,jdbcType=VARCHAR},"%Y-%m-%d")</if>
+		</where>
+	</select>
+</mapper>

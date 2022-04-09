@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link rel="stylesheet" type="text/css" th:href="@{/js/plugins/oss-h5-upload/style.css}"/>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input type="hidden" id="attachmentId" name="attachmentId" th:value="${attachment.attachmentId}">
+							<input type="hidden" id="ossPolicyType" value="public">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">名称：</label>
+								<div class="col-sm-8">
+									<input id="attachmentName" name="attachmentName" class="form-control" type="text" th:value="${attachment.attachmentName}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">附件：</label>
+								<div class="col-sm-8">
+									<input id="attachmentUrl_pics" name="attachmentUrl" class="form-control" type="hidden">
+									<h4 th:if="${attachment.attachmentUrl != null and attachment.attachmentUrl != ''}" th:text="'已上传文件：'+${attachment.attachmentUrl}"></h4>
+									<h4>您所选择的文件：</h4>
+									<div id="attachmentUrl_ossfile" style="margin-bottom: 5px;">你的浏览器不支持flash,Silverlight或者HTML5！</div>
+									<button type="button" class="layui-btn layui-btn-normal" id="attachmentUrl">选择附件</button>
+								  	<button type="button" class="layui-btn" id="attachmentUrl_upload">开始上传</button>
+								  	<pre id="attachmentUrl_console" class="hide"></pre>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-5">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:src="@{/js/plugins/oss-h5-upload/lib/plupload-2.1.2/js/plupload.full.min.js}"></script>
+	<script th:src="@{/js/plugins/oss-h5-upload/upload.js}"></script>
+	<script type="text/javascript" th:src="@{/js/appjs/common/attachment/edit.js}"></script>
+</body>
+</html>

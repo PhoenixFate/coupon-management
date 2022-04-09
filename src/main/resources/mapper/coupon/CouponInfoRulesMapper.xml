@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.CouponInfoRulesDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.CouponInfoRulesDO">
+		select `id`,`coupon_id`,`rule_key`,`rule_name`,`rule_val`,`expression`,`create_user`,`create_gmt`,`update_user`,`update_gmt` from coupon_info_rules where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.coupon.domain.CouponInfoRulesDO">
+		select `id`,`coupon_id`,`rule_key`,`rule_name`,`rule_val`,`expression`,`create_user`,`create_gmt`,`update_user`,`update_gmt` from coupon_info_rules
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="couponId != null and couponId != ''"> and coupon_id = #{couponId} </if>
+		  		  <if test="ruleKey != null and ruleKey != ''"> and rule_key = #{ruleKey} </if>
+		  		  <if test="ruleName != null and ruleName != ''"> and rule_name = #{ruleName} </if>
+		  		  <if test="ruleVal != null and ruleVal != ''"> and rule_val = #{ruleVal} </if>
+		  		  <if test="expression != null and expression != ''"> and expression = #{expression} </if>
+		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+		  		  <if test="createGmt != null and createGmt != ''"> and create_gmt = #{createGmt} </if>
+		  		  <if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+		  		  <if test="updateGmt != null and updateGmt != ''"> and update_gmt = #{updateGmt} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from coupon_info_rules
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="couponId != null and couponId != ''"> and coupon_id = #{couponId} </if>
+		  		  <if test="ruleKey != null and ruleKey != ''"> and rule_key = #{ruleKey} </if>
+		  		  <if test="ruleName != null and ruleName != ''"> and rule_name = #{ruleName} </if>
+		  		  <if test="ruleVal != null and ruleVal != ''"> and rule_val = #{ruleVal} </if>
+		  		  <if test="expression != null and expression != ''"> and expression = #{expression} </if>
+		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+		  		  <if test="createGmt != null and createGmt != ''"> and create_gmt = #{createGmt} </if>
+		  		  <if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+		  		  <if test="updateGmt != null and updateGmt != ''"> and update_gmt = #{updateGmt} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.coupon.domain.CouponInfoRulesDO">
+		insert into coupon_info_rules
+		(
+			`id`, 
+			`coupon_id`, 
+			`rule_key`, 
+			`rule_name`, 
+			`rule_val`, 
+			`expression`, 
+			`create_user`, 
+			`create_gmt`, 
+			`update_user`, 
+			`update_gmt`
+		)
+		values
+		(
+			#{id}, 
+			#{couponId}, 
+			#{ruleKey}, 
+			#{ruleName}, 
+			#{ruleVal}, 
+			#{expression}, 
+			#{createUser}, 
+			#{createGmt}, 
+			#{updateUser}, 
+			#{updateGmt}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.coupon.domain.CouponInfoRulesDO">
+		update coupon_info_rules 
+		<set>
+			<if test="couponId != null">`coupon_id` = #{couponId}, </if>
+			<if test="ruleKey != null">`rule_key` = #{ruleKey}, </if>
+			<if test="ruleName != null">`rule_name` = #{ruleName}, </if>
+			<if test="ruleVal != null">`rule_val` = #{ruleVal}, </if>
+			<if test="expression != null">`expression` = #{expression}, </if>
+			<if test="createUser != null">`create_user` = #{createUser}, </if>
+			<if test="createGmt != null">`create_gmt` = #{createGmt}, </if>
+			<if test="updateUser != null">`update_user` = #{updateUser}, </if>
+			<if test="updateGmt != null">`update_gmt` = #{updateGmt}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from coupon_info_rules where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from coupon_info_rules where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

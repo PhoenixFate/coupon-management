@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phoenix.common.dao.MenuDao">
+
+	<select id="get" resultType="com.phoenix.common.domain.MenuDO">
+		select menu_id, parent_menu_id, menu_name, menu_url, menu_perms, menu_type, menu_icon, menu_order_num, create_gmt, update_gmt, remark
+		from sys_menu where menu_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.common.domain.MenuDO">
+		select menu_id, parent_menu_id, menu_name, menu_url, menu_perms, menu_type, menu_icon, menu_order_num, create_gmt, update_gmt, remark
+		from sys_menu
+		<where>
+			<if test="menuId != null and menuId != ''"> and menu_id = #{menuId} </if>
+			<if test="parentMenuId != null and parentMenuId != ''"> and parent_menu_id = #{parentMenuId} </if>
+			<if test="menuName != null and menuName != ''"> and menu_name = ${menuName}  </if>
+			<if test="menuUrl != null and menuUrl != ''"> and menu_url = #{menuUrl} </if>
+			<if test="menuPerms != null and menuPerms != ''"> and menu_perms = #{menuPerms} </if>
+			<if test="menuType != null and menuType != ''"> and menu_type = #{menuType} </if>
+			<if test="menuIcon != null and menuIcon != ''"> and menu_icon = #{menuIcon} </if>
+			<if test="menuOrderNum != null and menuOrderNum != ''"> and menu_order_num = #{menuOrderNum} </if>
+			<if test="createGmt != null and createGmt != ''"> and create_gmt = #{createGmt} </if>
+			<if test="updateGmt != null and updateGmt != ''"> and update_gmt = #{updateGmt} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by menu_order_num desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from sys_menu
+		<where>
+			<if test="menuId != null and menuId != ''"> and menu_id = #{menuId} </if>
+			<if test="parentMenuId != null and parentMenuId != ''"> and parent_menu_id = #{parentMenuId} </if>
+			<if test="menuName != null and menuName != ''"> and menu_name = #{menuName} </if>
+			<if test="menuUrl != null and menuUrl != ''"> and menu_url = #{menuUrl} </if>
+			<if test="menuPerms != null and menuPerms != ''"> and menu_perms = #{menuPerms} </if>
+			<if test="menuType != null and menuType != ''"> and menu_type = #{menuType} </if>
+			<if test="menuIcon != null and menuIcon != ''"> and menu_icon = #{menuIcon} </if>
+			<if test="menuOrderNum != null and menuOrderNum != ''"> and menu_order_num = #{menuOrderNum} </if>
+			<if test="createGmt != null and createGmt != ''"> and create_gmt = #{createGmt} </if>
+			<if test="updateGmt != null and updateGmt != ''"> and update_gmt = #{updateGmt} </if>
+		</where>
+	</select>
+
+	<insert id="save"
+		parameterType="com.phoenix.common.domain.MenuDO">
+		insert into sys_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="menuId != null">
+				menu_id,
+			</if>
+			<if test="parentMenuId != null">
+				parent_menu_id,
+			</if>
+			<if test="menuName != null">
+				menu_name,
+			</if>
+			<if test="menuUrl != null">
+				menu_url,
+			</if>
+			<if test="menuPerms != null">
+				menu_perms,
+			</if>
+			<if test="menuType != null">
+				menu_type,
+			</if>
+			<if test="menuIcon != null">
+				menu_icon,
+			</if>
+			<if test="menuOrderNum != null">
+				menu_order_num,
+			</if>
+			<if test="createGmt != null">
+				create_gmt,
+			</if>
+			<if test="updateGmt != null">
+				update_gmt,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="menuId != null">
+				#{menuId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentMenuId != null">
+				#{parentMenuId,jdbcType=VARCHAR},
+			</if>
+			<if test="menuName != null">
+				#{menuName,jdbcType=VARCHAR},
+			</if>
+			<if test="menuUrl != null">
+				#{menuUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="menuPerms != null">
+				#{menuPerms,jdbcType=VARCHAR},
+			</if>
+			<if test="menuType != null">
+				#{menuType,jdbcType=INTEGER},
+			</if>
+			<if test="menuIcon != null">
+				#{menuIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="menuOrderNum != null">
+				#{menuOrderNum,jdbcType=INTEGER},
+			</if>
+			<if test="createGmt != null">
+				#{createGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateGmt != null">
+				#{updateGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update"
+		parameterType="com.phoenix.common.domain.MenuDO">
+		update sys_menu
+		<set>
+			<if test="parentMenuId != null">
+				parent_menu_id = #{parentMenuId,jdbcType=VARCHAR},
+			</if>
+			<if test="menuName != null">
+				menu_name = #{menuName,jdbcType=VARCHAR},
+			</if>
+			<if test="menuUrl != null">
+				menu_url = #{menuUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="menuPerms != null">
+				menu_perms = #{menuPerms,jdbcType=VARCHAR},
+			</if>
+			<if test="menuType != null">
+				menu_type = #{menuType,jdbcType=INTEGER},
+			</if>
+			<if test="menuIcon != null">
+				menu_icon = #{menuIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="menuOrderNum != null">
+				menu_order_num = #{menuOrderNum,jdbcType=INTEGER},
+			</if>
+			<if test="createGmt != null">
+				create_gmt = #{createGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateGmt != null">
+				update_gmt = #{updateGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where menu_id = #{menuId,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="remove">
+		delete from sys_menu where menu_id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from sys_menu where menu_id in
+		<foreach item="menuId" collection="array" open="("
+			separator="," close=")">
+			#{menuId}
+		</foreach>
+	</delete>
+
+	<select id="listMenuByUserId"
+		resultType="com.phoenix.common.domain.MenuDO">
+		select distinct
+		m.menu_id,m.parent_menu_id,m.menu_name,m.menu_url,m.menu_perms,m.menu_type,m.menu_icon,m.menu_order_num,m.create_gmt,m.update_gmt,m.remark
+		from sys_menu m
+		left join sys_role_menu rm on m.menu_id =
+		rm.menu_id
+		left join sys_user_role ur on rm.role_id =ur.role_id
+		<where>
+			and m.menu_type in ('0','1')
+			<if test="userId !=null and userId != ''"> and ur.user_id = #{userId} </if>
+			<if test="searchName != null and searchName != ''"> and menu_name like concat('%',#{searchName},'%') </if>
+		</where>
+		order by m.menu_order_num
+	</select>
+
+	<select id="listUserPerms" resultType="string">
+		select distinct m.menu_perms from sys_menu m
+		left join
+		sys_role_menu rm on m.menu_id = rm.menu_id
+		left join
+		sys_user_role ur on rm.role_id = ur.role_id
+		<where>
+			<if test="value != null and value != ''"> and ur.user_id = #{value}</if>
+		</where>
+	</select>
+</mapper>

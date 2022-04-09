@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.common.dao.OrgDao">
+
+	<sql id="Base_Column_List">
+		org_id, org_code, org_name, org_grade, org_mobile, org_img, org_logo_img,
+		org_order_num,
+		status, create_gmt, update_gmt, init_role_status, org_field,
+		org_display_name, org_display_logo,REFUND_PASSWORD
+	</sql>
+
+	<select id="get" resultType="com.phoenix.common.domain.OrgDO">
+		select
+		<include refid="Base_Column_List" />
+		from sys_org where org_id = #{value}
+	</select>
+	
+
+	<select id="getByOrgCode" resultType="com.phoenix.common.domain.OrgDO">
+		select <include refid="Base_Column_List" />
+		from sys_org where org_code = #{value}
+	</select>
+	
+	<select id="list" resultType="com.phoenix.common.domain.OrgDO">
+		select
+		<include refid="Base_Column_List" />
+		from sys_org
+		<where>
+			<if test="orgId != null and orgId != ''"> and org_id = #{orgId,jdbcType=VARCHAR} </if>
+			<if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode,jdbcType=VARCHAR} </if>
+			<if test="status != null and status != ''"> and status = #{status,jdbcType=CHAR} </if>
+			<if test="searchName != null and searchName != ''"> and org_name like concat('%',#{searchName},'%') </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by org_order_num asc,org_code desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from sys_org
+		<where>
+			<if test="orgId != null and orgId != ''"> and org_id = #{orgId,jdbcType=VARCHAR} </if>
+			<if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode,jdbcType=VARCHAR} </if>
+			<if test="status != null and status != ''"> and status = #{status,jdbcType=CHAR} </if>
+			<if test="searchName != null and searchName != ''"> and org_name like concat('%',#{searchName},'%') </if>
+		</where>
+	</select>
+
+	<insert id="save"
+		parameterType="com.phoenix.common.domain.OrgDO">
+		insert into sys_org
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orgId != null">
+				org_id,
+			</if>
+			<if test="orgCode != null">
+				org_code,
+			</if>
+			<if test="orgName != null">
+				org_name,
+			</if>
+			<if test="orgGrade != null">
+				org_grade,
+			</if>
+			<if test="orgMobile != null">
+				org_mobile,
+			</if>
+			<if test="orgImg != null">
+				org_img,
+			</if>
+			<if test="orgLogoImg != null">
+				org_logo_img,
+			</if>
+			<if test="orgOrderNum != null">
+				org_order_num,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="createGmt != null">
+				create_gmt,
+			</if>
+			<if test="updateGmt != null">
+				update_gmt,
+			</if>
+			<if test="initRoleStatus != null">
+				init_role_status,
+			</if>
+			<if test="orgField != null">
+				org_field,
+			</if>
+			<if test="orgDisplayName != null">
+				org_display_name,
+			</if>
+			<if test="orgDisplayLogo != null">
+				org_display_logo,
+			</if>
+			<if test="orgDesc != null">
+				org_desc,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="orgCode != null">
+				#{orgCode,jdbcType=VARCHAR},
+			</if>
+			<if test="orgName != null">
+				#{orgName,jdbcType=VARCHAR},
+			</if>
+			<if test="orgGrade != null">
+				#{orgGrade,jdbcType=VARCHAR},
+			</if>
+			<if test="orgMobile != null">
+				#{orgMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="orgImg != null">
+				#{orgImg,jdbcType=VARCHAR},
+			</if>
+			<if test="orgLogoImg != null">
+				#{orgLogoImg,jdbcType=VARCHAR},
+			</if>
+			<if test="orgOrderNum != null">
+				#{orgOrderNum,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
+			</if>
+			<if test="createGmt != null">
+				#{createGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateGmt != null">
+				#{updateGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="initRoleStatus != null">
+				#{initRoleStatus,jdbcType=CHAR},
+			</if>
+			<if test="orgField != null">
+				#{orgField,jdbcType=VARCHAR},
+			</if>
+			<if test="orgDisplayName != null">
+				#{orgDisplayName,jdbcType=VARCHAR},
+			</if>
+			<if test="orgDisplayLogo != null">
+				#{orgDisplayLogo,jdbcType=VARCHAR},
+			</if>
+			<if test="orgDesc != null">
+				#{orgDesc,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update"
+		parameterType="com.phoenix.common.domain.OrgDO">
+		update sys_org
+		<set>
+			<if test="orgCode != null">
+				org_code = #{orgCode,jdbcType=VARCHAR},
+			</if>
+			<if test="orgName != null">
+				org_name = #{orgName,jdbcType=VARCHAR},
+			</if>
+			<if test="orgGrade != null">
+				org_grade = #{orgGrade,jdbcType=VARCHAR},
+			</if>
+			<if test="orgMobile != null">
+				org_mobile = #{orgMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="orgImg != null">
+				org_img = #{orgImg,jdbcType=VARCHAR},
+			</if>
+			<if test="orgLogoImg != null">
+				org_logo_img = #{orgLogoImg,jdbcType=VARCHAR},
+			</if>
+			<if test="orgOrderNum != null">
+				org_order_num = #{orgOrderNum,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=CHAR},
+			</if>
+			<if test="createGmt != null">
+				create_gmt = #{createGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateGmt != null">
+				update_gmt = #{updateGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="initRoleStatus != null">
+				init_role_status = #{initRoleStatus,jdbcType=CHAR},
+			</if>
+			<if test="orgField != null">
+				org_field = #{orgField,jdbcType=VARCHAR},
+			</if>
+			<if test="orgDisplayName != null">
+				org_display_name = #{orgDisplayName,jdbcType=VARCHAR},
+			</if>
+			<if test="orgDisplayLogo != null">
+				org_display_logo = #{orgDisplayLogo,jdbcType=VARCHAR},
+			</if>
+			<if test="orgDesc != null">
+				org_desc = #{orgDesc,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="refundPassword != null">`REFUND_PASSWORD` = #{refundPassword}, </if>
+		</set>
+		where org_id = #{orgId,jdbcType=VARCHAR}
+	</update>
+
+	<update id="remove">
+		update sys_org set status = '0' where org_id =
+		#{value}
+	</update>
+
+	<update id="batchRemove">
+		update sys_org set status = '0' where org_id in
+		<foreach item="orgId" collection="array" open="("
+			separator="," close=")">
+			#{orgId}
+		</foreach>
+	</update>
+
+	<select id="getOrgs"
+		resultType="com.phoenix.common.domain.OrgDO">
+		select
+		org.org_id,org.org_code,org.org_name,org.org_grade,org.org_mobile,org.org_desc,org.org_img,org.org_logo_img,org.org_order_num,org.status,org.create_gmt,org.update_gmt,org.org_field,org.org_sys_logo
+		from sys_org org
+		<where>
+			<if test="orgId != null and orgId != ''"> and org.org_id = #{orgId,jdbcType=VARCHAR} </if>
+			<if test="orgCode != null and orgCode != ''"> and org.org_code = #{orgCode,jdbcType=VARCHAR} </if>
+			<if test="orgName != null and orgName != ''"> and org.org_name like concat('%',#{orgName,jdbcType=VARCHAR},'%') </if>
+			<if test="status != null and status != ''"> and status = #{status,jdbcType=CHAR} </if>
+			<if test="userId != null and userId != ''"> and exists(select 1 from sys_user user where
+				user.org_code=org.org_code and user.user_id=#{userId,jdbcType=VARCHAR}) </if>
+			<if test="excludeOrgCode != null and excludeOrgCode != ''"> and org.org_code != #{excludeOrgCode,jdbcType=VARCHAR}</if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by org_order_num asc,org_code desc
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

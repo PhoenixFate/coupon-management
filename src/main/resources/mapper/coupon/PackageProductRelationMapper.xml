@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.PackageProductRelationDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.PackageProductRelationDO">
+		select `relation_id`,`package_id`,`product_id` from package_product_relation where relation_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.coupon.domain.PackageProductRelationDO">
+		select `relation_id`,`package_id`,`product_id` from package_product_relation
+        <where>  
+		  		  <if test="relationId != null and relationId != ''"> and relation_id = #{relationId} </if>
+		  		  <if test="packageId != null and packageId != ''"> and package_id = #{packageId} </if>
+		  		  <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by relation_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from package_product_relation
+		 <where>  
+		  		  <if test="relationId != null and relationId != ''"> and relation_id = #{relationId} </if>
+		  		  <if test="packageId != null and packageId != ''"> and package_id = #{packageId} </if>
+		  		  <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.coupon.domain.PackageProductRelationDO">
+		insert into package_product_relation
+		(
+			`relation_id`, 
+			`package_id`, 
+			`product_id`
+		)
+		values
+		(
+			#{relationId}, 
+			#{packageId}, 
+			#{productId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.coupon.domain.PackageProductRelationDO">
+		update package_product_relation 
+		<set>
+			<if test="packageId != null">`package_id` = #{packageId}, </if>
+			<if test="productId != null">`product_id` = #{productId}</if>
+		</set>
+		where relation_id = #{relationId}
+	</update>
+	
+	<delete id="remove">
+		delete from package_product_relation where relation_id = #{value}
+	</delete>
+	
+	<delete id="removeByProductId">
+		delete from package_product_relation where product_id = #{productCode}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from package_product_relation where relation_id in 
+		<foreach item="relationId" collection="array" open="(" separator="," close=")">
+			#{relationId}
+		</foreach>
+	</delete>
+
+</mapper>

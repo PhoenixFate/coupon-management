@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">医院编码：</label>
+								<div class="col-sm-8">
+									<input id="orgCode" name="orgCode" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">账单日期 YYYY-MM-DD：</label>
+								<div class="col-sm-8">
+									<input id="orderDate" name="orderDate" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">业务类型：</label>
+								<div class="col-sm-8">
+									<input id="bizCode" name="bizCode" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">业务名称：</label>
+								<div class="col-sm-8">
+									<input id="bizName" name="bizName" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">HIS病人信息编号：</label>
+								<div class="col-sm-8">
+									<input id="patientId" name="patientId" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">病人姓名：</label>
+								<div class="col-sm-8">
+									<input id="patientName" name="patientName" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">身份证号：</label>
+								<div class="col-sm-8">
+									<input id="idNo" name="idNo" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">手机号：</label>
+								<div class="col-sm-8">
+									<input id="phoneNo" name="phoneNo" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">诊疗卡号：</label>
+								<div class="col-sm-8">
+									<input id="cardNo" name="cardNo" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">操作员号：</label>
+								<div class="col-sm-8">
+									<input id="collectorNo" name="collectorNo" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">消费订单号：</label>
+								<div class="col-sm-8">
+									<input id="thirdOrdernumber" name="thirdOrdernumber" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易额 单位分：</label>
+								<div class="col-sm-8">
+									<input id="orderFee" name="orderFee" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">渠道1：窗口，2：自助机，3：微信公众号，4支付宝服务窗，5：app， 6：其他：</label>
+								<div class="col-sm-8">
+									<input id="channel" name="channel" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易时间 yyyy-MM-dd    HH:mm:ss：</label>
+								<div class="col-sm-8">
+									<input id="tradeTime" name="tradeTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">创建时间：</label>
+								<div class="col-sm-8">
+									<input id="createTime" name="createTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否退款 1是：</label>
+								<div class="col-sm-8">
+									<input id="refundFlag" name="refundFlag" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退费金额：</label>
+								<div class="col-sm-8">
+									<input id="refundFee" name="refundFee" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/account/accountHisZd/add.js}">
+	</script>
+</body>
+</html>

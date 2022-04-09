@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phoenix.common.dao.DictDao">
+
+	<select id="get" resultType="com.phoenix.common.domain.DictDO">
+		select dict_id, type_id, dict_name,
+		dict_value, dict_sort, parent_dict_id, create_user,
+		create_gmt,
+		update_user, update_gmt, remarks
+		from sys_dict where dict_id =
+		#{value}
+	</select>
+
+	<select id="list" resultType="com.phoenix.common.domain.DictDO">
+		select dict.dict_id, dict.type_id, dict.dict_name, dict.dict_value,
+		dict.dict_sort, dict.parent_dict_id, dict.create_user,
+		dict.create_gmt,
+		dict.update_user, dict.update_gmt, dict.remarks,
+		type.type_Code dictType, type.type_Name dictDescription
+		from sys_dict dict
+		left join sys_dict_type type on dict.type_id =
+		type.type_id
+		<where>
+			<if test="dictId != null and dictId != ''"> and dict.dict_id = #{dictId} </if>
+			<if test="dictName != null and dictName != ''"> and dict.dict_name = #{dictName} </if>
+			<if test="dictValue != null and dictValue != ''"> and dict.dict_value = #{dictValue} </if>
+			<if test="typeId != null and typeId != ''"> and dict.type_id = #{typeId} </if>
+			<if test="dictSort != null and dictSort != ''"> and dict.dict_sort = #{dictSort} </if>
+			<if test="parentDictId != null and parentDictId != ''"> and dict.parent_dict_id = #{parentDictId} </if>
+			<if test="searchName != null and searchName != ''"> and dict.dict_name like concat('%',#{searchName},'%') </if>
+			<if test="dictType != null and dictType != ''">
+				and dict.type_id = (select type_id from sys_dict_type
+				where type_code = #{dictType})
+			</if>
+			<choose>
+				<when test="id == null or id == ''">
+					and (id is null or id = '')
+				</when>
+				<otherwise>
+					and id = #{id,jdbcType=VARCHAR}
+				</otherwise>
+			</choose>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by dict.type_id,dict.dict_sort
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from sys_dict
+		<where>
+			<if test="dictId != null and dictId != ''"> and dict_id = #{dictId} </if>
+			<if test="dictName != null and dictName != ''"> and dict_name = #{dictName} </if>
+			<if test="dictValue != null and dictValue != ''"> and dict_value = #{dictValue} </if>
+			<if test="typeId != null and typeId != ''"> and type_id = #{typeId} </if>
+			<if test="dictSort != null and dictSort != ''"> and dict_sort = #{dictSort} </if>
+			<if test="parentDictId != null and parentDictId != ''"> and parent_dict_id = #{parentDictId} </if>
+			<if test="searchName != null and searchName != ''"> and dict_name like concat('%',#{searchName},'%')  </if>
+			<if test="dictType != null and dictType != ''">
+				and type_id = (select type_id from sys_dict_type
+				where type_code = #{dictType})
+			</if>
+			<choose>
+				<when test="id == null or id == ''">
+					and (id is null or id = '')
+				</when>
+				<otherwise>
+					and id = #{id,jdbcType=VARCHAR}
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
+
+	<insert id="save"
+		parameterType="com.phoenix.common.domain.DictDO">
+		insert into sys_dict
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="dictId != null">
+				dict_id,
+			</if>
+			<if test="typeId != null">
+				type_id,
+			</if>
+			<if test="dictName != null">
+				dict_name,
+			</if>
+			<if test="dictValue != null">
+				dict_value,
+			</if>
+			<if test="dictSort != null">
+				dict_sort,
+			</if>
+			<if test="parentDictId != null">
+				parent_dict_id,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createGmt != null">
+				create_gmt,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="updateGmt != null">
+				update_gmt,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="id != null">
+				id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="dictId != null">
+				#{dictId,jdbcType=VARCHAR},
+			</if>
+			<if test="typeId != null">
+				#{typeId,jdbcType=VARCHAR},
+			</if>
+			<if test="dictName != null">
+				#{dictName,jdbcType=VARCHAR},
+			</if>
+			<if test="dictValue != null">
+				#{dictValue,jdbcType=VARCHAR},
+			</if>
+			<if test="dictSort != null">
+				#{dictSort,jdbcType=DECIMAL},
+			</if>
+			<if test="parentDictId != null">
+				#{parentDictId,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createGmt != null">
+				#{createGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateGmt != null">
+				#{updateGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update"
+		parameterType="com.phoenix.common.domain.DictDO">
+		update sys_dict
+		<set>
+			<if test="typeId != null">
+				type_id = #{typeId,jdbcType=VARCHAR},
+			</if>
+			<if test="dictName != null">
+				dict_name = #{dictName,jdbcType=VARCHAR},
+			</if>
+			<if test="dictValue != null">
+				dict_value = #{dictValue,jdbcType=VARCHAR},
+			</if>
+			<if test="dictSort != null">
+				dict_sort = #{dictSort,jdbcType=DECIMAL},
+			</if>
+			<if test="parentDictId != null">
+				parent_dict_id = #{parentDictId,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createGmt != null">
+				create_gmt = #{createGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				update_user = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateGmt != null">
+				update_gmt = #{updateGmt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where dict_id = #{dictId,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="remove">
+		delete from sys_dict where dict_id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from sys_dict where dict_id in
+		<foreach item="dictId" collection="array" open="(" separator=","
+			close=")">
+			#{dictId}
+		</foreach>
+	</delete>
+
+	<select id="getTypeCout" resultType="int">
+		select count(1) from sys_dict where type_id in
+		<foreach item="typeId" collection="array" open="(" separator=","
+			close=")">
+			#{typeId}
+		</foreach>
+	</select>
+</mapper>

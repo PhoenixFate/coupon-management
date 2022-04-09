@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="productId" name="productId" th:value="${productInfo.productId}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">产品名称：</label>
+								<div class="col-sm-8">
+									<input id="productName" name="productName" th:value="${productInfo.productName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">产品详情介绍：</label>
+								<div class="col-sm-8">
+								<textarea id="productDetail" name="productDetail" class="form-control" rows="6" th:text="${productInfo.productDetail}"></textarea>
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">产品编码：</label>
+								<div class="col-sm-8">
+									<input id="productCode" name="productCode" th:value="${productInfo.productCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">产品状态：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline"> <input type="radio" name="productStatus" value="1" th:field="${productInfo.productStatus}"/> 启用</label> 
+									<label class="radio-inline"> <input type="radio" name="productStatus" value="0" th:field="${productInfo.productStatus}"/> 暂不启用 </label>
+									<label class="radio-inline"> <input type="radio" name="productStatus" value="2" th:field="${productInfo.productStatus}"/> 停用 </label>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/coupon/productInfo/edit.js}">
+	</script>
+</body>
+</html>

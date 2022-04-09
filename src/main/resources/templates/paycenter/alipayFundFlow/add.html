@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">商户号：</label>
+								<div class="col-sm-8">
+									<input id="mchId" name="mchId" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">机构代码：</label>
+								<div class="col-sm-8">
+									<input id="orgCode" name="orgCode" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">发生时间：</label>
+								<div class="col-sm-8">
+									<input id="tradeTime" name="tradeTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支付宝流水号：</label>
+								<div class="col-sm-8">
+									<input id="alipayBillsNo" name="alipayBillsNo" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商户订单号：</label>
+								<div class="col-sm-8">
+									<input id="merchantOrderNo" name="merchantOrderNo" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">商品名称：</label>
+								<div class="col-sm-8">
+									<input id="bizName" name="bizName" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">买家账号：</label>
+								<div class="col-sm-8">
+									<input id="buyerName" name="buyerName" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">收支类型：</label>
+								<div class="col-sm-8">
+									<input id="tradeType" name="tradeType" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">收入金额(元)：</label>
+								<div class="col-sm-8">
+									<input id="incomeFee" name="incomeFee" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">账户结余(元)：</label>
+								<div class="col-sm-8">
+									<input id="accountRemain" name="accountRemain" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">支出金额(元)：</label>
+								<div class="col-sm-8">
+									<input id="outcomeFee" name="outcomeFee" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">备注：</label>
+								<div class="col-sm-8">
+									<input id="remarks" name="remarks" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易渠道：</label>
+								<div class="col-sm-8">
+									<input id="tradeChannel" name="tradeChannel" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交易日期：</label>
+								<div class="col-sm-8">
+									<input id="tradeDate" name="tradeDate" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/paycenter/alipayFundFlow/add.js}">
+	</script>
+</body>
+</html>

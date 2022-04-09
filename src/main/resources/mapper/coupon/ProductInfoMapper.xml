@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phoenix.coupon.dao.ProductInfoDao">
+
+	<select id="get" resultType="com.phoenix.coupon.domain.ProductInfoDO">
+		select `product_id`,`product_name`,`product_detail`,`product_code`,`version`,`product_status`,`create_time`,`update_time` from product_info where product_id = #{value}
+	</select>
+	
+		<select id="getAllProPacInfo" resultType="com.phoenix.coupon.domain.productPackageInfoDo">
+			SELECT
+				ppr.relation_id,ppr.package_id,ppr.product_id as product_code
+			FROM
+				package_product_relation AS ppr 
+			WHERE
+				ppr.product_id = #{arg0}
+		</select>
+	
+	<select id="getProPacRelationInfoByPacId"  resultType="com.phoenix.coupon.domain.productPackageInfoDo">
+		SELECT
+			ppro.package_id,
+			pi.package_name,
+			pi.package_detail,
+			ppro.product_code 
+		FROM
+			(
+			SELECT
+				proi.product_id,
+				proi.product_code,
+				proi.product_name,
+				proi.product_detail,
+				ppr.package_id 
+			FROM
+				product_info AS proi
+				LEFT JOIN package_product_relation AS ppr ON proi.product_code = ppr.product_id 
+				AND proi.product_code = #{productCode}
+				
+			) AS ppro
+			LEFT JOIN package_info AS pi ON ppro.package_id = pi.package_id
+	</select>
+
+	<select id="list" resultType="com.phoenix.coupon.domain.ProductInfoDO">
+		select `product_id`,`product_name`,`product_detail`,`product_code`,`version`,`product_status`,`create_time`,`update_time` from product_info
+        <where>  
+		  		  <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
+		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
+		  		  <if test="productDetail != null and productDetail != ''"> and product_detail = #{productDetail} </if>
+		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="productStatus != null and productStatus != ''"> and product_status = #{productStatus} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by product_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from product_info
+		 <where>  
+		  		  <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
+		  		  <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
+		  		  <if test="productDetail != null and productDetail != ''"> and product_detail = #{productDetail} </if>
+		  		  <if test="productCode != null and productCode != ''"> and product_code = #{productCode} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="productStatus != null and productStatus != ''"> and product_status = #{productStatus} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.phoenix.coupon.domain.ProductInfoDO">
+		insert into product_info
+		(
+			`product_id`, 
+			`product_name`, 
+			`product_detail`, 
+			`product_code`, 
+			`version`, 
+			`product_status`
+		)
+		values
+		(
+			#{productId}, 
+			#{productName}, 
+			#{productDetail}, 
+			#{productCode}, 
+			#{version}, 
+			#{productStatus}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.phoenix.coupon.domain.ProductInfoDO">
+		update product_info 
+		<set>
+			<if test="productName != null">`product_name` = #{productName}, </if>
+			<if test="productDetail != null">`product_detail` = #{productDetail}, </if>
+			<if test="productCode != null">`product_code` = #{productCode}, </if>
+			<if test="version != null">`version` = #{version}, </if>
+			<if test="productStatus != null">`product_status` = #{productStatus} </if>
+		</set>
+		where product_id = #{productId}
+	</update>
+	
+	<delete id="remove">
+		delete from product_info where product_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from product_info where product_id in 
+		<foreach item="productId" collection="array" open="(" separator="," close=")">
+			#{productId}
+		</foreach>
+	</delete>
+
+</mapper>

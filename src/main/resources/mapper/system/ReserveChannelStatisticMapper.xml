@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phoenix.system.dao.ReserveChannelStatisticDao" >
+  <sql id="Base_Column_List" >
+    id, channel_code, channel_name, org_code, reserve_count, refund_count, violate_count, 
+    statistic_date
+  </sql>
+  
+  <select id="total" resultType="com.phoenix.system.domain.ReserveChannelStatisticDO">
+		select sum(reserve_count) as reserve_count,sum(refund_count) as refund_count,sum(violate_count) as violate_count
+		from reserve_channel_statistic
+		<where>
+			<if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode,jdbcType=VARCHAR}</if>
+			<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode,jdbcType=VARCHAR}</if>
+			<if test="startTime != null and startTime != ''"> and statistic_date &gt;= #{startTime,jdbcType=VARCHAR}</if>
+			<if test="endTime != null and endTime != ''"> and statistic_date &lt;= #{endTime,jdbcType=VARCHAR}</if>
+		</where>
+	</select>
+  
+  <select id="list" resultType="com.phoenix.system.domain.ReserveChannelStatisticDO">
+		select <include refid="Base_Column_List" />
+		from reserve_channel_statistic
+		<where>
+			<if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode,jdbcType=VARCHAR}</if>
+			<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode,jdbcType=VARCHAR}</if>
+			<if test="startTime != null and startTime != ''"> and statistic_date &gt;= #{startTime,jdbcType=VARCHAR}</if>
+			<if test="endTime != null and endTime != ''"> and statistic_date &lt; #{endTime,jdbcType=VARCHAR}</if>
+		</where>
+		order by statistic_date desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(id) from reserve_channel_statistic
+		<where>
+			<if test="orgCode != null and orgCode != ''"> and org_code = #{orgCode,jdbcType=VARCHAR}</if>
+			<if test="channelCode != null and channelCode != ''"> and channel_code = #{channelCode,jdbcType=VARCHAR}</if>
+			<if test="startTime != null and startTime != ''"> and statistic_date &gt;= #{startTime,jdbcType=VARCHAR}</if>
+			<if test="endTime != null and endTime != ''"> and statistic_date &lt; #{endTime,jdbcType=VARCHAR}</if>
+		</where>
+	</select>
+</mapper>

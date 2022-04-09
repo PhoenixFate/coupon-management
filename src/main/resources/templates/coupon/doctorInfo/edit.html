@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="docApplyId" name="docApplyId" th:value="${doctorInfo.docApplyId}"  type="hidden">
+						<input id="oldDocCode" name="oldDocCode" th:value="${doctorInfo.docCode}"  type="hidden">
+						
+						<div class="form-group">	
+								<label class="col-sm-3 control-label">所属医院：</label>
+								<div class="col-sm-6">
+									<select id="hosCode" name="hosCode" class="selectpicker"  title="所属医院" th:field="${doctorInfo.hosCode}">
+							        	<option th:each="hosCode:${hosCodes}" th:value="${hosCode.orgCode}" th:text="${hosCode.orgName}">
+								        	</option>
+							        </select>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">医生编码：</label>
+								<div class="col-sm-6">
+									<input id="docCode" name="docCode" th:value="${doctorInfo.docCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">医生名称：</label>
+								<div class="col-sm-6">
+									<input id="docName" name="docName" th:value="${doctorInfo.docName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">医生身份证：</label>
+								<div class="col-sm-6">
+									<input id="docCard" name="docCard" th:value="${doctorInfo.docCard}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">手机号码：</label>
+								<div class="col-sm-6">
+									<input id="docPhone" name="docPhone" th:value="${doctorInfo.docPhone}" class="form-control" type="text">
+								</div>
+							</div>
+							
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">医生类别：</label>
+								<div class="col-sm-6">
+									<select lay-key  id="doctorType" name="doctorType" title="医生类别" class="selectpicker" th:field="${doctorInfo.doctorType}" >
+										<option value="0" selected="selected">医生</option>
+										<option value="1">护士</option>
+								    </select>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">医生职称：</label>
+								<div class="col-sm-6">
+									<input id="docTitle" name="docTitle" th:value="${doctorInfo.docTitle}" class="form-control" type="text">
+								</div>
+							</div>
+							
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">审核状态：</label>
+								<div class="col-sm-6">
+								
+								<label class="radio-inline"> 
+										<input type="radio" name="auditStatus" value="0" checked="checked"  th:field="${doctorInfo.auditStatus}"/> 未审核
+									</label> 
+									<label class="radio-inline"> 
+										<input type="radio" name="auditStatus" value="1" th:field="${doctorInfo.auditStatus}"/> 审核通过
+									</label> 
+									
+									<label class="radio-inline"> 
+										<input type="radio" name="auditStatus" value="2" th:field="${doctorInfo.auditStatus}"/> 审核未通过
+									</label> 
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">审核意见：</label>
+								<div class="col-sm-6">
+									<input id="auditMsg" name="auditMsg" th:value="${doctorInfo.auditMsg}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">审核用户：</label>
+								<div class="col-sm-6">
+									<input id="auditUser" name="auditUser" th:value="${doctorInfo.auditUser}" class="form-control" type="text" disabled="disabled">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">部门名称</label>
+								<div class="col-sm-6">
+									<input id="deptName" name="deptName" th:value="${doctorInfo.deptName}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-6 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/coupon/doctorInfo/edit.js}">
+	</script>
+</body>
+</html>

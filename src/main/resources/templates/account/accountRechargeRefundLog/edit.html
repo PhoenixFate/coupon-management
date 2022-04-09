@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="refund_log_id" name="refund_log_id" th:value="${accountRechargeRefundLog.refund_log_id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">充值流水号：</label>
+								<div class="col-sm-8">
+									<input id="rechargeId" name="rechargeId" th:value="${accountRechargeRefundLog.rechargeId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">账户id：</label>
+								<div class="col-sm-8">
+									<input id="accountId" name="accountId" th:value="${accountRechargeRefundLog.accountId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">账户号：</label>
+								<div class="col-sm-8">
+									<input id="accountNo" name="accountNo" th:value="${accountRechargeRefundLog.accountNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退值渠道码：</label>
+								<div class="col-sm-8">
+									<input id="channelCode" name="channelCode" th:value="${accountRechargeRefundLog.channelCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退款状态， 1 成功， 0 失败， 用于判断是否退款成功：</label>
+								<div class="col-sm-8">
+									<input id="refundStatus" name="refundStatus" th:value="${accountRechargeRefundLog.refundStatus}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退款订单号：</label>
+								<div class="col-sm-8">
+									<input id="refundOrdernumber" name="refundOrdernumber" th:value="${accountRechargeRefundLog.refundOrdernumber}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">第三方支付流水号， 支付宝微信银联等生成的支付流水号：</label>
+								<div class="col-sm-8">
+									<input id="thirdPayFlow" name="thirdPayFlow" th:value="${accountRechargeRefundLog.thirdPayFlow}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">银行交易凭证号：</label>
+								<div class="col-sm-8">
+									<input id="bankPzh" name="bankPzh" th:value="${accountRechargeRefundLog.bankPzh}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">银联交易流水号：</label>
+								<div class="col-sm-8">
+									<input id="bankFlow" name="bankFlow" th:value="${accountRechargeRefundLog.bankFlow}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">银行商户号：</label>
+								<div class="col-sm-8">
+									<input id="bankMerchantNo" name="bankMerchantNo" th:value="${accountRechargeRefundLog.bankMerchantNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退值描述：</label>
+								<div class="col-sm-8">
+									<input id="remark" name="remark" th:value="${accountRechargeRefundLog.remark}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退款终端号（操作员号）：</label>
+								<div class="col-sm-8">
+									<input id="terminalNo" name="terminalNo" th:value="${accountRechargeRefundLog.terminalNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退值完成之后账户余额：</label>
+								<div class="col-sm-8">
+									<input id="accountBalance" name="accountBalance" th:value="${accountRechargeRefundLog.accountBalance}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退值金额：</label>
+								<div class="col-sm-8">
+									<input id="refundAmount" name="refundAmount" th:value="${accountRechargeRefundLog.refundAmount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退值时间：</label>
+								<div class="col-sm-8">
+									<input id="refundTime" name="refundTime" th:value="${accountRechargeRefundLog.refundTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">机构代码：</label>
+								<div class="col-sm-8">
+									<input id="orgCode" name="orgCode" th:value="${accountRechargeRefundLog.orgCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">退值操作员编号：</label>
+								<div class="col-sm-8">
+									<input id="refundCollector" name="refundCollector" th:value="${accountRechargeRefundLog.refundCollector}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/account/accountRechargeRefundLog/edit.js}">
+	</script>
+</body>
+</html>

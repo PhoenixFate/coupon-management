@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phoenix.common.dao.LoginDao">
+	<select id="getReserveStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select count(reserve_id) as reserveStatisticCount 
+			from sys_schedule_reserve
+		<where>
+			and org_code = #{orgCode,jdbcType=VARCHAR}
+			and create_gmt &gt;= STR_TO_DATE(#{startDate,jdbcType=VARCHAR},"%Y-%m-%d")
+			and create_gmt &lt; STR_TO_DATE(#{endDate,jdbcType=VARCHAR},"%Y-%m-%d")
+		</where>
+	</select>
+	
+	<select id="getTakeStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select count(reserve_id) as takeStatisticCount 
+			from sys_schedule_reserve
+		<where>
+			and org_code = #{orgCode,jdbcType=VARCHAR} and reserve_status = '5'
+			and create_gmt &gt;= STR_TO_DATE(#{startDate,jdbcType=VARCHAR},"%Y-%m-%d")
+			and create_gmt &lt; STR_TO_DATE(#{endDate,jdbcType=VARCHAR},"%Y-%m-%d")
+		</where>
+	</select>
+	
+	<select id="getVoilateStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select count(reserve_id) as violateStatisticCount 
+			from reserve_violate_log
+		<where>
+			and org_code = #{orgCode,jdbcType=VARCHAR} and appeal_status != '2'
+			and schedule_date &gt;= #{startDate,jdbcType=VARCHAR}
+			and schedule_date &lt;= #{endDate,jdbcType=VARCHAR}
+		</where>
+	</select>
+	
+	<select id="getRegisteUserStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select count(patient_id) as registeUserStatisticCount 
+			from sys_patient
+		<where>
+			and org_code = #{orgCode,jdbcType=VARCHAR}
+			<if test="startDate != null and startDate != ''">
+				and create_time &gt;= STR_TO_DATE(#{startDate,jdbcType=VARCHAR},"%Y-%m-%d")
+			</if>
+			<if test="endDate != null and endDate != ''">
+				and create_time &lt;= STR_TO_DATE(#{endDate,jdbcType=VARCHAR},"%Y-%m-%d")
+			</if>
+		</where>
+	</select>
+	
+	<select id="getLastWeekDataStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select statistic_date, sum(reserve_count) as reserveStatisticCount, sum(refund_count) as refundStatisticCount, sum(violate_count) as violateStatisticCount  
+			from reserve_statistic
+		<where>
+			and org_code = #{orgCode,jdbcType=VARCHAR}
+			and statistic_date &gt;= #{startDate,jdbcType=VARCHAR}
+			and statistic_date &lt;= #{endDate,jdbcType=VARCHAR}
+		</where>
+			group by statistic_date
+	</select>
+	
+	<select id="getLastWeekChannelDataStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select * from 
+			(select channel_code, channel_name, sum(reserve_count) as reserveStatisticCount
+				from reserve_channel_statistic
+			<where>
+				and org_code = #{orgCode,jdbcType=VARCHAR}
+				and statistic_date &gt;= #{startDate,jdbcType=VARCHAR}
+				and statistic_date &lt;= #{endDate,jdbcType=VARCHAR}
+			</where>
+				group by channel_code,channel_name) t 
+			order by reserveStatisticCount desc
+	</select>
+	
+	<select id="getDoctorStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select * from 
+			(select doctor_code, doctor_name, dept_name, sum(reserve_count) as reserveStatisticCount
+				from reserve_statistic
+			<where>
+				and org_code = #{orgCode,jdbcType=VARCHAR}
+				and statistic_date &gt;= #{startDate,jdbcType=VARCHAR}
+				and statistic_date &lt;= #{endDate,jdbcType=VARCHAR}
+			</where>
+				group by doctor_code,doctor_name,dept_name) t
+			order by reserveStatisticCount desc
+			limit 10
+	</select>
+	
+	<select id="getDeptStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select * from 
+			(select dept_code, dept_name, sum(reserve_count) as reserveStatisticCount
+				from reserve_statistic
+			<where>
+				and org_code = #{orgCode,jdbcType=VARCHAR}
+				and statistic_date &gt;= #{startDate,jdbcType=VARCHAR}
+				and statistic_date &lt;= #{endDate,jdbcType=VARCHAR}
+			</where>
+				group by dept_code,dept_name) t
+			order by reserveStatisticCount desc
+			limit 10
+	</select>
+	<!-- 检验检查 -->
+	<select id="getInspectReserveStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select count(reserve_id) as reserveStatisticCount 
+			from sys_inspect_reserve
+		<where>
+			and org_code = #{orgCode,jdbcType=VARCHAR}
+			and create_gmt &gt;= STR_TO_DATE(#{startDate,jdbcType=VARCHAR},"%Y-%m-%d")
+			and create_gmt &lt; STR_TO_DATE(#{endDate,jdbcType=VARCHAR},"%Y-%m-%d")
+		</where>
+	</select>
+	
+	<select id="getInspectTakeStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select count(reserve_id) as takeStatisticCount 
+			from sys_inspect_reserve
+		<where>
+			and org_code = #{orgCode,jdbcType=VARCHAR} and reserve_status = '5'
+			and create_gmt &gt;= STR_TO_DATE(#{startDate,jdbcType=VARCHAR},"%Y-%m-%d")
+			and create_gmt &lt; STR_TO_DATE(#{endDate,jdbcType=VARCHAR},"%Y-%m-%d")
+		</where>
+	</select>
+	
+	<select id="getInspectVoilateStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select count(reserve_id) as violateStatisticCount 
+			from inspect_violate_log
+		<where>
+			and org_code = #{orgCode,jdbcType=VARCHAR} and appeal_status != '2'
+			and schedule_date &gt;= #{startDate,jdbcType=VARCHAR}
+			and schedule_date &lt;= #{endDate,jdbcType=VARCHAR}
+		</where>
+	</select>
+	
+	<select id="getLastWeekInspectDataStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select statistic_date, sum(reserve_count) as reserveStatisticCount, sum(refund_count) as refundStatisticCount, sum(violate_count) as violateStatisticCount  
+			from inspect_reserve_statistic
+		<where>
+			and org_code = #{orgCode,jdbcType=VARCHAR}
+			and statistic_date &gt;= #{startDate,jdbcType=VARCHAR}
+			and statistic_date &lt;= #{endDate,jdbcType=VARCHAR}
+		</where>
+			group by statistic_date
+	</select>
+	
+	<select id="getItemStatistic" resultType="com.phoenix.system.vo.DataStatisticVO">
+		select * from 
+			(select item_code, item_name, sum(reserve_count) as reserveStatisticCount
+				from inspect_reserve_statistic
+			<where>
+				and org_code = #{orgCode,jdbcType=VARCHAR}
+				and statistic_date &gt;= #{startDate,jdbcType=VARCHAR}
+				and statistic_date &lt;= #{endDate,jdbcType=VARCHAR}
+			</where>
+				group by item_code, item_name) t
+			order by reserveStatisticCount desc
+			limit 5
+	</select>
+	
+</mapper>

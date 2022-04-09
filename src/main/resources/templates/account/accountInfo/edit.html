@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="account_id" name="account_id" th:value="${accountInfo.account_id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">账户号, 医保卡号、院内就诊卡号、身份证号：</label>
+								<div class="col-sm-8">
+									<input id="accountNo" name="accountNo" th:value="${accountInfo.accountNo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">账户类型， 1 身份证，2 医保卡， 3 院内就诊卡， 4 居民健康卡：</label>
+								<div class="col-sm-8">
+									<input id="accountType" name="accountType" th:value="${accountInfo.accountType}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">账户姓名：</label>
+								<div class="col-sm-8">
+									<input id="username" name="username" th:value="${accountInfo.username}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">密码：</label>
+								<div class="col-sm-8">
+									<input id="password" name="password" th:value="${accountInfo.password}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">账户状态， 1 正常， 2 冻结， 3 停用：</label>
+								<div class="col-sm-8">
+									<input id="enableFlag" name="enableFlag" th:value="${accountInfo.enableFlag}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">开户时间：</label>
+								<div class="col-sm-8">
+									<input id="crtTime" name="crtTime" th:value="${accountInfo.crtTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">最后更新时间：</label>
+								<div class="col-sm-8">
+									<input id="updateTime" name="updateTime" th:value="${accountInfo.updateTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">手机号码：</label>
+								<div class="col-sm-8">
+									<input id="phoneno" name="phoneno" th:value="${accountInfo.phoneno}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">开户渠道：</label>
+								<div class="col-sm-8">
+									<input id="createChannel" name="createChannel" th:value="${accountInfo.createChannel}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">账户余额， 单位分：</label>
+								<div class="col-sm-8">
+									<input id="accountBalance" name="accountBalance" th:value="${accountInfo.accountBalance}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">机构代码：</label>
+								<div class="col-sm-8">
+									<input id="orgCode" name="orgCode" th:value="${accountInfo.orgCode}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">开户费（发卡开户有发卡费）：</label>
+								<div class="col-sm-8">
+									<input id="accountFee" name="accountFee" th:value="${accountInfo.accountFee}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">身份证号码：</label>
+								<div class="col-sm-8">
+									<input id="idno" name="idno" th:value="${accountInfo.idno}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">乐观锁：</label>
+								<div class="col-sm-8">
+									<input id="version" name="version" th:value="${accountInfo.version}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/account/accountInfo/edit.js}">
+	</script>
+</body>
+</html>

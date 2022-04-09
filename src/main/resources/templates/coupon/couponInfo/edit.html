@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="couponId" name="couponId" th:value="${couponInfo.couponId}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">优惠券名称：</label>
+								<div class="col-sm-6">
+									<input id="couponName" name="couponName" th:value="${couponInfo.couponName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">优惠券详情介绍：</label>
+								<div class="col-sm-8">
+									<textarea id="couponDetail" name="couponDetail" th:text="${couponInfo.couponDetail}" class="form-control" rows="5"></textarea>
+								</div>
+							</div>
+							<div class="form-group" >	
+								<label class="col-sm-3 control-label">优惠券总数：</label>
+								<div class="col-sm-2">
+									<input id="totalNums" name="totalNums" th:value="${couponInfo.totalNums}" class="form-control" type="text"">
+								</div>
+							</div>
+							<div class="form-group" >	
+								<label class="col-sm-3 control-label">剩余总数：</label>
+								<div class="col-sm-2">
+									<input id="remainNums" name="remainNums" th:value="${couponInfo.remainNums}" class="form-control" type="text" >
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">每人限领几张：</label>
+								<div class="col-sm-2">
+									<input id="userLimits" name="userLimits" th:value="${couponInfo.userLimits}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">优惠券支持的服务编码：</label>
+								<div class="col-sm-2">
+								    <input id="bizCode" name="bizCode" class="form-control" th:value="${couponInfo.bizCode}" type="text">
+									<!-- <select id="bizCode" th:field="${couponInfo.bizCode}" name="bizCode" title="业务编码" class="selectpicker" >
+								        <option th:each="bizCode:${bizCodes}" th:value="${bizCode.dictValue}" th:text="${bizCode.dictName}"></option>
+								    </select> -->
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">优惠券状态：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline"> 
+										<input type="radio" name="couponStatus"  value="1" th:field="${couponInfo.couponStatus}" /> 启用
+									</label> 
+									<label class="radio-inline"> 
+										<input type="radio" name="couponStatus" value="0" th:field="${couponInfo.couponStatus}"/> 暂不启用
+									</label> 
+									<label class="radio-inline"> 
+										<input type="radio" name="couponStatus" value="2" th:field="${couponInfo.couponStatus}"/> 停用
+									</label> 
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">有效期类型：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline"> 
+										<input type="radio" name="periodValidType" value="1" th:field="${couponInfo.periodValidType}" lay-filter="periodValidTypeRadio"/> 按照固定时间段
+									</label> 
+									<label class="radio-inline"> 
+										<input type="radio" name="periodValidType" value="2" th:field="${couponInfo.periodValidType}" lay-filter="periodValidTypeRadio"/> 按照发券日期
+									</label> 
+								</div>
+							</div>
+							<div class="form-group" id="periodStartTime_div">	
+								<label class="col-sm-3 control-label">有效期开始：</label>
+								<div class="col-sm-3">
+									<input id="periodStartTime" name="periodStartTime" class="form-control" type="text" th:value="${couponInfo.periodStartTime}">
+								</div>
+								<label class="col-sm-2 control-label">截止时间：</label>
+								<div class="col-sm-3">
+									<input id="periodEndTime" name="periodEndTime" class="form-control" type="text" th:value="${couponInfo.periodEndTime}">
+								</div>
+							</div>
+
+								<div class="form-group" id="periodValidDays_div">	
+								<label class="col-sm-3 control-label">按发券日期生效-有效期天数：</label>
+								<div class="col-sm-2">
+									<input id="periodValidDays" name="periodValidDays" th:value="${couponInfo.periodValidDays}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group" id="periodStartType_div" >	
+								<label class="col-sm-3 control-label">按发券日期生效-生效形式：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline"> 
+										<input type="radio" name="periodStartType" value="1" th:field="${couponInfo.periodStartType}" /> 立即生效
+									</label> 
+									<label class="radio-inline"> 
+										<input type="radio" name="periodStartType" value="2" th:field="${couponInfo.periodStartType}"/> 次日生效
+									</label> 
+									<label class="radio-inline"> 
+										<input type="radio" name="periodStartType" value="3" th:field="${couponInfo.periodStartType}"/> 次周生效
+									</label> 
+									<label class="radio-inline"> 
+										<input type="radio" name="periodStartType" value="4" th:field="${couponInfo.periodStartType}"/> 次月生效
+									</label> 
+								</div>
+							</div>
+
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/coupon/couponInfo/edit.js}">
+	</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						
+						<div class="form-group">	
+								<label class="col-sm-3 control-label">所属医院：</label>
+								<div class="col-sm-6">
+									<select id="hosCode" name="hosCode" title="所属医院" class="selectpicker"    data-live-search="true">
+								        	<option th:each="hosCode:${hosCodes}" th:value="${hosCode.orgCode}" th:text="${hosCode.orgName}">
+								        	</option>
+								    </select>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">医生编码：</label>
+								<div class="col-sm-6">
+									<input id="docCode" name="docCode" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">医生名称：</label>
+								<div class="col-sm-6">
+									<input id="docName" name="docName" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">医生身份证：</label>
+								<div class="col-sm-6">
+									<input id="docCard" name="docCard" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">手机号码：</label>
+								<div class="col-sm-6">
+									<input id="docPhone" name="docPhone" class="form-control" type="text">
+								</div>
+							</div>
+							
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">医生类别：</label>
+								<div class="col-sm-6">
+									<select lay-key  id="doctorType" name="doctorType" title="医生类别" class="selectpicker" >
+										<option value="0" selected="selected">医生</option>
+										<option value="1">护士</option>
+								    </select>
+								</div>
+							</div>
+							
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">医生职称：</label>
+								<div class="col-sm-6">
+									<input id="docTitle" name="docTitle" class="form-control" type="text">
+								</div>
+							</div>
+							
+							
+								
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">部门名称</label>
+								<div class="col-sm-6">
+									<input id="deptName" name="deptName" class="form-control" type="text">
+								</div>
+							</div>
+							
+							
+							
+							<div class="form-group">
+								<div class="col-sm-6 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/coupon/doctorInfo/add.js}">
+	</script>
+</body>
+</html>

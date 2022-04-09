@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div name="searchform" id="searchform" class="layui-form layui-form-pane">
+							<div class="layui-form-item">
+								<div class="layui-inline">
+									<input type="hidden"  id="packageId"  name="packageId" th:value="${packageId}">
+									<button shiro:hasPermission="coupon:packageInfo:packageInfo:batchSave" type="button" class="layui-btn btn-primary" id="batchSave">
+										<i class="fa fa-plus" aria-hidden="true"></i>保存
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true" class="layui-hide" lay-filter="packageCouponInfoList"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" th:src="@{/js/appjs/coupon/packageInfo/items.js}"></script>
+</body>
+</html>
