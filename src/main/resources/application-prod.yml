@@ -2,7 +2,7 @@ spring:
   datasource:
     druid:
       driverClassName: com.mysql.jdbc.Driver
-      url: jdbc:mysql://114.67.89.253:50306/coupon?useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
+      url: jdbc:mysql://192.168.1.50:3306/coupon?useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
       username: root
       password: centos123qwer
       maxActive: 20
@@ -21,8 +21,8 @@ spring:
   thymeleaf:
       cache: false
   redis:
-      host: 114.67.89.253
-      port: 50379
+      host: 192.168.1.50
+      port: 6379
       password: centos123qwer
       database: 5
       # 连接超时时间（毫秒）
