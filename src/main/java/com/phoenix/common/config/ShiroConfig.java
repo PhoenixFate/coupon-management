@@ -42,6 +42,7 @@ public class ShiroConfig {
 
     /**
      * ShiroDialect，为了在thymeleaf里使用shiro的标签的bean
+     *
      * @return
      */
     @Bean
@@ -49,34 +50,35 @@ public class ShiroConfig {
         return new ShiroDialect();
     }
 
-	@Bean
+    @Bean
     ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
-		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-		shiroFilterFactoryBean.setSecurityManager(securityManager);
-		shiroFilterFactoryBean.setLoginUrl("/login");
-		shiroFilterFactoryBean.setSuccessUrl("/index");
-		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
-		LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-		filterChainDefinitionMap.put("/css/**", "anon");
-		filterChainDefinitionMap.put("/js/**", "anon");
-		filterChainDefinitionMap.put("/fonts/**", "anon");
-		filterChainDefinitionMap.put("/img/**", "anon");
-		filterChainDefinitionMap.put("/docs/**", "anon");
-		filterChainDefinitionMap.put("/druid/**", "anon");
-		filterChainDefinitionMap.put("/files/**", "anon");
-		filterChainDefinitionMap.put("/logout", "logout");
-		filterChainDefinitionMap.put("/jc", "anon");
-		filterChainDefinitionMap.put("/ys", "anon");
-		filterChainDefinitionMap.put("/", "anon");
-		filterChainDefinitionMap.put("/**", "authc");
-		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-		return shiroFilterFactoryBean;
-	}
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setSuccessUrl("/index");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/fonts/**", "anon");
+        filterChainDefinitionMap.put("/img/**", "anon");
+        filterChainDefinitionMap.put("/docs/**", "anon");
+        filterChainDefinitionMap.put("/druid/**", "anon");
+        filterChainDefinitionMap.put("/files/**", "anon");
+        filterChainDefinitionMap.put("/logout", "logout");
+        filterChainDefinitionMap.put("/jc", "anon");
+        filterChainDefinitionMap.put("/ys", "anon");
+        filterChainDefinitionMap.put("/", "anon");
+        filterChainDefinitionMap.put("/**", "authc");
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        return shiroFilterFactoryBean;
+    }
 
 
     @Bean
-    public SecurityManager securityManager(){
-        DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
+    public SecurityManager securityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //设置realm.
         securityManager.setRealm(userRealm());
         // 自定义缓存实现 使用redis
@@ -85,20 +87,21 @@ public class ShiroConfig {
         return securityManager;
     }
 
-	@Bean
+    @Bean
     UserRealm userRealm() {
-		UserRealm userRealm = new UserRealm();
-		return userRealm;
-	}
+        UserRealm userRealm = new UserRealm();
+        return userRealm;
+    }
 
     /**
-     *  开启shiro aop注解支持.
-     *  使用代理方式;所以需要开启代码支持;
+     * 开启shiro aop注解支持.
+     * 使用代理方式;所以需要开启代码支持;
+     *
      * @param securityManager
      * @return
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
@@ -106,6 +109,7 @@ public class ShiroConfig {
 
     /**
      * 配置shiro redisManager
+     *
      * @return
      */
     @Bean
@@ -122,6 +126,7 @@ public class ShiroConfig {
     /**
      * cacheManager 缓存 redis实现
      * 使用的是shiro-redis开源插件
+     *
      * @return
      */
     public RedisCacheManager cacheManager() {
@@ -143,8 +148,8 @@ public class ShiroConfig {
     }
 
     @Bean
-    public SessionDAO sessionDAO(){
-    	return redisSessionDAO();
+    public SessionDAO sessionDAO() {
+        return redisSessionDAO();
     }
 
     /**
