@@ -197,19 +197,25 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<profilesActive>dev</profilesActive>
+				<profileActive>dev</profileActive>
 			</properties>
 		</profile>
 		<profile>
 			<id>test</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
 			<properties>
-				<profilesActive>test</profilesActive>
+				<profileActive>test</profileActive>
 			</properties>
 		</profile>
 		<profile>
 			<id>prod</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
 			<properties>
-				<profilesActive>prod</profilesActive>
+				<profileActive>prod</profileActive>
 			</properties>
 		</profile>
 	</profiles>
@@ -217,17 +223,26 @@
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<warName>${project.artifactId}</warName>
-				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

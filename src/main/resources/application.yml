@@ -7,7 +7,7 @@ security:
     enabled: false
 spring:
   profiles: 
-    active: dev
+    active: @profileActive@
   thymeleaf:
     mode: LEGACYHTML5
     cache: false
