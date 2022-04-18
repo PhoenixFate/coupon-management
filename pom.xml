@@ -4,7 +4,7 @@
 	<groupId>com.phoenix</groupId>
 	<artifactId>coupon-management</artifactId>
 	<version>1.0.0</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>coupon-management</name>
 
 	<parent>
