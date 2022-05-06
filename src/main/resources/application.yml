@@ -1,7 +1,8 @@
 server:
-    context-path: /
-    session-timeout: 3800
+  context-path: /
     port: 9677
+  session:
+    timeout: 3000 #单位为秒
 security:
   basic:
     enabled: false
@@ -9,7 +10,7 @@ spring:
   profiles: 
     active: @profileActive@
   thymeleaf:
-    mode: LEGACYHTML5
+    mode: LEGACY-HTML5
     cache: false
   jackson:
     time-zone: GMT+8
