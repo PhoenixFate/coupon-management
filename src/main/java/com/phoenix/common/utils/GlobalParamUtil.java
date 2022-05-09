@@ -63,7 +63,7 @@ public class GlobalParamUtil {
 	{
 		try
 		{
-			String sessionId = ShiroUtils.getSubjct().getSession().getId().toString();
+			String sessionId = ShiroUtils.getSubject().getSession().getId().toString();
 			return "GLOBALPARAM:" + sessionId + ":" + key;
 		}catch(Exception e)
 		{

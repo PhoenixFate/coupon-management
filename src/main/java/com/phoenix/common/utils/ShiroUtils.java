@@ -16,11 +16,11 @@ public class ShiroUtils {
     @Autowired
     private static SessionDAO sessionDAO;
 
-    public static Subject getSubjct() {
+    public static Subject getSubject() {
         return SecurityUtils.getSubject();
     }
     public static UserDO getUser() {
-        Object object = getSubjct().getPrincipal();
+        Object object = getSubject().getPrincipal();
         return (UserDO)object;
     }
     
@@ -47,7 +47,7 @@ public class ShiroUtils {
         return getUser().getUserId();
     }
     public static void logout() {
-        getSubjct().logout();
+        getSubject().logout();
     }
 
     public static List<Principal> getPrinciples() {
