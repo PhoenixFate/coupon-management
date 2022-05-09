@@ -1,6 +1,6 @@
 server:
   context-path: /
-    port: 9677
+  port: 9677
   session:
     timeout: 3000 #单位为秒
 security:
