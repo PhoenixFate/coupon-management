@@ -13,8 +13,8 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.util.DigestUtils;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 
 public class EncryptionUtil {
     private static String SALT = "phoenix)(*!@#$%^&*^";
@@ -68,7 +68,8 @@ public class EncryptionUtil {
             Security.addProvider(new BouncyCastleProvider());
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC");
             cipher.init(1, k);
-            return (new BASE64Encoder()).encode(cipher.doFinal(data));
+            Encoder encoder = java.util.Base64.getEncoder();
+            return encoder.encodeToString(cipher.doFinal(data));
         } catch (Exception var4) {
             var4.printStackTrace();
             return null;
@@ -82,7 +83,8 @@ public class EncryptionUtil {
             Security.addProvider(new BouncyCastleProvider());
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC");
             cipher.init(1, k);
-            return (new BASE64Encoder()).encode(cipher.doFinal(data));
+            Encoder encoder = java.util.Base64.getEncoder();
+            return encoder.encodeToString(cipher.doFinal(data));
         } catch (Exception var5) {
             var5.printStackTrace();
             return null;
@@ -90,10 +92,9 @@ public class EncryptionUtil {
     }
 
     public static String decode(String sSrc) {
-        BASE64Decoder decoder = new BASE64Decoder();
-
+        Decoder decoder = java.util.Base64.getDecoder();
         try {
-            byte[] data = decoder.decodeBuffer(sSrc);
+            byte[] data = decoder.decode(sSrc);
             Key k = toKey(sKey.getBytes());
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(2, k);
@@ -104,10 +105,9 @@ public class EncryptionUtil {
     }
 
     public static String decode(String sSrc, String sKey) {
-        BASE64Decoder decoder = new BASE64Decoder();
-
+        Decoder decoder = java.util.Base64.getDecoder();
         try {
-            byte[] data = decoder.decodeBuffer(sSrc);
+            byte[] data = decoder.decode(sSrc);
             Key k = toKey(sKey.getBytes());
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(2, k);
