@@ -2,9 +2,9 @@ spring:
   datasource:
     druid:
       driverClassName: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://www.bytes-space.com:50306/coupon?useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
+      url: jdbc:mysql://www.bytes-space.com:21306/coupon?useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
       username: root
-      password: centos123qwer
+      password: ENC(G5IFIP+kj/n/FD2MCWDb74KLkHRw+/yjWPOpf/+7jhE=)
       maxActive: 20
       initialSize: 3
       minIdle: 3
@@ -13,26 +13,26 @@ spring:
       # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
       timeBetweenEvictionRunsMillis: 60000
       stat-view-servlet:
-        loginUsername: root
-        loginPassword: centos123qwer
+        loginUsername: admin
+        loginPassword: ENC(G5IFIP+kj/n/FD2MCWDb74KLkHRw+/yjWPOpf/+7jhE=)
         resetEnable: true
   jmx:
     enabled: false
   thymeleaf:
-      cache: false
+    cache: false
   redis:
-      host: www.bytes-space.com
-      port: 50379
-      password: centos123qwer
-      database: 6
-      # 连接超时时间（毫秒）
-      timeout: 0
-      pool:
-        # 连接池中的最大空闲连接
-        max-idle: 8
-        # 连接池中的最小空闲连接
-        min-idle: 10
-        # 连接池最大连接数（使用负值表示没有限制）
-        max-active: 100
-        # 连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-wait: -1
+    host: www.bytes-space.com
+    port: 21379
+    password: ENC(G5IFIP+kj/n/FD2MCWDb74KLkHRw+/yjWPOpf/+7jhE=)
+    database: 6
+    # 连接超时时间（毫秒）
+    timeout: 0
+    pool:
+      # 连接池中的最大空闲连接
+      max-idle: 8
+      # 连接池中的最小空闲连接
+      min-idle: 10
+      # 连接池最大连接数（使用负值表示没有限制）
+      max-active: 100
+      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-wait: -1

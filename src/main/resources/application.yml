@@ -27,3 +27,9 @@ mybatis:
     map-underscore-to-camel-case: true
   mapper-locations: mapper/**/*Mapper.xml
   typeAliasesPackage: com.phoenix.**.domain
+# 启动时需要配置 秘钥
+# 方案一：在yml中加这个密钥的配置，在项目启动的时候，会根据密钥自动解密ENC(加密串)所代表的数据信息
+# 方案二：将秘钥加入启动参数 -Djasypt.encryptor.password=xxx
+jasypt:
+  encryptor:
+    password: phoenix
